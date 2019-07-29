@@ -1,7 +1,7 @@
 import React from 'react';
 
-function App() {
-  return <p>Hello World!</p>;
-}
+import Dropzone from './components/Dropzone/Dropzone';
+
+const App = () => <Dropzone id="dropzone" />;
 
 export default App;
