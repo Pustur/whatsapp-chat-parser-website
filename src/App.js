@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { parseString } from 'whatsapp-chat-parser';
 
 import Dropzone from './components/Dropzone/Dropzone';
+import MessageViewer from './components/MessageViewer/MessageViewer';
 
 const App = () => {
   const [messages, setMessages] = useState([]);
@@ -21,12 +22,7 @@ const App = () => {
   return (
     <>
       <Dropzone onFileUpload={processFile} id="dropzone" />
-      {messages.length > 0 && (
-        <>
-          <h1>{`Showing ${messages.length} messages`}</h1>
-          <pre>{JSON.stringify(messages, null, 2)}</pre>
-        </>
-      )}
+      <MessageViewer messages={messages}></MessageViewer>
     </>
   );
 };
