@@ -8,21 +8,7 @@ const preventDefaults = e => {
   e.stopPropagation();
 };
 
-const processFile = file => {
-  if (!file) return;
-  if (file.type === 'text/plain') {
-    const reader = new FileReader();
-
-    reader.onloadend = () => console.log(reader.result);
-    reader.readAsText(file);
-  } else {
-    console.error(`${file.type} is not a supported file type`);
-  }
-};
-
-const onChangeHandler = e => processFile(e.target.files[0]);
-
-const Dropzone = ({ id }) => {
+const Dropzone = ({ id, onFileUpload }) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
 
   const onDragEnterOverHandler = e => {
@@ -38,8 +24,10 @@ const Dropzone = ({ id }) => {
   const onDropHandler = e => {
     preventDefaults(e);
     setIsHighlighted(false);
-    processFile(e.dataTransfer.files[0]);
+    onFileUpload(e.dataTransfer.files[0]);
   };
+
+  const onChangeHandler = e => onFileUpload(e.target.files[0]);
 
   return (
     <form
@@ -65,6 +53,7 @@ const Dropzone = ({ id }) => {
 
 Dropzone.propTypes = {
   id: PropTypes.string.isRequired,
+  onFileUpload: PropTypes.func.isRequired,
 };
 
 export default Dropzone;
