@@ -22,7 +22,7 @@ const App = () => {
   return (
     <>
       <Dropzone onFileUpload={processFile} id="dropzone" />
-      <MessageViewer messages={messages}></MessageViewer>
+      <MessageViewer messages={messages} limit={100}></MessageViewer>
     </>
   );
 };

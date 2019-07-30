@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 
 import Message from '../Message/Message';
 
-const limit = 100;
-
-const MessageViewer = ({ messages }) => {
+const MessageViewer = ({ messages, limit }) => {
   const renderedMessages =
     messages.length > limit ? messages.slice(0, limit) : messages;
   const isLimited = renderedMessages.length !== messages.length;
@@ -37,6 +35,11 @@ MessageViewer.propTypes = {
       message: PropTypes.string,
     }),
   ).isRequired,
+  limit: PropTypes.number,
+};
+
+MessageViewer.defaultProps = {
+  limit: Infinity,
 };
 
 export default MessageViewer;
