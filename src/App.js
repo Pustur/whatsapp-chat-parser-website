@@ -1,26 +1,72 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import JSZip from 'jszip';
+import { createGlobalStyle } from 'styled-components';
+import { parseString } from 'whatsapp-chat-parser';
 
-function App() {
+import Dropzone from './components/Dropzone/Dropzone';
+import MessageViewer from './components/MessageViewer/MessageViewer';
+import { StyledH1 } from './style';
+
+const GlobalStyles = createGlobalStyle`
+  html {
+    height: 100%;
+    font-family: sans-serif;
+  }
+
+  body {
+    height: 100%;
+    margin: 0;
+    color: #333;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+`;
+
+const App = () => {
+  const [messages, setMessages] = useState([]);
+
+  const processFile = file => {
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    if (file.type === 'application/zip') {
+      reader.onloadend = e => {
+        const arrayBuffer = e.target.result;
+        const jszip = new JSZip();
+
+        jszip
+          .loadAsync(arrayBuffer)
+          .then(({ files }) =>
+            Object.entries(files)
+              .filter(([fileName]) => fileName.endsWith('.txt'))
+              .sort(([a], [b]) => a.length - b.length)[0][1]
+              .async('string'),
+          )
+          .then(parseString)
+          .then(setMessages);
+      };
+      reader.readAsArrayBuffer(file);
+    } else if (file.type === 'text/plain') {
+      reader.onloadend = () => parseString(reader.result).then(setMessages);
+      reader.readAsText(file);
+    } else {
+      console.error(`${file.type} is not a supported file type`);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyles />
+      <StyledH1>WhatsApp Chat Parser</StyledH1>
+      <Dropzone onFileUpload={processFile} id="dropzone" />
+      <MessageViewer messages={messages} limit={100} />
+    </>
   );
-}
+};
 
 export default App;
