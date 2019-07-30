@@ -1,6 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {
+  StyledItem,
+  StyledBubble,
+  StyledWrapper,
+  StyledAuthor,
+  StyledDate,
+} from './style';
+
 const intlOptions = {
   year: 'numeric',
   month: 'short',
@@ -17,15 +25,21 @@ const Message = ({ message }) => {
   const isSystem = message.author === 'System';
 
   return (
-    <li>
-      {!isSystem && <div>{message.author}</div>}
-      <div>{message.message}</div>
-      {!isSystem && (
-        <time dateTime={dateTime}>
-          {new Intl.DateTimeFormat('default', intlOptions).format(message.date)}
-        </time>
-      )}
-    </li>
+    <StyledItem>
+      <StyledBubble>
+        <StyledWrapper>
+          {!isSystem && <StyledAuthor>{message.author}</StyledAuthor>}
+          <div>{message.message}</div>
+        </StyledWrapper>
+        {!isSystem && (
+          <StyledDate dateTime={dateTime}>
+            {new Intl.DateTimeFormat('default', intlOptions).format(
+              message.date,
+            )}
+          </StyledDate>
+        )}
+      </StyledBubble>
+    </StyledItem>
   );
 };
 

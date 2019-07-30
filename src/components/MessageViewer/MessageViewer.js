@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Message from '../Message/Message';
+import { StyledContainer, StyledList, StyledP, StyledInfo } from './style';
 
 const MessageViewer = ({ messages, limit }) => {
   const renderedMessages =
@@ -9,23 +10,25 @@ const MessageViewer = ({ messages, limit }) => {
   const isLimited = renderedMessages.length !== messages.length;
 
   return (
-    <>
+    <StyledContainer>
       {messages.length > 0 && (
-        <h1>
-          Showing {isLimited && 'first'} {renderedMessages.length} messages{' '}
-          {isLimited && (
-            <span>(out of {messages.length} for performance reasons)</span>
-          )}
-        </h1>
+        <StyledP>
+          <StyledInfo>
+            Showing {isLimited && 'first'} {renderedMessages.length} messages{' '}
+            {isLimited && (
+              <span>(out of {messages.length} for performance reasons)</span>
+            )}
+          </StyledInfo>
+        </StyledP>
       )}
 
-      <ul>
+      <StyledList>
         {renderedMessages.map(message => {
           const key = `${message.date.getTime()}_${message.message}`;
           return <Message key={key} message={message} />;
         })}
-      </ul>
-    </>
+      </StyledList>
+    </StyledContainer>
   );
 };
 
