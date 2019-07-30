@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import JSZip from 'jszip';
 import { createGlobalStyle } from 'styled-components';
 import { parseString } from 'whatsapp-chat-parser';
 
@@ -29,9 +30,27 @@ const App = () => {
 
   const processFile = file => {
     if (!file) return;
-    if (file.type === 'text/plain') {
-      const reader = new FileReader();
 
+    const reader = new FileReader();
+
+    if (file.type === 'application/zip') {
+      reader.onloadend = e => {
+        const arrayBuffer = e.target.result;
+        const jszip = new JSZip();
+
+        jszip
+          .loadAsync(arrayBuffer)
+          .then(({ files }) =>
+            Object.entries(files)
+              .filter(([fileName]) => fileName.endsWith('.txt'))
+              .sort(([a], [b]) => a.length - b.length)[0][1]
+              .async('string'),
+          )
+          .then(parseString)
+          .then(setMessages);
+      };
+      reader.readAsArrayBuffer(file);
+    } else if (file.type === 'text/plain') {
       reader.onloadend = () => parseString(reader.result).then(setMessages);
       reader.readAsText(file);
     } else {
@@ -43,7 +62,7 @@ const App = () => {
     <>
       <GlobalStyles />
       <Dropzone onFileUpload={processFile} id="dropzone" />
-      <MessageViewer messages={messages} limit={100}></MessageViewer>
+      <MessageViewer messages={messages} limit={100} />
     </>
   );
 };

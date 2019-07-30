@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { StyledLabel, StyledP, StyledInput } from './style';
+import { StyledLabel, StyledP, StyledExtension, StyledInput } from './style';
 
 const preventDefaults = e => {
   e.preventDefault();
@@ -39,12 +39,14 @@ const Dropzone = ({ id, onFileUpload }) => {
       <StyledInput
         id={id}
         type="file"
-        accept="text/plain"
+        accept="text/plain application/zip"
         onChange={onChangeHandler}
       />
       <StyledLabel htmlFor={id} isHighlighted={isHighlighted}>
         <StyledP>
           Click here to upload a file or drag and drop it onto the dashed region
+          (supported formats: <StyledExtension>txt</StyledExtension>,{' '}
+          <StyledExtension>zip</StyledExtension>)
         </StyledP>
       </StyledLabel>
     </form>

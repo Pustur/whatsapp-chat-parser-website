@@ -16,6 +16,15 @@ const StyledP = styled.p`
   margin: 0;
 `;
 
+const StyledExtension = styled.span`
+  font-family: monospace;
+  background-color: #eee;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 1px 3px;
+`;
+
 const StyledInput = styled.input`
   ${screenReaderOnly}
 
@@ -24,4 +33,4 @@ const StyledInput = styled.input`
   }
 `;
 
-export { StyledLabel, StyledP, StyledInput };
+export { StyledLabel, StyledP, StyledExtension, StyledInput };
