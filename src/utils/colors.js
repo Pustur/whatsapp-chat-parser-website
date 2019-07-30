@@ -1,5 +1,7 @@
 const labelHighlightColor = '#0bf';
 
+const systemBackgroundColor = '#fff5c4';
+
 const authorColors = [
   '#ffa97a',
   '#1f7aec',
@@ -14,4 +16,4 @@ const authorColors = [
   '#dfb610',
 ];
 
-export { labelHighlightColor, authorColors };
+export { labelHighlightColor, systemBackgroundColor, authorColors };

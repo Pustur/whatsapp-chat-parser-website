@@ -25,8 +25,8 @@ const Message = ({ message, color }) => {
   const isSystem = message.author === 'System';
 
   return (
-    <StyledItem>
-      <StyledBubble>
+    <StyledItem isSystem={isSystem}>
+      <StyledBubble isSystem={isSystem}>
         <StyledWrapper>
           {!isSystem && (
             <StyledAuthor color={color}>{message.author}</StyledAuthor>

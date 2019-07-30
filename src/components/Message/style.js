@@ -1,7 +1,14 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+import { systemBackgroundColor } from '../../utils/colors';
 
 const StyledItem = styled.li`
   margin: 1rem auto;
+  ${props =>
+    props.isSystem &&
+    css`
+      text-align: center;
+    `}
 `;
 
 const StyledBubble = styled.div`
@@ -10,6 +17,11 @@ const StyledBubble = styled.div`
   border-radius: 6px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   background-color: white;
+  ${props =>
+    props.isSystem &&
+    css`
+      background-color: ${systemBackgroundColor};
+    `}
 
   @media (max-width: 699px) {
     flex-direction: column;
