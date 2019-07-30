@@ -10,12 +10,14 @@ const MessageViewer = ({ messages, limit }) => {
 
   return (
     <>
-      <h1>
-        Showing {isLimited && 'first'} {renderedMessages.length} messages{' '}
-        {isLimited && (
-          <span>(out of {messages.length} for performance reasons)</span>
-        )}
-      </h1>
+      {messages.length > 0 && (
+        <h1>
+          Showing {isLimited && 'first'} {renderedMessages.length} messages{' '}
+          {isLimited && (
+            <span>(out of {messages.length} for performance reasons)</span>
+          )}
+        </h1>
+      )}
 
       <ul>
         {renderedMessages.map(message => {
