@@ -1,6 +1,9 @@
 import styled, { css } from 'styled-components';
 
-import { systemBackgroundColor } from '../../utils/colors';
+import {
+  systemBackgroundColor,
+  activeUserBackgroundColor,
+} from '../../utils/colors';
 
 const StyledItem = styled.li`
   margin: 1rem auto;
@@ -8,6 +11,11 @@ const StyledItem = styled.li`
     props.isSystem &&
     css`
       text-align: center;
+    `}
+  ${props =>
+    props.isActiveUser &&
+    css`
+      text-align: right;
     `}
 `;
 
@@ -21,6 +29,12 @@ const StyledBubble = styled.div`
     props.isSystem &&
     css`
       background-color: ${systemBackgroundColor};
+    `}
+  ${props =>
+    props.isActiveUser &&
+    css`
+      text-align: left;
+      background-color: ${activeUserBackgroundColor};
     `}
 
   @media (max-width: 699px) {

@@ -1,9 +1,12 @@
 const labelHighlightColor = '#0bf';
 
+const viewerBackgroundColor = '#e5ddd5';
+
+const activeUserBackgroundColor = '#ddf7c8';
+
 const systemBackgroundColor = '#fff5c4';
 
 const authorColors = [
-  '#ffa97a',
   '#1f7aec',
   '#fe7c7f',
   '#6bcbef',
@@ -12,8 +15,15 @@ const authorColors = [
   '#e542a3',
   '#91ab01',
   '#ba33dc',
+  '#ffa97a',
   '#029d00',
   '#dfb610',
 ];
 
-export { labelHighlightColor, systemBackgroundColor, authorColors };
+export {
+  labelHighlightColor,
+  viewerBackgroundColor,
+  systemBackgroundColor,
+  activeUserBackgroundColor,
+  authorColors,
+};

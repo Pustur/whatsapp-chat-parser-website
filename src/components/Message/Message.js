@@ -17,7 +17,7 @@ const intlOptions = {
   minute: 'numeric',
 };
 
-const Message = ({ message, color }) => {
+const Message = ({ message, color, isActiveUser }) => {
   const dateTime = message.date
     .toISOString()
     .slice(0, 19)
@@ -25,8 +25,8 @@ const Message = ({ message, color }) => {
   const isSystem = message.author === 'System';
 
   return (
-    <StyledItem isSystem={isSystem}>
-      <StyledBubble isSystem={isSystem}>
+    <StyledItem isSystem={isSystem} isActiveUser={isActiveUser}>
+      <StyledBubble isSystem={isSystem} isActiveUser={isActiveUser}>
         <StyledWrapper>
           {!isSystem && (
             <StyledAuthor color={color}>{message.author}</StyledAuthor>
@@ -52,10 +52,12 @@ Message.propTypes = {
     message: PropTypes.string,
   }).isRequired,
   color: PropTypes.string,
+  isActiveUser: PropTypes.bool,
 };
 
 Message.defaultProps = {
   color: 'black',
+  isActiveUser: false,
 };
 
 export default Message;

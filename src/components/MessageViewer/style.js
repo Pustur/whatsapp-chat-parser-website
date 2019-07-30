@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-import { labelHighlightColor } from '../../utils/colors';
+import { labelHighlightColor, viewerBackgroundColor } from '../../utils/colors';
 import bgImage from '../../img/bg.png';
 
 const StyledContainer = styled.div`
   flex-grow: 1;
   padding: 0 1rem;
-  background-color: #d0dfef;
+  background-color: ${viewerBackgroundColor};
   background-image: url(${bgImage});
 
   @media (min-width: 700px) {

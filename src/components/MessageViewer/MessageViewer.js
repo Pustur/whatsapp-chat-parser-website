@@ -10,6 +10,7 @@ const MessageViewer = ({ messages, limit }) => {
   const participants = Array.from(
     new Set(messages.map(({ author }) => author)),
   ).filter(author => author !== 'System');
+  const activeUser = participants[1];
   const colorMap = participants.reduce((obj, participant, i) => {
     return { ...obj, [participant]: authorColors[i % authorColors.length] };
   }, {});
@@ -38,6 +39,7 @@ const MessageViewer = ({ messages, limit }) => {
               key={key}
               message={message}
               color={colorMap[message.author]}
+              isActiveUser={activeUser === message.author}
             />
           );
         })}
