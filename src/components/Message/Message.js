@@ -17,7 +17,7 @@ const intlOptions = {
   minute: 'numeric',
 };
 
-const Message = ({ message }) => {
+const Message = ({ message, color }) => {
   const dateTime = message.date
     .toISOString()
     .slice(0, 19)
@@ -28,7 +28,9 @@ const Message = ({ message }) => {
     <StyledItem>
       <StyledBubble>
         <StyledWrapper>
-          {!isSystem && <StyledAuthor>{message.author}</StyledAuthor>}
+          {!isSystem && (
+            <StyledAuthor color={color}>{message.author}</StyledAuthor>
+          )}
           <div>{message.message}</div>
         </StyledWrapper>
         {!isSystem && (
@@ -49,6 +51,11 @@ Message.propTypes = {
     author: PropTypes.string,
     message: PropTypes.string,
   }).isRequired,
+  color: PropTypes.string,
+};
+
+Message.defaultProps = {
+  color: 'black',
 };
 
 export default Message;

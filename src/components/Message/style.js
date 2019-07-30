@@ -28,6 +28,7 @@ const StyledAuthor = styled.div`
   margin-bottom: 0.2rem;
   font-weight: bold;
   font-size: 75%;
+  color: ${props => props.color};
 `;
 
 const StyledDate = styled.time`
