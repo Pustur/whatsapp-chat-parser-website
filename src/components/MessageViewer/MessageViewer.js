@@ -32,14 +32,19 @@ const MessageViewer = ({ messages, limit }) => {
       )}
 
       <StyledList>
-        {renderedMessages.map(message => {
+        {renderedMessages.map((message, i, arr) => {
+          const prevMessage = arr[i - 1];
           const key = `${message.date.getTime()}_${message.message}`;
+
           return (
             <Message
               key={key}
               message={message}
               color={colorMap[message.author]}
               isActiveUser={activeUser === message.author}
+              sameAuthorAsPrevious={
+                prevMessage && prevMessage.author === message.author
+              }
             />
           );
         })}

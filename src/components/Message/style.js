@@ -6,7 +6,9 @@ import {
 } from '../../utils/colors';
 
 const StyledItem = styled.li`
-  margin: 1rem auto;
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
   ${props =>
     props.isSystem &&
     css`
@@ -16,6 +18,11 @@ const StyledItem = styled.li`
     props.isActiveUser &&
     css`
       text-align: right;
+    `}
+  ${props =>
+    props.sameAuthorAsPrevious &&
+    css`
+      margin-top: 0.2rem;
     `}
 `;
 
