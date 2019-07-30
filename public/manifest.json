@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "WhatsApp Parser",
+  "name": "WhatsApp Chat Parser",
   "icons": [
     {
       "src": "favicon.ico",
