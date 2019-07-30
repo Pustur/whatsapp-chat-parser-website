@@ -5,6 +5,7 @@ import { parseString } from 'whatsapp-chat-parser';
 
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
+import { StyledH1 } from './style';
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -61,6 +62,7 @@ const App = () => {
   return (
     <>
       <GlobalStyles />
+      <StyledH1>WhatsApp Chat Parser</StyledH1>
       <Dropzone onFileUpload={processFile} id="dropzone" />
       <MessageViewer messages={messages} limit={100} />
     </>
