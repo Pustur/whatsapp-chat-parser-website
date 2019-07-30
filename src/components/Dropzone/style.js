@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-import { labelHighlightColor, screenReaderOnly } from '../../utils/styles';
+import { labelHighlightColor } from '../../utils/colors';
+import { screenReaderOnly } from '../../utils/styles';
 
 const StyledLabel = styled.label`
   display: block;

@@ -1,7 +1,5 @@
 import { css } from 'styled-components';
 
-const labelHighlightColor = '#0bf';
-
 const screenReaderOnly = css`
   position: absolute;
   width: 1px;
@@ -13,4 +11,4 @@ const screenReaderOnly = css`
   border: 0;
 `;
 
-export { labelHighlightColor, screenReaderOnly };
+export { screenReaderOnly };
