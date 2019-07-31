@@ -63,8 +63,8 @@ const App = () => {
     } else {
       const errorMessage = `${file.type} is not a supported file type`;
 
-      console.error(errorMessage);
-      alert(errorMessage);
+      console.error(errorMessage); // eslint-disable-line no-console
+      alert(errorMessage); // eslint-disable-line no-alert
     }
   };
 
