@@ -61,7 +61,10 @@ const App = () => {
       reader.onloadend = () => parseString(reader.result).then(setMessages);
       reader.readAsText(file);
     } else {
-      console.error(`${file.type} is not a supported file type`);
+      const errorMessage = `${file.type} is not a supported file type`;
+
+      console.error(errorMessage);
+      alert(errorMessage);
     }
   };
 
