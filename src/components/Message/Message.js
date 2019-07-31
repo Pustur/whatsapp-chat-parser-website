@@ -6,6 +6,7 @@ import {
   StyledBubble,
   StyledWrapper,
   StyledAuthor,
+  StyledMessage,
   StyledDate,
 } from './style';
 
@@ -35,7 +36,7 @@ const Message = ({ message, color, isActiveUser, sameAuthorAsPrevious }) => {
           {!isSystem && !sameAuthorAsPrevious && (
             <StyledAuthor color={color}>{message.author}</StyledAuthor>
           )}
-          <div>{message.message}</div>
+          <StyledMessage>{message.message}</StyledMessage>
         </StyledWrapper>
         {!isSystem && (
           <StyledDate dateTime={dateTime}>

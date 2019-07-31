@@ -64,6 +64,10 @@ const StyledAuthor = styled.div`
   color: ${props => props.color};
 `;
 
+const StyledMessage = styled.div`
+  white-space: pre-wrap;
+`;
+
 const StyledDate = styled.time`
   flex: 0 0 auto;
   align-self: flex-end;
@@ -77,4 +81,11 @@ const StyledDate = styled.time`
   }
 `;
 
-export { StyledItem, StyledBubble, StyledWrapper, StyledAuthor, StyledDate };
+export {
+  StyledItem,
+  StyledBubble,
+  StyledWrapper,
+  StyledAuthor,
+  StyledMessage,
+  StyledDate,
+};
