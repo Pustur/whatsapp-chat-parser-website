@@ -22,7 +22,7 @@ const StyledItem = styled.li`
   ${props =>
     props.sameAuthorAsPrevious &&
     css`
-      margin-top: 0.2rem;
+      margin-top: 0.25rem;
     `}
 `;
 
@@ -58,7 +58,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledAuthor = styled.div`
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
   font-weight: bold;
   font-size: 75%;
   color: ${props => props.color};
@@ -73,7 +73,7 @@ const StyledDate = styled.time`
   opacity: 0.6;
 
   @media (max-width: 699px) {
-    margin-top: 0.2rem;
+    margin-top: 0.25rem;
   }
 `;
 
