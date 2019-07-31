@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-import { screenReaderOnly } from './utils/styles';
-
-const StyledH1 = styled.h1`
-  ${screenReaderOnly}
-`;
-
 const StyledHeader = styled.header`
   padding: 10px;
   display: flex;
@@ -30,4 +24,4 @@ const StyledHeader = styled.header`
   }
 `;
 
-export { StyledH1, StyledHeader };
+export { StyledHeader };
