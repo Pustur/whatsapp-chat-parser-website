@@ -1,6 +1,6 @@
 {
   "name": "whatsapp-chat-parser-website",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "jszip": "3.2.2",
@@ -9,7 +9,7 @@
     "react-dom": "16.8.6",
     "react-scripts": "3.0.1",
     "styled-components": "4.3.1",
-    "whatsapp-chat-parser": "2.0.3"
+    "whatsapp-chat-parser": "2.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

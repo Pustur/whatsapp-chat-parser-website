@@ -17,6 +17,7 @@ The website is available at [whatsapp-chat-parser.netlify.com](https://whatsapp-
 ## Technologies used
 
 - Library: [React](https://reactjs.org/)
+- CSS: [Styled Components](https://www.styled-components.com/)
 - Code formatting: [Prettier](https://prettier.io/)
 - Linting: [ESLint](https://eslint.org/) (with [Airbnb rules](https://www.npmjs.com/package/eslint-config-airbnb))
 

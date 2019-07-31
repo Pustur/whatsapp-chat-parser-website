@@ -7,7 +7,6 @@ const StyledLabel = styled.label`
   display: block;
   border-radius: 10px;
   padding: 20px;
-  margin: 10px;
   border: 2px dashed
     ${props => (props.isHighlighted ? labelHighlightColor : '#ccc')};
 `;
