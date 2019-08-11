@@ -10,9 +10,16 @@ import { StyledHeader } from './style';
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
 const GlobalStyles = createGlobalStyle`
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
   html {
     height: 100%;
     font-family: sans-serif;
+    box-sizing: border-box;
   }
 
   body {
