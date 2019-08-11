@@ -1,10 +1,10 @@
-const labelHighlightColor = '#0bf';
-
 const viewerBackgroundColor = '#e5ddd5';
 
 const activeUserBackgroundColor = '#ddf7c8';
-
 const systemBackgroundColor = '#fff5c4';
+
+const whatsappGreenColor = '#07bc4c';
+const whatsappGreenDarkColor = '#0c9842';
 
 const authorColors = [
   '#1f7aec',
@@ -21,9 +21,10 @@ const authorColors = [
 ];
 
 export {
-  labelHighlightColor,
   viewerBackgroundColor,
   systemBackgroundColor,
   activeUserBackgroundColor,
+  whatsappGreenColor,
+  whatsappGreenDarkColor,
   authorColors,
 };

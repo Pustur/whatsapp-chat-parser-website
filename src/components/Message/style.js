@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 
+import { overflowBreakWord } from '../../utils/styles';
 import {
   systemBackgroundColor,
   activeUserBackgroundColor,
@@ -65,6 +66,8 @@ const StyledAuthor = styled.div`
 `;
 
 const StyledMessage = styled.div`
+  ${overflowBreakWord}
+
   white-space: pre-wrap;
 `;
 

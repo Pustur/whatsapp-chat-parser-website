@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { labelHighlightColor } from '../../utils/colors';
+import { whatsappGreenColor } from '../../utils/colors';
 import { screenReaderOnly } from '../../utils/styles';
 
 const StyledLabel = styled.label`
@@ -8,7 +8,7 @@ const StyledLabel = styled.label`
   border-radius: 10px;
   padding: 20px;
   border: 2px dashed
-    ${props => (props.isHighlighted ? labelHighlightColor : '#ccc')};
+    ${props => (props.isHighlighted ? whatsappGreenColor : '#ccc')};
 `;
 
 const StyledP = styled.p`
@@ -28,7 +28,7 @@ const StyledInput = styled.input`
   ${screenReaderOnly}
 
   &:focus + ${StyledLabel} {
-    border-color: ${labelHighlightColor};
+    border-color: ${whatsappGreenColor};
   }
 `;
 

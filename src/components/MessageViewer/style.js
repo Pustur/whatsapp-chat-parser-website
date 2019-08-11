@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { labelHighlightColor, viewerBackgroundColor } from '../../utils/colors';
+import { whatsappGreenColor, viewerBackgroundColor } from '../../utils/colors';
 import bgImage from '../../img/bg.png';
 
 const StyledContainer = styled.div`
@@ -29,7 +29,7 @@ const StyledInfo = styled.span`
   border-radius: 6px;
   text-align: center;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  background-color: ${labelHighlightColor};
+  background-color: ${whatsappGreenColor};
   color: white;
 `;
 

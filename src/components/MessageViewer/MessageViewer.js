@@ -23,10 +23,8 @@ const MessageViewer = ({ messages, limit }) => {
       {messages.length > 0 && (
         <StyledP>
           <StyledInfo>
-            Showing {isLimited && 'first'} {renderedMessages.length} messages{' '}
-            {isLimited && (
-              <span>(out of {messages.length} for performance reasons)</span>
-            )}
+            Showing {isLimited ? 'first' : 'all'} {renderedMessages.length}{' '}
+            messages {isLimited && <span>(out of {messages.length})</span>}
           </StyledInfo>
         </StyledP>
       )}
