@@ -7,6 +7,8 @@ import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
 import { StyledHeader } from './style';
 
+import { whatsappGreenColor, whatsappGreenDarkColor } from './utils/colors';
+
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
 const GlobalStyles = createGlobalStyle`
@@ -30,6 +32,11 @@ const GlobalStyles = createGlobalStyle`
 
   a {
     text-decoration: none;
+    color: ${whatsappGreenColor};
+
+    &:visited {
+      color: ${whatsappGreenDarkColor};
+    }
   }
 
   #root {
