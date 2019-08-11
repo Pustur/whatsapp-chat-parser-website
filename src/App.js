@@ -35,6 +35,11 @@ const GlobalStyles = createGlobalStyle`
 const App = () => {
   const [messages, setMessages] = useState([]);
 
+  const showError = (message, err) => {
+    console.error(err || message); // eslint-disable-line no-console
+    alert(message); // eslint-disable-line no-alert
+  };
+
   const processFile = file => {
     if (!file) return;
 
@@ -47,24 +52,34 @@ const App = () => {
 
         jszip
           .loadAsync(arrayBuffer)
-          .then(({ files }) =>
-            Object.entries(files)
-              .filter(([fileName]) => fileName.endsWith('.txt'))
+          .then(({ files }) => {
+            const txtFiles = Object.entries(files).filter(([fileName]) =>
+              fileName.endsWith('.txt'),
+            );
+
+            if (!txtFiles.length) {
+              throw new Error('No txt files found in archive');
+            }
+
+            return txtFiles
               .sort(([a], [b]) => a.length - b.length)[0][1]
-              .async('string'),
-          )
+              .async('string');
+          })
           .then(parseString)
-          .then(setMessages);
+          .then(setMessages)
+          .catch(showError);
       };
       reader.readAsArrayBuffer(file);
     } else if (file.type === 'text/plain') {
-      reader.onloadend = () => parseString(reader.result).then(setMessages);
+      reader.onloadend = () =>
+        parseString(reader.result)
+          .then(setMessages)
+          .catch(err =>
+            showError('An error has occurred while parsing the file', err),
+          );
       reader.readAsText(file);
     } else {
-      const errorMessage = `${file.type} is not a supported file type`;
-
-      console.error(errorMessage); // eslint-disable-line no-console
-      alert(errorMessage); // eslint-disable-line no-alert
+      showError(`File type ${file.type} not supported`);
     }
   };
 
