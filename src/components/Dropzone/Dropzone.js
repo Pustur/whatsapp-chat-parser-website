@@ -39,7 +39,7 @@ const Dropzone = ({ id, onFileUpload }) => {
       <StyledInput
         id={id}
         type="file"
-        accept="text/plain application/zip"
+        accept="text/plain, application/zip"
         onChange={onChangeHandler}
       />
       <StyledLabel htmlFor={id} isHighlighted={isHighlighted}>
