@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import JSZip from 'jszip';
 import { createGlobalStyle } from 'styled-components';
 import { parseString } from 'whatsapp-chat-parser';
 
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
-import { StyledHeader } from './style';
+import {
+  StyledContainer,
+  StyledMenuOpenButton,
+  StyledMenuCloseButton,
+  StyledOverlay,
+  StyledSidebar,
+  StyledSidebarContainer,
+  StyledLabel,
+  StyledInput,
+  StyledHeader,
+} from './style';
 
 import { whatsappGreenColor, whatsappGreenDarkColor } from './utils/colors';
 
@@ -19,13 +29,11 @@ const GlobalStyles = createGlobalStyle`
   }
 
   html {
-    height: 100%;
     font-family: sans-serif;
     box-sizing: border-box;
   }
 
   body {
-    height: 100%;
     margin: 0;
     color: #333;
   }
@@ -39,15 +47,33 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+  button {
+    cursor: pointer;
+  }
+
+  html,
+  body,
   #root {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
+    height: 100%;
   }
 `;
 
 const App = () => {
   const [messages, setMessages] = useState([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [messagesLimit, setMessagesLimit] = useState(100);
+  const closeButtonRef = useRef(null);
+  const openButtonRef = useRef(null);
+
+  const closeMenu = () => {
+    openButtonRef.current.focus();
+    setIsMenuOpen(false);
+  };
+
+  const openMenu = () => {
+    closeButtonRef.current.focus();
+    setIsMenuOpen(true);
+  };
 
   const showError = (message, err) => {
     console.error(err || message); // eslint-disable-line no-console
@@ -100,14 +126,64 @@ const App = () => {
   return (
     <>
       <GlobalStyles />
-      <StyledHeader>
-        <Dropzone onFileUpload={processFile} id="dropzone" />
-        <span>OR</span>
-        <a href={exampleChat} download>
-          Download example chat
-        </a>
-      </StyledHeader>
-      <MessageViewer messages={messages} limit={100} />
+      <StyledContainer>
+        <StyledHeader>
+          <Dropzone onFileUpload={processFile} id="dropzone" />
+          <span>OR</span>
+          <a href={exampleChat} download>
+            Download example chat
+          </a>
+        </StyledHeader>
+        <MessageViewer messages={messages} limit={messagesLimit} />
+        <StyledMenuOpenButton
+          type="button"
+          onClick={openMenu}
+          ref={openButtonRef}
+        >
+          Open menu
+        </StyledMenuOpenButton>
+        <StyledOverlay
+          type="button"
+          isActive={isMenuOpen}
+          onClick={closeMenu}
+          tabIndex="-1"
+        />
+        <StyledSidebar isOpen={isMenuOpen}>
+          <StyledMenuCloseButton
+            type="button"
+            onClick={closeMenu}
+            ref={closeButtonRef}
+          >
+            Close menu
+          </StyledMenuCloseButton>
+          <StyledSidebarContainer>
+            <div>
+              <StyledLabel htmlFor="limit">Messages limit</StyledLabel>
+              <StyledInput
+                id="limit"
+                type="number"
+                min="0"
+                max={messages.length}
+                value={messagesLimit}
+                onChange={e =>
+                  setMessagesLimit(parseInt(e.currentTarget.value, 10))
+                }
+              />
+            </div>
+
+            <div>
+              <small>
+                Made by <a href="https://lorisbettazza.com">Loris Bettazza</a>
+                <br />
+                View{' '}
+                <a href="https://github.com/Pustur/whatsapp-chat-parser-website">
+                  Source code
+                </a>
+              </small>
+            </div>
+          </StyledSidebarContainer>
+        </StyledSidebar>
+      </StyledContainer>
     </>
   );
 };
