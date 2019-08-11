@@ -33,4 +33,16 @@ const normalizeInput = css`
   color: inherit;
 `;
 
-export { screenReaderOnly, hideText, normalizeButton, normalizeInput };
+const overflowBreakWord = css`
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+`;
+
+export {
+  screenReaderOnly,
+  hideText,
+  normalizeButton,
+  normalizeInput,
+  overflowBreakWord,
+};
