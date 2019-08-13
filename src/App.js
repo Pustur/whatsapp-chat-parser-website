@@ -10,6 +10,11 @@ import useIsFirstRender from './hooks/useIsFirstRender';
 
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
+const showError = (message, err) => {
+  console.error(err || message); // eslint-disable-line no-console
+  alert(message); // eslint-disable-line no-alert
+};
+
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,11 +30,6 @@ const App = () => {
 
   const openMenu = () => {
     setIsMenuOpen(true);
-  };
-
-  const showError = (message, err) => {
-    console.error(err || message); // eslint-disable-line no-console
-    alert(message); // eslint-disable-line no-alert
   };
 
   const processFile = file => {
