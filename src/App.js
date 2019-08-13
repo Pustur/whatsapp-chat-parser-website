@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import JSZip from 'jszip';
 import { createGlobalStyle } from 'styled-components';
 import { parseString } from 'whatsapp-chat-parser';
@@ -16,6 +16,8 @@ import {
   StyledInput,
   StyledHeader,
 } from './style';
+
+import useIsFirstRender from './hooks/useIsFirstRender';
 
 import { whatsappGreenColor, whatsappGreenDarkColor } from './utils/colors';
 
@@ -62,16 +64,16 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [messagesLimit, setMessagesLimit] = useState(100);
+  const isFirstRender = useIsFirstRender();
+
   const closeButtonRef = useRef(null);
   const openButtonRef = useRef(null);
 
   const closeMenu = () => {
-    openButtonRef.current.focus();
     setIsMenuOpen(false);
   };
 
   const openMenu = () => {
-    closeButtonRef.current.focus();
     setIsMenuOpen(true);
   };
 
@@ -122,6 +124,13 @@ const App = () => {
       showError(`File type ${file.type} not supported`);
     }
   };
+
+  useEffect(() => {
+    if (isFirstRender) return;
+
+    if (isMenuOpen) closeButtonRef.current.focus();
+    else openButtonRef.current.focus();
+  }, [isFirstRender, isMenuOpen]);
 
   return (
     <>
