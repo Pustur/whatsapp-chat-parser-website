@@ -4,6 +4,7 @@ import { parseString } from 'whatsapp-chat-parser';
 
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
+import Credits from './components/Credits/Credits';
 import * as S from './style';
 
 import useIsFirstRender from './hooks/useIsFirstRender';
@@ -127,14 +128,7 @@ const App = () => {
             </div>
 
             <div>
-              <small>
-                Made by <a href="https://lorisbettazza.com">Loris Bettazza</a>
-                <br />
-                View{' '}
-                <a href="https://github.com/Pustur/whatsapp-chat-parser-website">
-                  Source code
-                </a>
-              </small>
+              <Credits />
             </div>
           </S.SidebarContainer>
         </S.Sidebar>
