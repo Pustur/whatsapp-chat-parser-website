@@ -83,6 +83,15 @@ const App = () => {
     else openButtonRef.current.focus();
   }, [isFirstRender, isMenuOpen]);
 
+  useEffect(() => {
+    const keyDownHandler = e => {
+      if (e.keyCode === 27) closeMenu();
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+    return () => document.removeEventListener('keydown', keyDownHandler);
+  }, []);
+
   return (
     <>
       <S.GlobalStyles />
