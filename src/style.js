@@ -1,10 +1,47 @@
-import styled, { css } from 'styled-components';
+import styled, { css, createGlobalStyle } from 'styled-components';
 
 import { hideText, normalizeButton, normalizeInput } from './utils/styles';
-import { whatsappGreenColor } from './utils/colors';
+import { whatsappGreenColor, whatsappGreenDarkColor } from './utils/colors';
 import { zIndex } from './utils/z-index';
 
 const buttonSize = '44px';
+
+const GlobalStyles = createGlobalStyle`
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+  html {
+    font-family: sans-serif;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    color: #333;
+  }
+
+  a {
+    text-decoration: none;
+    color: ${whatsappGreenColor};
+
+    &:visited {
+      color: ${whatsappGreenDarkColor};
+    }
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+`;
 
 const StyledContainer = styled.div`
   display: flex;
@@ -170,6 +207,7 @@ const StyledHeader = styled.header`
 `;
 
 export {
+  GlobalStyles,
   StyledContainer,
   StyledMenuOpenButton,
   StyledMenuCloseButton,

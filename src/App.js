@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import JSZip from 'jszip';
-import { createGlobalStyle } from 'styled-components';
 import { parseString } from 'whatsapp-chat-parser';
 
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
 import {
+  GlobalStyles,
   StyledContainer,
   StyledMenuOpenButton,
   StyledMenuCloseButton,
@@ -19,46 +19,7 @@ import {
 
 import useIsFirstRender from './hooks/useIsFirstRender';
 
-import { whatsappGreenColor, whatsappGreenDarkColor } from './utils/colors';
-
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
-
-const GlobalStyles = createGlobalStyle`
-  *,
-  *::before,
-  *::after {
-    box-sizing: inherit;
-  }
-
-  html {
-    font-family: sans-serif;
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    color: #333;
-  }
-
-  a {
-    text-decoration: none;
-    color: ${whatsappGreenColor};
-
-    &:visited {
-      color: ${whatsappGreenDarkColor};
-    }
-  }
-
-  button {
-    cursor: pointer;
-  }
-
-  html,
-  body,
-  #root {
-    height: 100%;
-  }
-`;
 
 const App = () => {
   const [messages, setMessages] = useState([]);
