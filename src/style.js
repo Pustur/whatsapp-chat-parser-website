@@ -164,10 +164,15 @@ const SidebarContainer = styled.div`
   border-top: 1px solid #eee;
 `;
 
+const Field = styled.div`
+  * + * {
+    margin-top: 0.375rem;
+  }
+`;
+
 const Label = styled.label`
   display: block;
-  margin-bottom: 0.25rem;
-  opacity: 0.7;
+  opacity: 0.8;
 `;
 
 const Input = styled.input`
@@ -180,6 +185,11 @@ const Input = styled.input`
   padding: 0 0.3rem;
   background-color: #fafafa;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+`;
+
+const InputDescription = styled.div`
+  font-size: 80%;
+  opacity: 0.6;
 `;
 
 const Header = styled.header`
@@ -214,7 +224,9 @@ export {
   Overlay,
   Sidebar,
   SidebarContainer,
+  Field,
   Label,
   Input,
+  InputDescription,
   Header,
 };

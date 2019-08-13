@@ -122,7 +122,7 @@ const App = () => {
             Close menu
           </S.MenuCloseButton>
           <S.SidebarContainer>
-            <div>
+            <S.Field>
               <S.Label htmlFor="limit">Messages limit</S.Label>
               <S.Input
                 id="limit"
@@ -134,7 +134,11 @@ const App = () => {
                   setMessagesLimit(parseInt(e.currentTarget.value, 10))
                 }
               />
-            </div>
+              <S.InputDescription>
+                A high number may freeze the page for a while, change this with
+                caution
+              </S.InputDescription>
+            </S.Field>
 
             <div>
               <Credits />
