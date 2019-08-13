@@ -50,6 +50,12 @@ const MessageViewer = ({ messages, limit }) => {
   );
 };
 
+const areEqual = (prevProps, nextProps) =>
+  prevProps.limit === nextProps.limit &&
+  prevProps.messages.length === nextProps.messages.length &&
+  JSON.stringify(prevProps.messages[0]) ===
+    JSON.stringify(nextProps.messages[0]);
+
 MessageViewer.propTypes = {
   messages: PropTypes.arrayOf(
     PropTypes.shape({
@@ -65,4 +71,4 @@ MessageViewer.defaultProps = {
   limit: Infinity,
 };
 
-export default MessageViewer;
+export default React.memo(MessageViewer, areEqual);
