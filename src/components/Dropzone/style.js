@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { whatsappGreenColor } from '../../utils/colors';
 import { screenReaderOnly } from '../../utils/styles';
 
-const StyledLabel = styled.label`
+const Label = styled.label`
   display: block;
   border-radius: 10px;
   padding: 20px;
@@ -11,11 +11,11 @@ const StyledLabel = styled.label`
     ${props => (props.isHighlighted ? whatsappGreenColor : '#ccc')};
 `;
 
-const StyledP = styled.p`
+const P = styled.p`
   margin: 0;
 `;
 
-const StyledExtension = styled.span`
+const Extension = styled.span`
   font-family: monospace;
   background-color: #eee;
   border: 1px solid #ddd;
@@ -24,12 +24,12 @@ const StyledExtension = styled.span`
   padding: 1px 3px;
 `;
 
-const StyledInput = styled.input`
+const Input = styled.input`
   ${screenReaderOnly}
 
-  &:focus + ${StyledLabel} {
+  &:focus + ${Label} {
     border-color: ${whatsappGreenColor};
   }
 `;
 
-export { StyledLabel, StyledP, StyledExtension, StyledInput };
+export { Label, P, Extension, Input };

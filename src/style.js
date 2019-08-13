@@ -43,13 +43,13 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-const StyledContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100%;
 `;
 
-const StyledMenuOpenButton = styled.button`
+const MenuOpenButton = styled.button`
   ${normalizeButton}
   ${hideText}
 
@@ -80,7 +80,7 @@ const StyledMenuOpenButton = styled.button`
   }
 `;
 
-const StyledMenuCloseButton = styled.button`
+const MenuCloseButton = styled.button`
   ${normalizeButton}
   ${hideText}
 
@@ -120,7 +120,7 @@ const StyledMenuCloseButton = styled.button`
   }
 `;
 
-const StyledOverlay = styled.button`
+const Overlay = styled.button`
   ${normalizeButton}
 
   display: block;
@@ -139,7 +139,7 @@ const StyledOverlay = styled.button`
     `}
 `;
 
-const StyledSidebar = styled.aside`
+const Sidebar = styled.aside`
   position: fixed;
   width: 280px;
   top: 0;
@@ -151,7 +151,7 @@ const StyledSidebar = styled.aside`
   z-index: ${zIndex.sidebar};
 `;
 
-const StyledSidebarContainer = styled.div`
+const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -164,13 +164,13 @@ const StyledSidebarContainer = styled.div`
   border-top: 1px solid #eee;
 `;
 
-const StyledLabel = styled.label`
+const Label = styled.label`
   display: block;
   margin-bottom: 0.25rem;
   opacity: 0.7;
 `;
 
-const StyledInput = styled.input`
+const Input = styled.input`
   ${normalizeInput}
 
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -182,7 +182,7 @@ const StyledInput = styled.input`
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
 `;
 
-const StyledHeader = styled.header`
+const Header = styled.header`
   padding: 10px;
   display: flex;
   align-items: center;
@@ -208,13 +208,13 @@ const StyledHeader = styled.header`
 
 export {
   GlobalStyles,
-  StyledContainer,
-  StyledMenuOpenButton,
-  StyledMenuCloseButton,
-  StyledOverlay,
-  StyledSidebar,
-  StyledSidebarContainer,
-  StyledLabel,
-  StyledInput,
-  StyledHeader,
+  Container,
+  MenuOpenButton,
+  MenuCloseButton,
+  Overlay,
+  Sidebar,
+  SidebarContainer,
+  Label,
+  Input,
+  Header,
 };

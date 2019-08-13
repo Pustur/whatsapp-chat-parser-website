@@ -4,18 +4,7 @@ import { parseString } from 'whatsapp-chat-parser';
 
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
-import {
-  GlobalStyles,
-  StyledContainer,
-  StyledMenuOpenButton,
-  StyledMenuCloseButton,
-  StyledOverlay,
-  StyledSidebar,
-  StyledSidebarContainer,
-  StyledLabel,
-  StyledInput,
-  StyledHeader,
-} from './style';
+import * as S from './style';
 
 import useIsFirstRender from './hooks/useIsFirstRender';
 
@@ -95,41 +84,37 @@ const App = () => {
 
   return (
     <>
-      <GlobalStyles />
-      <StyledContainer>
-        <StyledHeader>
+      <S.GlobalStyles />
+      <S.Container>
+        <S.Header>
           <Dropzone onFileUpload={processFile} id="dropzone" />
           <span>OR</span>
           <a href={exampleChat} download>
             Download example chat
           </a>
-        </StyledHeader>
+        </S.Header>
         <MessageViewer messages={messages} limit={messagesLimit} />
-        <StyledMenuOpenButton
-          type="button"
-          onClick={openMenu}
-          ref={openButtonRef}
-        >
+        <S.MenuOpenButton type="button" onClick={openMenu} ref={openButtonRef}>
           Open menu
-        </StyledMenuOpenButton>
-        <StyledOverlay
+        </S.MenuOpenButton>
+        <S.Overlay
           type="button"
           isActive={isMenuOpen}
           onClick={closeMenu}
           tabIndex="-1"
         />
-        <StyledSidebar isOpen={isMenuOpen}>
-          <StyledMenuCloseButton
+        <S.Sidebar isOpen={isMenuOpen}>
+          <S.MenuCloseButton
             type="button"
             onClick={closeMenu}
             ref={closeButtonRef}
           >
             Close menu
-          </StyledMenuCloseButton>
-          <StyledSidebarContainer>
+          </S.MenuCloseButton>
+          <S.SidebarContainer>
             <div>
-              <StyledLabel htmlFor="limit">Messages limit</StyledLabel>
-              <StyledInput
+              <S.Label htmlFor="limit">Messages limit</S.Label>
+              <S.Input
                 id="limit"
                 type="number"
                 min="0"
@@ -151,9 +136,9 @@ const App = () => {
                 </a>
               </small>
             </div>
-          </StyledSidebarContainer>
-        </StyledSidebar>
-      </StyledContainer>
+          </S.SidebarContainer>
+        </S.Sidebar>
+      </S.Container>
     </>
   );
 };

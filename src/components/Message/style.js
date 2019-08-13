@@ -6,7 +6,7 @@ import {
   activeUserBackgroundColor,
 } from '../../utils/colors';
 
-const StyledItem = styled.li`
+const Item = styled.li`
   margin-top: 1rem;
   margin-left: auto;
   margin-right: auto;
@@ -27,7 +27,7 @@ const StyledItem = styled.li`
     `}
 `;
 
-const StyledBubble = styled.div`
+const Bubble = styled.div`
   display: inline-flex;
   padding: 8px 10px;
   border-radius: 6px;
@@ -54,24 +54,24 @@ const StyledBubble = styled.div`
   }
 `;
 
-const StyledWrapper = styled.div`
+const Wrapper = styled.div`
   flex: 1 1 auto;
 `;
 
-const StyledAuthor = styled.div`
+const Author = styled.div`
   margin-bottom: 0.25rem;
   font-weight: bold;
   font-size: 75%;
   color: ${props => props.color};
 `;
 
-const StyledMessage = styled.div`
+const Message = styled.div`
   ${overflowBreakWord}
 
   white-space: pre-wrap;
 `;
 
-const StyledDate = styled.time`
+const Date = styled.time`
   flex: 0 0 auto;
   align-self: flex-end;
   margin-left: 1rem;
@@ -84,11 +84,4 @@ const StyledDate = styled.time`
   }
 `;
 
-export {
-  StyledItem,
-  StyledBubble,
-  StyledWrapper,
-  StyledAuthor,
-  StyledMessage,
-  StyledDate,
-};
+export { Item, Bubble, Wrapper, Author, Message, Date };

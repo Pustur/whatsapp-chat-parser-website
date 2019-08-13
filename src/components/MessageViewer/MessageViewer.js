@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Message from '../Message/Message';
-import { StyledContainer, StyledList, StyledP, StyledInfo } from './style';
+import * as S from './style';
 
 import { authorColors } from '../../utils/colors';
 
@@ -19,17 +19,17 @@ const MessageViewer = ({ messages, limit }) => {
   const isLimited = renderedMessages.length !== messages.length;
 
   return (
-    <StyledContainer>
+    <S.Container>
       {messages.length > 0 && (
-        <StyledP>
-          <StyledInfo>
+        <S.P>
+          <S.Info>
             Showing {isLimited ? 'first' : 'all'} {renderedMessages.length}{' '}
             messages {isLimited && <span>(out of {messages.length})</span>}
-          </StyledInfo>
-        </StyledP>
+          </S.Info>
+        </S.P>
       )}
 
-      <StyledList>
+      <S.List>
         {renderedMessages.map((message, i, arr) => {
           const prevMessage = arr[i - 1];
 
@@ -45,8 +45,8 @@ const MessageViewer = ({ messages, limit }) => {
             />
           );
         })}
-      </StyledList>
-    </StyledContainer>
+      </S.List>
+    </S.Container>
   );
 };
 
