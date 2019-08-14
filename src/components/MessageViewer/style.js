@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 import { whatsappGreenColor, viewerBackgroundColor } from '../../utils/colors';
+
 import bgImage from '../../img/bg.png';
 
-const StyledContainer = styled.div`
+const Container = styled.div`
   flex-grow: 1;
   padding: 0 1rem;
   background-color: ${viewerBackgroundColor};
@@ -14,16 +15,16 @@ const StyledContainer = styled.div`
   }
 `;
 
-const StyledList = styled.ul`
+const List = styled.ul`
   padding: 0;
   list-style: none;
 `;
 
-const StyledP = styled.p`
+const P = styled.p`
   text-align: center;
 `;
 
-const StyledInfo = styled.span`
+const Info = styled.span`
   display: inline-block;
   padding: 8px 10px;
   border-radius: 6px;
@@ -33,4 +34,4 @@ const StyledInfo = styled.span`
   color: white;
 `;
 
-export { StyledContainer, StyledList, StyledP, StyledInfo };
+export { Container, List, P, Info };

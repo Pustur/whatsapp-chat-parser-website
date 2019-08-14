@@ -1,18 +1,55 @@
-import styled, { css } from 'styled-components';
+import styled, { css, createGlobalStyle } from 'styled-components';
 
 import { hideText, normalizeButton, normalizeInput } from './utils/styles';
-import { whatsappGreenColor } from './utils/colors';
+import { whatsappGreenColor, whatsappGreenDarkColor } from './utils/colors';
 import { zIndex } from './utils/z-index';
 
 const buttonSize = '44px';
 
-const StyledContainer = styled.div`
+const GlobalStyles = createGlobalStyle`
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+  html {
+    font-family: sans-serif;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    color: #333;
+  }
+
+  a {
+    text-decoration: none;
+    color: ${whatsappGreenColor};
+
+    &:visited {
+      color: ${whatsappGreenDarkColor};
+    }
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+`;
+
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100%;
 `;
 
-const StyledMenuOpenButton = styled.button`
+const MenuOpenButton = styled.button`
   ${normalizeButton}
   ${hideText}
 
@@ -43,7 +80,7 @@ const StyledMenuOpenButton = styled.button`
   }
 `;
 
-const StyledMenuCloseButton = styled.button`
+const MenuCloseButton = styled.button`
   ${normalizeButton}
   ${hideText}
 
@@ -83,7 +120,7 @@ const StyledMenuCloseButton = styled.button`
   }
 `;
 
-const StyledOverlay = styled.button`
+const Overlay = styled.button`
   ${normalizeButton}
 
   display: block;
@@ -102,7 +139,7 @@ const StyledOverlay = styled.button`
     `}
 `;
 
-const StyledSidebar = styled.aside`
+const Sidebar = styled.aside`
   position: fixed;
   width: 280px;
   top: 0;
@@ -114,7 +151,7 @@ const StyledSidebar = styled.aside`
   z-index: ${zIndex.sidebar};
 `;
 
-const StyledSidebarContainer = styled.div`
+const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -127,13 +164,18 @@ const StyledSidebarContainer = styled.div`
   border-top: 1px solid #eee;
 `;
 
-const StyledLabel = styled.label`
-  display: block;
-  margin-bottom: 0.25rem;
-  opacity: 0.7;
+const Field = styled.div`
+  * + * {
+    margin-top: 0.375rem;
+  }
 `;
 
-const StyledInput = styled.input`
+const Label = styled.label`
+  display: block;
+  opacity: 0.8;
+`;
+
+const Input = styled.input`
   ${normalizeInput}
 
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -145,7 +187,12 @@ const StyledInput = styled.input`
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
 `;
 
-const StyledHeader = styled.header`
+const InputDescription = styled.div`
+  font-size: 80%;
+  opacity: 0.6;
+`;
+
+const Header = styled.header`
   padding: 10px;
   display: flex;
   align-items: center;
@@ -170,13 +217,16 @@ const StyledHeader = styled.header`
 `;
 
 export {
-  StyledContainer,
-  StyledMenuOpenButton,
-  StyledMenuCloseButton,
-  StyledOverlay,
-  StyledSidebar,
-  StyledSidebarContainer,
-  StyledLabel,
-  StyledInput,
-  StyledHeader,
+  GlobalStyles,
+  Container,
+  MenuOpenButton,
+  MenuCloseButton,
+  Overlay,
+  Sidebar,
+  SidebarContainer,
+  Field,
+  Label,
+  Input,
+  InputDescription,
+  Header,
 };

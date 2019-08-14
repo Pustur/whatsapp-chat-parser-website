@@ -1,14 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  StyledItem,
-  StyledBubble,
-  StyledWrapper,
-  StyledAuthor,
-  StyledMessage,
-  StyledDate,
-} from './style';
+import * as S from './style';
 
 const intlOptions = {
   year: 'numeric',
@@ -26,27 +19,27 @@ const Message = ({ message, color, isActiveUser, sameAuthorAsPrevious }) => {
   const isSystem = message.author === 'System';
 
   return (
-    <StyledItem
+    <S.Item
       isSystem={isSystem}
       isActiveUser={isActiveUser}
       sameAuthorAsPrevious={sameAuthorAsPrevious}
     >
-      <StyledBubble isSystem={isSystem} isActiveUser={isActiveUser}>
-        <StyledWrapper>
+      <S.Bubble isSystem={isSystem} isActiveUser={isActiveUser}>
+        <S.Wrapper>
           {!isSystem && !sameAuthorAsPrevious && (
-            <StyledAuthor color={color}>{message.author}</StyledAuthor>
+            <S.Author color={color}>{message.author}</S.Author>
           )}
-          <StyledMessage>{message.message}</StyledMessage>
-        </StyledWrapper>
+          <S.Message>{message.message}</S.Message>
+        </S.Wrapper>
         {!isSystem && (
-          <StyledDate dateTime={dateTime}>
+          <S.Date dateTime={dateTime}>
             {new Intl.DateTimeFormat('default', intlOptions).format(
               message.date,
             )}
-          </StyledDate>
+          </S.Date>
         )}
-      </StyledBubble>
-    </StyledItem>
+      </S.Bubble>
+    </S.Item>
   );
 };
 
