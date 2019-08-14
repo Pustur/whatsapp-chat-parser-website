@@ -8,6 +8,7 @@ import Credits from './components/Credits/Credits';
 import * as S from './style';
 
 import useIsFirstRender from './hooks/useIsFirstRender';
+import useDebounce from './hooks/useDebounce';
 
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
@@ -103,7 +104,10 @@ const App = () => {
             Download example chat
           </a>
         </S.Header>
-        <MessageViewer messages={messages} limit={messagesLimit} />
+        <MessageViewer
+          messages={messages}
+          limit={useDebounce(messagesLimit, 500)}
+        />
         <S.MenuOpenButton type="button" onClick={openMenu} ref={openButtonRef}>
           Open menu
         </S.MenuOpenButton>
