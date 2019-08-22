@@ -7,7 +7,6 @@ import MessageViewer from './components/MessageViewer/MessageViewer';
 import Credits from './components/Credits/Credits';
 import * as S from './style';
 
-import useIsFirstRender from './hooks/useIsFirstRender';
 import useDebounce from './hooks/useDebounce';
 
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
@@ -21,10 +20,10 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [messagesLimit, setMessagesLimit] = useState(100);
-  const isFirstRender = useIsFirstRender();
 
   const closeButtonRef = useRef(null);
   const openButtonRef = useRef(null);
+  const isFirstRender = useRef(true);
 
   const closeMenu = () => {
     setIsMenuOpen(false);
@@ -78,11 +77,15 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (isFirstRender) return;
+    if (isFirstRender.current) return;
 
     if (isMenuOpen) closeButtonRef.current.focus();
     else openButtonRef.current.focus();
-  }, [isFirstRender, isMenuOpen]);
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    isFirstRender.current = false;
+  }, []);
 
   useEffect(() => {
     const keyDownHandler = e => {
