@@ -18,8 +18,8 @@ const showError = (message, err) => {
 
 const App = () => {
   const [messages, setMessages] = useState([]);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [messagesLimit, setMessagesLimit] = useState(100);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeButtonRef = useRef(null);
   const openButtonRef = useRef(null);
