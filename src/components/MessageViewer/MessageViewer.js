@@ -14,8 +14,7 @@ const MessageViewer = ({ messages, limit }) => {
   const colorMap = participants.reduce((obj, participant, i) => {
     return { ...obj, [participant]: authorColors[i % authorColors.length] };
   }, {});
-  const renderedMessages =
-    messages.length > limit ? messages.slice(0, limit) : messages;
+  const renderedMessages = messages.slice(0, limit);
   const isLimited = renderedMessages.length !== messages.length;
 
   return (
@@ -50,12 +49,6 @@ const MessageViewer = ({ messages, limit }) => {
   );
 };
 
-const areEqual = (prevProps, nextProps) =>
-  prevProps.limit === nextProps.limit &&
-  prevProps.messages.length === nextProps.messages.length &&
-  JSON.stringify(prevProps.messages[0]) ===
-    JSON.stringify(nextProps.messages[0]);
-
 MessageViewer.propTypes = {
   messages: PropTypes.arrayOf(
     PropTypes.shape({
@@ -71,4 +64,4 @@ MessageViewer.defaultProps = {
   limit: Infinity,
 };
 
-export default React.memo(MessageViewer, areEqual);
+export default React.memo(MessageViewer);

@@ -39,10 +39,18 @@ const overflowBreakWord = css`
   word-break: break-word;
 `;
 
+const messageBaseStyle = css`
+  display: inline-flex;
+  padding: 8px 10px;
+  border-radius: 6px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+`;
+
 export {
   screenReaderOnly,
   hideText,
   normalizeButton,
   normalizeInput,
   overflowBreakWord,
+  messageBaseStyle,
 };

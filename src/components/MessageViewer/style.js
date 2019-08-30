@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { whatsappGreenColor, viewerBackgroundColor } from '../../utils/colors';
+import { messageBaseStyle } from '../../utils/styles';
 
 import bgImage from '../../img/bg.png';
 
@@ -25,11 +26,9 @@ const P = styled.p`
 `;
 
 const Info = styled.span`
-  display: inline-block;
-  padding: 8px 10px;
-  border-radius: 6px;
+  ${messageBaseStyle}
+
   text-align: center;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   background-color: ${whatsappGreenColor};
   color: white;
 `;
