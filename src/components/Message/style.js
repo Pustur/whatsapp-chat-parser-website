@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { overflowBreakWord } from '../../utils/styles';
+import { overflowBreakWord, messageBaseStyle } from '../../utils/styles';
 import {
   systemBackgroundColor,
   activeUserBackgroundColor,
@@ -28,10 +28,8 @@ const Item = styled.li`
 `;
 
 const Bubble = styled.div`
-  display: inline-flex;
-  padding: 8px 10px;
-  border-radius: 6px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  ${messageBaseStyle}
+
   background-color: white;
   ${props =>
     props.isSystem &&
