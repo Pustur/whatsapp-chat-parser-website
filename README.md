@@ -21,6 +21,10 @@ The website is available at [whatsapp-chat-parser.netlify.com](https://whatsapp-
 - Code formatting: [Prettier](https://prettier.io/)
 - Linting: [ESLint](https://eslint.org/) (with [Airbnb rules](https://www.npmjs.com/package/eslint-config-airbnb))
 
+## Changelog
+
+[CHANGELOG](CHANGELOG.md)
+
 ## License
 
 [MIT](LICENSE)
