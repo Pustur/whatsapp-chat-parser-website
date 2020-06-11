@@ -46,17 +46,16 @@ const App = () => {
         jszip
           .loadAsync(arrayBuffer)
           .then(({ files }) => {
-            const txtFiles = Object.entries(files).filter(([fileName]) =>
-              fileName.endsWith('.txt'),
+            const txtFile = Object.keys(files).find(
+              fileName =>
+                !fileName.includes('__MACOSX') && fileName.endsWith('.txt'),
             );
 
-            if (!txtFiles.length) {
+            if (!txtFile) {
               throw new Error('No txt files found in archive');
             }
 
-            return txtFiles
-              .sort(([a], [b]) => a.length - b.length)[0][1]
-              .async('string');
+            return files[txtFile].async('string');
           })
           .then(parseString)
           .then(setMessages)
