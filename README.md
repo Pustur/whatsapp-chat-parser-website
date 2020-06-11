@@ -6,7 +6,7 @@ This website allows you to upload a WhatsApp chat log and view its contents.
 You can upload a `txt` directly or a `zip` file containing the exported chat.  
 The app runs locally and no logs are sent or stored anywhere.
 
-The website is available at [whatsapp-chat-parser.netlify.com](https://whatsapp-chat-parser.netlify.com/)
+The website is available at [whatsapp-chat-parser.netlify.app](https://whatsapp-chat-parser.netlify.app/)
 
 ## How to export WhatsApp chats
 
