@@ -10,13 +10,12 @@ The website is available at [whatsapp-chat-parser.netlify.app](https://whatsapp-
 
 ## How to export WhatsApp chats
 
-- [Android](https://faq.whatsapp.com/en/android/23756533/)
-- [iPhone](https://faq.whatsapp.com/en/iphone/20888066/#email)
-- [Windows Phone](https://faq.whatsapp.com/en/wp/22548236)
+- [Android](https://faq.whatsapp.com/android/chats/how-to-save-your-chat-history)
+- [iPhone](https://faq.whatsapp.com/iphone/chats/how-to-back-up-to-icloud/)
 
 ## Technologies used
 
-- Library: [React](https://reactjs.org/)
+- Library: [React](https://reactjs.org/) ([Create React App](https://github.com/facebook/create-react-app))
 - CSS: [Styled Components](https://www.styled-components.com/)
 - Code formatting: [Prettier](https://prettier.io/)
 - Linting: [ESLint](https://eslint.org/) (with [Airbnb rules](https://www.npmjs.com/package/eslint-config-airbnb))
