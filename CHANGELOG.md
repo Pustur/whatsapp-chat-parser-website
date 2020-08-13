@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.6] - 2020-08-13
+
+### Changed
+
+- Updated parser and dependencies
+- Updated [README](README.md)
+
 ## [1.3.5] - 2020-06-11
 
 ### Changed
@@ -79,6 +86,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 
+[1.3.6]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.3.5...1.3.6
 [1.3.5]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.3.4...1.3.5
 [1.3.4]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.3.3...1.3.4
 [1.3.3]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.3.2...1.3.3
