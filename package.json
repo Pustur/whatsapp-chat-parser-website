@@ -10,9 +10,9 @@
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-scripts": "3.4.3",
-    "styled-components": "5.1.1",
-    "whatsapp-chat-parser": "3.0.0"
+    "react-scripts": "4.0.1",
+    "styled-components": "5.2.1",
+    "whatsapp-chat-parser": "3.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -37,13 +37,13 @@
     ]
   },
   "devDependencies": {
-    "eslint": "6.8.0",
-    "eslint-config-airbnb": "18.2.0",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-import": "2.22.0",
-    "eslint-plugin-jsx-a11y": "6.3.1",
-    "eslint-plugin-prettier": "3.1.4",
-    "eslint-plugin-react": "7.20.6",
-    "prettier": "2.0.5"
+    "eslint": "7.15.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-prettier": "7.0.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-prettier": "3.2.0",
+    "eslint-plugin-react": "7.21.5",
+    "prettier": "2.2.1"
   }
 }
