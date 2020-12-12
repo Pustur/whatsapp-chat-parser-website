@@ -1,7 +1,7 @@
 import styled, { css, createGlobalStyle } from 'styled-components';
 
 import { hideText, normalizeButton, normalizeInput } from './utils/styles';
-import { whatsappGreenColor, whatsappGreenDarkColor } from './utils/colors';
+import { whatsappThemeColor, whatsappVisitedThemeColor } from './utils/colors';
 import { zIndex } from './utils/z-index';
 
 const buttonSize = '44px';
@@ -25,10 +25,10 @@ const GlobalStyles = createGlobalStyle`
 
   a {
     text-decoration: none;
-    color: ${whatsappGreenColor};
+    color: ${whatsappThemeColor};
 
     &:visited {
-      color: ${whatsappGreenDarkColor};
+      color: ${whatsappVisitedThemeColor};
     }
   }
 
@@ -59,7 +59,7 @@ const MenuOpenButton = styled.button`
   left: 1rem;
   bottom: 1rem;
   border-radius: 50%;
-  background-color: ${whatsappGreenColor};
+  background-color: ${whatsappThemeColor};
 
   &::after {
     content: '';

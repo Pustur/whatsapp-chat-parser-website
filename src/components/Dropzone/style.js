@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components';
 
-import { whatsappGreenColor } from '../../utils/colors';
+import { whatsappThemeColor } from '../../utils/colors';
 import { screenReaderOnly } from '../../utils/styles';
 
 const labelHighlight = css`
   background-color: #eee;
-  border-color: ${whatsappGreenColor};
+  border-color: ${whatsappThemeColor};
 `;
 
 const Label = styled.label`

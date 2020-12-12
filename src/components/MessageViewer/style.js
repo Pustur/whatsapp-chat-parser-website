@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { whatsappGreenColor, viewerBackgroundColor } from '../../utils/colors';
+import { whatsappThemeColor, viewerBackgroundColor } from '../../utils/colors';
 import { messageBaseStyle } from '../../utils/styles';
 
 import bgImage from '../../img/bg.png';
@@ -29,7 +29,7 @@ const Info = styled.span`
   ${messageBaseStyle}
 
   text-align: center;
-  background-color: ${whatsappGreenColor};
+  background-color: ${whatsappThemeColor};
   color: white;
 `;
 
