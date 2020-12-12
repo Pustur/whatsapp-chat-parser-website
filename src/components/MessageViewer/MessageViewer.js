@@ -11,9 +11,13 @@ const MessageViewer = ({ messages, limit }) => {
     new Set(messages.map(({ author }) => author)),
   ).filter(author => author !== 'System');
   const activeUser = participants[1];
-  const colorMap = participants.reduce((obj, participant, i) => {
-    return { ...obj, [participant]: authorColors[i % authorColors.length] };
-  }, {});
+  const colorMap = participants.reduce(
+    (obj, participant, i) => ({
+      ...obj,
+      [participant]: authorColors[i % authorColors.length],
+    }),
+    {},
+  );
   const renderedMessages = messages.slice(0, limit);
   const isLimited = renderedMessages.length !== messages.length;
 
