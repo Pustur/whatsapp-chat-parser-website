@@ -41,6 +41,13 @@ const GlobalStyles = createGlobalStyle`
   #root {
     height: 100%;
   }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #262d31;
+      color: #ccc;
+    }
+  }
 `;
 
 const Container = styled.div`
@@ -118,6 +125,13 @@ const MenuCloseButton = styled.button`
   &::after {
     transform: translate3d(-50%, -50%, 0) rotate(135deg);
   }
+
+  @media (prefers-color-scheme: dark) {
+    &::before,
+    &::after {
+      background-color: white;
+    }
+  }
 `;
 
 const Overlay = styled.button`
@@ -149,6 +163,10 @@ const Sidebar = styled.aside`
   transform: translate3d(${props => (props.isOpen ? 0 : '-100%')}, 0, 0);
   transition: transform 0.3s ease;
   z-index: ${zIndex.sidebar};
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #262d31;
+  }
 `;
 
 const SidebarContainer = styled.div`
@@ -162,6 +180,10 @@ const SidebarContainer = styled.div`
   right: 0;
   padding: 1rem;
   border-top: 1px solid #eee;
+
+  @media (prefers-color-scheme: dark) {
+    border-color: #444;
+  }
 `;
 
 const Field = styled.div`
@@ -185,6 +207,10 @@ const Input = styled.input`
   padding: 0 0.3rem;
   background-color: #fafafa;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #222;
+  }
 `;
 
 const InputDescription = styled.div`

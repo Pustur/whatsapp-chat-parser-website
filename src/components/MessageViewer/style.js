@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 
-import { whatsappThemeColor, viewerBackgroundColor } from '../../utils/colors';
+import {
+  whatsappThemeColor,
+  viewerBackgroundColor,
+  viewerDarkBackgroundColor,
+} from '../../utils/colors';
 import { messageBaseStyle } from '../../utils/styles';
 
 import bgImage from '../../img/bg.png';
+import bgDarkImage from '../../img/bg-dark.png';
 
 const Container = styled.div`
   flex-grow: 1;
@@ -13,6 +18,11 @@ const Container = styled.div`
 
   @media (min-width: 700px) {
     padding: 0 10%;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background-color: ${viewerDarkBackgroundColor};
+    background-image: url(${bgDarkImage});
   }
 `;
 

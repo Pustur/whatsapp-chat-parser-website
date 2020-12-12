@@ -6,6 +6,10 @@ import { screenReaderOnly } from '../../utils/styles';
 const labelHighlight = css`
   background-color: #eee;
   border-color: ${whatsappThemeColor};
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #333a3d;
+  }
 `;
 
 const Label = styled.label`
@@ -14,6 +18,10 @@ const Label = styled.label`
   padding: 20px;
   border: 2px dashed #ccc;
   ${props => props.isHighlighted && labelHighlight}
+
+  @media (prefers-color-scheme: dark) {
+    border-color: #666;
+  }
 `;
 
 const P = styled.p`
@@ -27,6 +35,11 @@ const Extension = styled.span`
   border-radius: 2px;
   display: inline-block;
   padding: 1px 3px;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #222;
+    border-color: #222;
+  }
 `;
 
 const Input = styled.input`

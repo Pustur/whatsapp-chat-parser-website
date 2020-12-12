@@ -1,7 +1,10 @@
 const viewerBackgroundColor = '#e5ddd5';
+const viewerDarkBackgroundColor = '#0d1418';
 
 const activeUserBackgroundColor = '#ddf7c8';
+const activeUserDarkBackgroundColor = '#0e6162';
 const systemBackgroundColor = '#fff5c4';
+const systemDarkBackgroundColor = '#353526';
 
 const whatsappThemeColor = '#07bc4c';
 const whatsappVisitedThemeColor = '#0c9842';
@@ -22,8 +25,11 @@ const authorColors = [
 
 export {
   viewerBackgroundColor,
+  viewerDarkBackgroundColor,
   systemBackgroundColor,
+  systemDarkBackgroundColor,
   activeUserBackgroundColor,
+  activeUserDarkBackgroundColor,
   whatsappThemeColor,
   whatsappVisitedThemeColor,
   authorColors,
