@@ -17,6 +17,7 @@ const Label = styled.label`
   border-radius: 10px;
   padding: 20px;
   border: 2px dashed #ccc;
+  cursor: pointer;
   ${props => props.isHighlighted && labelHighlight}
 
   @media (prefers-color-scheme: dark) {
