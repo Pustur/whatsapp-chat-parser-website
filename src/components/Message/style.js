@@ -3,7 +3,9 @@ import styled, { css } from 'styled-components';
 import { overflowBreakWord, messageBaseStyle } from '../../utils/styles';
 import {
   systemBackgroundColor,
+  systemDarkBackgroundColor,
   activeUserBackgroundColor,
+  activeUserDarkBackgroundColor,
 } from '../../utils/colors';
 
 const Item = styled.li`
@@ -49,6 +51,22 @@ const Bubble = styled.div`
 
   @media (min-width: 700px) {
     max-width: 65%;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #262d31;
+    color: #f1f1f2;
+    ${props =>
+      props.isSystem &&
+      css`
+        background-color: ${systemDarkBackgroundColor};
+        color: #fad964;
+      `}
+    ${props =>
+      props.isActiveUser &&
+      css`
+        background-color: ${activeUserDarkBackgroundColor};
+      `}
   }
 `;
 

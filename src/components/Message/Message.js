@@ -13,10 +13,7 @@ const intlOptions = {
 
 const Message = ({ message, color, isActiveUser, sameAuthorAsPrevious }) => {
   const isSystem = message.author === 'System';
-  const dateTime = message.date
-    .toISOString()
-    .slice(0, 19)
-    .replace('T', ' ');
+  const dateTime = message.date.toISOString().slice(0, 19).replace('T', ' ');
 
   return (
     <S.Item
