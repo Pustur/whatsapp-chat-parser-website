@@ -45,17 +45,22 @@ const App = () => {
 
         jszip
           .loadAsync(arrayBuffer)
-          .then(({ files }) => {
-            const txtFile = Object.keys(files).find(
-              fileName =>
-                !fileName.includes('__MACOSX') && fileName.endsWith('.txt'),
-            );
+          .then(zipData => {
+            const chatFile = zipData.file('_chat.txt');
 
-            if (!txtFile) {
+            if (chatFile) return chatFile.async('string');
+
+            const chatFiles = zipData.file(/.*(?:chat|whatsapp).*\.txt$/i);
+
+            if (!chatFiles.length) {
               throw new Error('No txt files found in archive');
             }
 
-            return files[txtFile].async('string');
+            const chatFilesSorted = chatFiles.sort(
+              (a, b) => a.name.length - b.name.length,
+            );
+
+            return chatFilesSorted[0].async('string');
           })
           .then(parseString)
           .then(setMessages)
