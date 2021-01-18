@@ -12,7 +12,13 @@ const intlOptions = {
   minute: 'numeric',
 };
 
-const Message = ({ message, color, isActiveUser, sameAuthorAsPrevious }) => {
+const Message = ({
+  message,
+  color,
+  isActiveUser,
+  sameAuthorAsPrevious,
+  zipFile,
+}) => {
   const isSystem = message.author === 'System';
   const dateTime = message.date.toISOString().slice(0, 19).replace('T', ' ');
 
@@ -28,7 +34,10 @@ const Message = ({ message, color, isActiveUser, sameAuthorAsPrevious }) => {
             <S.Author color={color}>{message.author}</S.Author>
           )}
           {message.attachment ? (
-            <Attachment fileName={message.attachment.fileName} />
+            <Attachment
+              fileName={message.attachment.fileName}
+              zipFile={zipFile}
+            />
           ) : (
             <S.Message>{message.message}</S.Message>
           )}
@@ -57,12 +66,14 @@ Message.propTypes = {
   color: PropTypes.string,
   isActiveUser: PropTypes.bool,
   sameAuthorAsPrevious: PropTypes.bool,
+  zipFile: PropTypes.instanceOf(Promise),
 };
 
 Message.defaultProps = {
   color: 'black',
   isActiveUser: false,
   sameAuthorAsPrevious: false,
+  zipFile: null,
 };
 
 export default Message;

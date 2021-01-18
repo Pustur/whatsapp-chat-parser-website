@@ -19,7 +19,7 @@ const getMimeType = fileName => {
   return null;
 };
 
-const Attachment = ({ fileName }) => {
+const Attachment = ({ fileName, zipFile }) => {
   const [attachment, setAttachment] = useState(null);
 
   const renderAttachment = () => {
@@ -61,7 +61,7 @@ const Attachment = ({ fileName }) => {
   };
 
   useEffect(() => {
-    window.zipFile.then(zipData => {
+    zipFile.then(zipData => {
       const file = zipData.files[fileName];
 
       if (!file) return;
@@ -80,6 +80,11 @@ const Attachment = ({ fileName }) => {
 
 Attachment.propTypes = {
   fileName: PropTypes.string.isRequired,
+  zipFile: PropTypes.instanceOf(Promise),
+};
+
+Attachment.defaultProps = {
+  zipFile: null,
 };
 
 export default Attachment;

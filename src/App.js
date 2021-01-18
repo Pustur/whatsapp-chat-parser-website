@@ -38,6 +38,7 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [messagesLimit, setMessagesLimit] = useState(100);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [zipFile, setZipFile] = useState(null);
 
   const closeButtonRef = useRef(null);
   const openButtonRef = useRef(null);
@@ -54,10 +55,11 @@ const App = () => {
   const zipLoadEndHandler = e => {
     const arrayBuffer = e.target.result;
     const jszip = new JSZip();
-    const zipFile = jszip.loadAsync(arrayBuffer);
+    const zip = jszip.loadAsync(arrayBuffer);
 
-    window.zipFile = zipFile;
-    zipFile
+    setZipFile(zip);
+
+    zip
       .then(readChatFile)
       .then(text => parseString(text, { parseAttachments: true }))
       .then(setMessages)
@@ -122,6 +124,7 @@ const App = () => {
         <MessageViewer
           messages={messages}
           limit={useDebounce(messagesLimit, 500)}
+          zipFile={zipFile}
         />
         <S.MenuOpenButton type="button" onClick={openMenu} ref={openButtonRef}>
           Open menu
