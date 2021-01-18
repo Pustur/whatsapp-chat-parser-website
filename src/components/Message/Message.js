@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Attachment from '../Attachment/Attachment';
 import * as S from './style';
 
 const intlOptions = {
@@ -26,7 +27,11 @@ const Message = ({ message, color, isActiveUser, sameAuthorAsPrevious }) => {
           {!isSystem && !sameAuthorAsPrevious && (
             <S.Author color={color}>{message.author}</S.Author>
           )}
-          <S.Message>{message.message}</S.Message>
+          {message.attachment ? (
+            <Attachment fileName={message.attachment.fileName} />
+          ) : (
+            <S.Message>{message.message}</S.Message>
+          )}
         </S.Wrapper>
         {!isSystem && (
           <S.Date dateTime={dateTime}>
@@ -42,9 +47,12 @@ const Message = ({ message, color, isActiveUser, sameAuthorAsPrevious }) => {
 
 Message.propTypes = {
   message: PropTypes.shape({
-    date: PropTypes.instanceOf(Date),
-    author: PropTypes.string,
-    message: PropTypes.string,
+    date: PropTypes.instanceOf(Date).isRequired,
+    author: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+    attachment: PropTypes.shape({
+      fileName: PropTypes.string.isRequired,
+    }),
   }).isRequired,
   color: PropTypes.string,
   isActiveUser: PropTypes.bool,

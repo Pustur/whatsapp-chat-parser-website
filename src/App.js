@@ -54,11 +54,12 @@ const App = () => {
   const zipLoadEndHandler = e => {
     const arrayBuffer = e.target.result;
     const jszip = new JSZip();
+    const zipFile = jszip.loadAsync(arrayBuffer);
 
-    jszip
-      .loadAsync(arrayBuffer)
+    window.zipFile = zipFile;
+    zipFile
       .then(readChatFile)
-      .then(parseString)
+      .then(text => parseString(text, { parseAttachments: true }))
       .then(setMessages)
       .catch(showError);
   };
