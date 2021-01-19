@@ -1,7 +1,7 @@
 import styled, { css, createGlobalStyle } from 'styled-components';
 
 import { hideText, normalizeButton, normalizeInput } from './utils/styles';
-import { whatsappThemeColor, whatsappVisitedThemeColor } from './utils/colors';
+import { whatsappThemeColor } from './utils/colors';
 import { zIndex } from './utils/z-index';
 
 const buttonSize = '44px';
@@ -26,10 +26,6 @@ const GlobalStyles = createGlobalStyle`
   a {
     text-decoration: none;
     color: ${whatsappThemeColor};
-
-    &:visited {
-      color: ${whatsappVisitedThemeColor};
-    }
   }
 
   img,
