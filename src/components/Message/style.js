@@ -29,7 +29,7 @@ const Item = styled.li`
     `}
 
   a {
-    color: inherit;
+    color: #68bbe4;
     text-decoration: underline;
   }
 `;
