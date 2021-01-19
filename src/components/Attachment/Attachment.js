@@ -5,6 +5,7 @@ import { getMimeType } from '../../utils/utils';
 
 const Attachment = ({ fileName, zipFile }) => {
   const [attachment, setAttachment] = useState(null);
+  const [error, setError] = useState(null);
 
   const renderAttachment = () => {
     const mimeType = getMimeType(fileName) || '';
@@ -36,7 +37,12 @@ const Attachment = ({ fileName, zipFile }) => {
     zipFile.then(zipData => {
       const file = zipData.files[fileName];
 
-      if (!file) return;
+      if (!file) {
+        if (isStillMounted) {
+          setError(new Error(`Can't find "${fileName}" in archive`));
+        }
+        return;
+      }
       if (getMimeType(fileName)) {
         file.async('base64').then(data => {
           if (isStillMounted) setAttachment(data);
@@ -54,6 +60,7 @@ const Attachment = ({ fileName, zipFile }) => {
     };
   }, [fileName]);
 
+  if (error) return error.toString();
   if (attachment) return renderAttachment();
   return `Loading ${fileName}...`;
 };
