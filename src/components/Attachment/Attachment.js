@@ -31,17 +31,27 @@ const Attachment = ({ fileName, zipFile }) => {
   };
 
   useEffect(() => {
+    let isStillMounted = true;
+
     zipFile.then(zipData => {
       const file = zipData.files[fileName];
 
       if (!file) return;
       if (getMimeType(fileName)) {
-        file.async('base64').then(setAttachment);
+        file.async('base64').then(data => {
+          if (isStillMounted) setAttachment(data);
+        });
         return;
       }
 
-      file.async('blob').then(blob => setAttachment(URL.createObjectURL(blob)));
+      file.async('blob').then(blob => {
+        if (isStillMounted) setAttachment(URL.createObjectURL(blob));
+      });
     });
+
+    return () => {
+      isStillMounted = false;
+    };
   }, [fileName]);
 
   if (attachment) return renderAttachment();
