@@ -32,6 +32,12 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+  img,
+  video,
+  audio {
+    max-width: 100%;
+  }
+
   button {
     cursor: pointer;
   }

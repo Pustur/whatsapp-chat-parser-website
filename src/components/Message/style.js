@@ -27,6 +27,11 @@ const Item = styled.li`
     css`
       margin-top: 0.25rem;
     `}
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
 `;
 
 const Bubble = styled.div`
