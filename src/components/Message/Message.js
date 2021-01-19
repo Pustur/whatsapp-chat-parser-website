@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Linkify from 'react-linkify';
 
 import Attachment from '../Attachment/Attachment';
 import * as S from './style';
@@ -39,7 +40,20 @@ const Message = ({
               zipFile={zipFile}
             />
           ) : (
-            <S.Message>{message.message}</S.Message>
+            <Linkify
+              componentDecorator={(decoratedHref, decoratedText, key) => (
+                <a
+                  key={key}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={decoratedHref}
+                >
+                  {decoratedText}
+                </a>
+              )}
+            >
+              <S.Message>{message.message}</S.Message>
+            </Linkify>
           )}
         </S.Wrapper>
         {!isSystem && (
