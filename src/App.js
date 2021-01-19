@@ -16,10 +16,29 @@ const showError = (message, err) => {
   alert(message); // eslint-disable-line no-alert
 };
 
+const readChatFile = zipData => {
+  const chatFile = zipData.file('_chat.txt');
+
+  if (chatFile) return chatFile.async('string');
+
+  const chatFiles = zipData.file(/.*(?:chat|whatsapp).*\.txt$/i);
+
+  if (!chatFiles.length) {
+    throw new Error('No txt files found in archive');
+  }
+
+  const chatFilesSorted = chatFiles.sort(
+    (a, b) => a.name.length - b.name.length,
+  );
+
+  return chatFilesSorted[0].async('string');
+};
+
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [messagesLimit, setMessagesLimit] = useState(100);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [zipFile, setZipFile] = useState(null);
 
   const closeButtonRef = useRef(null);
   const openButtonRef = useRef(null);
@@ -33,42 +52,38 @@ const App = () => {
     setIsMenuOpen(true);
   };
 
+  const zipLoadEndHandler = e => {
+    const arrayBuffer = e.target.result;
+    const jszip = new JSZip();
+    const zip = jszip.loadAsync(arrayBuffer);
+
+    setZipFile(zip);
+
+    zip
+      .then(readChatFile)
+      .then(text => parseString(text, { parseAttachments: true }))
+      .then(setMessages)
+      .catch(showError);
+  };
+
+  const txtLoadEndHandler = e => {
+    parseString(e.target.result)
+      .then(setMessages)
+      .catch(err =>
+        showError('An error has occurred while parsing the file', err),
+      );
+  };
+
   const processFile = file => {
     if (!file) return;
 
     const reader = new FileReader();
 
     if (file.type === 'application/zip') {
-      reader.onloadend = e => {
-        const arrayBuffer = e.target.result;
-        const jszip = new JSZip();
-
-        jszip
-          .loadAsync(arrayBuffer)
-          .then(({ files }) => {
-            const txtFile = Object.keys(files).find(
-              fileName =>
-                !fileName.includes('__MACOSX') && fileName.endsWith('.txt'),
-            );
-
-            if (!txtFile) {
-              throw new Error('No txt files found in archive');
-            }
-
-            return files[txtFile].async('string');
-          })
-          .then(parseString)
-          .then(setMessages)
-          .catch(showError);
-      };
+      reader.addEventListener('loadend', zipLoadEndHandler);
       reader.readAsArrayBuffer(file);
     } else if (file.type === 'text/plain') {
-      reader.onloadend = () =>
-        parseString(reader.result)
-          .then(setMessages)
-          .catch(err =>
-            showError('An error has occurred while parsing the file', err),
-          );
+      reader.addEventListener('loadend', txtLoadEndHandler);
       reader.readAsText(file);
     } else {
       showError(`File type ${file.type} not supported`);
@@ -109,6 +124,7 @@ const App = () => {
         <MessageViewer
           messages={messages}
           limit={useDebounce(messagesLimit, 500)}
+          zipFile={zipFile}
         />
         <S.MenuOpenButton type="button" onClick={openMenu} ref={openButtonRef}>
           Open menu

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0] - 2021-01-19
+
+### Added
+
+- Clickable links
+- Media files (when exporting with the "Attach Media" option) will show up now
+- Funding links
+
+### Changed
+
+- Updated example chat to showcase the new features
+- Updated parser and dependencies
+
 ## [1.4.0] - 2020-12-13
 
 ### Added
@@ -96,6 +109,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 
+[1.5.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.3.6...1.4.0
 [1.3.6]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.3.5...1.3.6
 [1.3.5]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.3.4...1.3.5

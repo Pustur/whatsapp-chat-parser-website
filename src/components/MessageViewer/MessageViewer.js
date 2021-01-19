@@ -6,7 +6,7 @@ import * as S from './style';
 
 import { authorColors } from '../../utils/colors';
 
-const MessageViewer = ({ messages, limit }) => {
+const MessageViewer = ({ messages, limit, zipFile }) => {
   const participants = Array.from(
     new Set(messages.map(({ author }) => author)),
   ).filter(author => author !== 'System');
@@ -45,6 +45,7 @@ const MessageViewer = ({ messages, limit }) => {
               sameAuthorAsPrevious={
                 prevMessage && prevMessage.author === message.author
               }
+              zipFile={zipFile}
             />
           );
         })}
@@ -62,10 +63,12 @@ MessageViewer.propTypes = {
     }),
   ).isRequired,
   limit: PropTypes.number,
+  zipFile: PropTypes.instanceOf(Promise),
 };
 
 MessageViewer.defaultProps = {
   limit: Infinity,
+  zipFile: null,
 };
 
 export default React.memo(MessageViewer);

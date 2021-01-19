@@ -7,7 +7,6 @@ const systemBackgroundColor = '#fff5c4';
 const systemDarkBackgroundColor = '#353526';
 
 const whatsappThemeColor = '#07bc4c';
-const whatsappVisitedThemeColor = '#0c9842';
 
 const authorColors = [
   '#1f7aec',
@@ -31,6 +30,5 @@ export {
   activeUserBackgroundColor,
   activeUserDarkBackgroundColor,
   whatsappThemeColor,
-  whatsappVisitedThemeColor,
   authorColors,
 };
