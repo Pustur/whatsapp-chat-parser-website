@@ -79,7 +79,7 @@ const App = () => {
 
     const reader = new FileReader();
 
-    if (file.type === 'application/zip') {
+    if (/^application\/(?:x-)?zip(?:-compressed)?$/.test(file.type)) {
       reader.addEventListener('loadend', zipLoadEndHandler);
       reader.readAsArrayBuffer(file);
     } else if (file.type === 'text/plain') {
