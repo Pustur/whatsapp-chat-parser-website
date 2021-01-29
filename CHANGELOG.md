@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.1] - 2021-01-29
+
+### Fixed
+
+- Zip file mime type detection in Windows
+- Space in readme
+
 ## [1.5.0] - 2021-01-19
 
 ### Added
@@ -109,6 +116,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 
+[1.5.1]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.3.6...1.4.0
 [1.3.6]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.3.5...1.3.6
