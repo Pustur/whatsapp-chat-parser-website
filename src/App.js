@@ -34,6 +34,14 @@ const readChatFile = zipData => {
   return chatFilesSorted[0].async('string');
 };
 
+const replaceEncryptionMessageAuthor = messages =>
+  messages.map((message, i) => {
+    if (i < 10 && message.message.includes('end-to-end')) {
+      return { ...message, author: 'System' };
+    }
+    return message;
+  });
+
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [messagesLimit, setMessagesLimit] = useState(100);
@@ -62,12 +70,14 @@ const App = () => {
     zip
       .then(readChatFile)
       .then(text => parseString(text, { parseAttachments: true }))
+      .then(replaceEncryptionMessageAuthor)
       .then(setMessages)
       .catch(showError);
   };
 
   const txtLoadEndHandler = e => {
     parseString(e.target.result)
+      .then(replaceEncryptionMessageAuthor)
       .then(setMessages)
       .catch(err =>
         showError('An error has occurred while parsing the file', err),
