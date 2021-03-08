@@ -14,7 +14,8 @@ const GlobalStyles = createGlobalStyle`
   }
 
   html {
-    font-family: sans-serif;
+    font-family: sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 
+      'Segoe UI Symbol', 'Noto Color Emoji';
     box-sizing: border-box;
   }
 
