@@ -6,7 +6,7 @@ import * as S from './style';
 
 import { authorColors } from '../../utils/colors';
 
-const MessageViewer = ({ messages, limit, zipFile }) => {
+const MessageViewer = ({ messages, lowerLimit, upperLimit, zipFile }) => {
   const participants = Array.from(
     new Set(messages.map(({ author }) => author)),
   ).filter(author => author !== 'System');
@@ -18,7 +18,7 @@ const MessageViewer = ({ messages, limit, zipFile }) => {
     }),
     {},
   );
-  const renderedMessages = messages.slice(0, limit);
+  const renderedMessages = messages.slice(lowerLimit - 1, upperLimit);
   const isLimited = renderedMessages.length !== messages.length;
 
   return (
@@ -26,8 +26,15 @@ const MessageViewer = ({ messages, limit, zipFile }) => {
       {messages.length > 0 && (
         <S.P>
           <S.Info>
-            Showing {isLimited ? 'first' : 'all'} {renderedMessages.length}{' '}
-            messages {isLimited && <span>(out of {messages.length})</span>}
+            {isLimited ? (
+              <span>
+                Showing messages {lowerLimit} to{' '}
+                {Math.min(upperLimit, messages.length)} (
+                {renderedMessages.length} out of {messages.length})
+              </span>
+            ) : (
+              <span>Showing all {messages.length} messages</span>
+            )}
           </S.Info>
         </S.P>
       )}
@@ -62,12 +69,14 @@ MessageViewer.propTypes = {
       message: PropTypes.string,
     }),
   ).isRequired,
-  limit: PropTypes.number,
+  lowerLimit: PropTypes.number,
+  upperLimit: PropTypes.number,
   zipFile: PropTypes.instanceOf(Promise),
 };
 
 MessageViewer.defaultProps = {
-  limit: Infinity,
+  lowerLimit: 1,
+  upperLimit: Infinity,
   zipFile: null,
 };
 

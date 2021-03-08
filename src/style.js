@@ -193,11 +193,24 @@ const Field = styled.div`
   * + * {
     margin-top: 0.375rem;
   }
+
+  & + & {
+    margin-top: 1rem;
+  }
 `;
 
 const Label = styled.label`
   display: block;
   opacity: 0.8;
+`;
+
+const Fieldset = styled.fieldset`
+  margin: 0;
+  border: 1px solid #eee;
+
+  @media (prefers-color-scheme: dark) {
+    border-color: #444;
+  }
 `;
 
 const Input = styled.input`
@@ -214,6 +227,18 @@ const Input = styled.input`
   @media (prefers-color-scheme: dark) {
     background-color: #222;
   }
+`;
+
+const Submit = styled.input`
+  ${normalizeInput}
+
+  border: 0;
+  border-radius: 4px;
+  width: 100%;
+  height: 1.8rem;
+  padding: 0 0.3rem;
+  background-color: ${whatsappThemeColor};
+  color: white;
 `;
 
 const InputDescription = styled.div`
@@ -255,7 +280,9 @@ export {
   SidebarContainer,
   Field,
   Label,
+  Fieldset,
   Input,
+  Submit,
   InputDescription,
   Header,
 };

@@ -7,9 +7,10 @@ import MessageViewer from './components/MessageViewer/MessageViewer';
 import Credits from './components/Credits/Credits';
 import * as S from './style';
 
-import useDebounce from './hooks/useDebounce';
-
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
+
+const DEFAULT_LOWER_LIMIT = 1;
+const DEFAULT_UPPER_LIMIT = 100;
 
 const showError = (message, err) => {
   console.error(err || message); // eslint-disable-line no-console
@@ -44,7 +45,8 @@ const replaceEncryptionMessageAuthor = messages =>
 
 const App = () => {
   const [messages, setMessages] = useState([]);
-  const [messagesLimit, setMessagesLimit] = useState(100);
+  const [lowerLimit, setLowerLimit] = useState(DEFAULT_LOWER_LIMIT);
+  const [upperLimit, setUpperLimit] = useState(DEFAULT_UPPER_LIMIT);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [zipFile, setZipFile] = useState(null);
 
@@ -100,6 +102,20 @@ const App = () => {
     }
   };
 
+  const setMessageLimits = e => {
+    const { lowerLimit: ll, upperLimit: ul } = Object.fromEntries(
+      new FormData(e.currentTarget),
+    );
+    const lower =
+      ll === '' ? DEFAULT_LOWER_LIMIT : parseInt(ll, 10) || DEFAULT_LOWER_LIMIT;
+    const upper =
+      ul === '' ? DEFAULT_UPPER_LIMIT : parseInt(ul, 10) || DEFAULT_UPPER_LIMIT;
+
+    e.preventDefault();
+    setLowerLimit(Math.min(lower, upper));
+    setUpperLimit(Math.max(lower, upper));
+  };
+
   useEffect(() => {
     if (isFirstRender.current) return;
 
@@ -133,7 +149,8 @@ const App = () => {
         </S.Header>
         <MessageViewer
           messages={messages}
-          limit={useDebounce(messagesLimit, 500)}
+          lowerLimit={lowerLimit}
+          upperLimit={upperLimit}
           zipFile={zipFile}
         />
         <S.MenuOpenButton type="button" onClick={openMenu} ref={openButtonRef}>
@@ -154,24 +171,38 @@ const App = () => {
             Close menu
           </S.MenuCloseButton>
           <S.SidebarContainer>
-            <S.Field>
-              <S.Label htmlFor="limit">Messages limit</S.Label>
-              <S.Input
-                id="limit"
-                type="number"
-                min="0"
-                max={messages.length}
-                value={messagesLimit}
-                onChange={e =>
-                  setMessagesLimit(parseInt(e.currentTarget.value, 10))
-                }
-              />
-              <S.InputDescription>
-                A high number may freeze the page for a while, change this with
-                caution
-              </S.InputDescription>
-            </S.Field>
-
+            <form onSubmit={setMessageLimits}>
+              <S.Fieldset>
+                <legend>Messages limit</legend>
+                <S.Field>
+                  <S.Label htmlFor="lower-limit">Start</S.Label>
+                  <S.Input
+                    id="lower-limit"
+                    name="lowerLimit"
+                    type="number"
+                    min="1"
+                    placeholder={lowerLimit}
+                  />
+                </S.Field>
+                <S.Field>
+                  <S.Label htmlFor="upper-limit">End</S.Label>
+                  <S.Input
+                    id="upper-limit"
+                    name="upperLimit"
+                    type="number"
+                    min="1"
+                    placeholder={upperLimit}
+                  />
+                </S.Field>
+                <S.Field>
+                  <S.Submit type="submit" value="Apply" />
+                  <S.InputDescription>
+                    A high delta may freeze the page for a while, change this
+                    with caution
+                  </S.InputDescription>
+                </S.Field>
+              </S.Fieldset>
+            </form>
             <div>
               <Credits />
             </div>
