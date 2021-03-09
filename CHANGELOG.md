@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2021-03-09
+
+### Added
+
+- Option to render a range of messages
+
+### Fixed
+
+- Some emoji rendering
+- Encryption message not being treated as a system message
+
 ## [1.5.1] - 2021-01-29
 
 ### Fixed
@@ -116,6 +127,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 
+[1.6.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.5.1...1.6.0
 [1.5.1]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.3.6...1.4.0
