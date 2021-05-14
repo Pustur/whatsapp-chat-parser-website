@@ -6,7 +6,9 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "jsx-a11y/media-has-caption": [0],
     "jsx-a11y/label-has-associated-control": [2, { "assert": "either" }],
-    "jsx-a11y/label-has-for": [0]
+    "jsx-a11y/label-has-for": [0],
+    "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
+	"no-restricted-syntax": ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"]
   },
   "env": {
     "browser": true,
