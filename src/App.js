@@ -10,7 +10,7 @@ import * as S from './style';
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
 const DEFAULT_LOWER_LIMIT = 1;
-const DEFAULT_UPPER_LIMIT = 100;
+const DEFAULT_UPPER_LIMIT = 3000;
 
 const showError = (message, err) => {
   console.error(err || message); // eslint-disable-line no-console
@@ -29,7 +29,7 @@ const readChatFile = zipData => {
   }
 
   const chatFilesSorted = chatFiles.sort(
-    (a, b) => a.name.length - b.name.length,
+    (a, b) => a.name.length - b.name.length
   );
 
   return chatFilesSorted[0].async('string');
