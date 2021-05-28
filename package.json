@@ -1,19 +1,19 @@
 {
   "name": "whatsapp-chat-parser-website",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "private": true,
   "files": [
     "build/"
   ],
   "dependencies": {
-    "jszip": "3.5.0",
+    "jszip": "3.6.0",
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-linkify": "1.0.0-alpha",
-    "react-scripts": "4.0.1",
-    "styled-components": "5.2.1",
-    "whatsapp-chat-parser": "3.1.0"
+    "react-scripts": "4.0.3",
+    "styled-components": "5.3.0",
+    "whatsapp-chat-parser": "3.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,13 +39,13 @@
     ]
   },
   "devDependencies": {
-    "eslint": "7.18.0",
+    "eslint": "7.27.0",
     "eslint-config-airbnb": "18.2.1",
-    "eslint-config-prettier": "7.2.0",
-    "eslint-plugin-import": "2.22.1",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-import": "2.23.3",
     "eslint-plugin-jsx-a11y": "6.4.1",
-    "eslint-plugin-prettier": "3.3.1",
-    "eslint-plugin-react": "7.22.0",
-    "prettier": "2.2.1"
+    "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-react": "7.23.2",
+    "prettier": "2.3.0"
   }
 }
