@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import JSZip from 'jszip';
 import { parseString } from 'whatsapp-chat-parser';
 
@@ -45,6 +45,7 @@ const replaceEncryptionMessageAuthor = messages =>
 
 const App = () => {
   const [messages, setMessages] = useState([]);
+  const [activeUser, setActiveUser] = useState('');
   const [lowerLimit, setLowerLimit] = useState(DEFAULT_LOWER_LIMIT);
   const [upperLimit, setUpperLimit] = useState(DEFAULT_UPPER_LIMIT);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -53,6 +54,14 @@ const App = () => {
   const closeButtonRef = useRef(null);
   const openButtonRef = useRef(null);
   const isFirstRender = useRef(true);
+
+  const participants = useMemo(
+    () =>
+      Array.from(new Set(messages.map(({ author }) => author))).filter(
+        author => author !== 'System',
+      ),
+    [messages],
+  );
 
   const closeMenu = () => {
     setIsMenuOpen(false);
@@ -136,6 +145,10 @@ const App = () => {
     return () => document.removeEventListener('keydown', keyDownHandler);
   }, []);
 
+  useEffect(() => {
+    setActiveUser(participants[0] || '');
+  }, [messages]);
+
   return (
     <>
       <S.GlobalStyles />
@@ -149,6 +162,8 @@ const App = () => {
         </S.Header>
         <MessageViewer
           messages={messages}
+          participants={participants}
+          activeUser={activeUser}
           lowerLimit={lowerLimit}
           upperLimit={upperLimit}
           zipFile={zipFile}
@@ -171,7 +186,7 @@ const App = () => {
             Close menu
           </S.MenuCloseButton>
           <S.SidebarContainer>
-            <form onSubmit={setMessageLimits}>
+            <S.Form onSubmit={setMessageLimits}>
               <S.Fieldset>
                 <legend>Messages limit</legend>
                 <S.Field>
@@ -202,7 +217,24 @@ const App = () => {
                   </S.InputDescription>
                 </S.Field>
               </S.Fieldset>
-            </form>
+              <S.Field>
+                <S.Label htmlFor="active-user">Active User</S.Label>
+                <S.Select
+                  id="active-user"
+                  disabled={!participants.length}
+                  value={activeUser}
+                  onChange={e => {
+                    setActiveUser(e.target.value);
+                  }}
+                >
+                  {participants.map(participant => (
+                    <option key={participant} value={participant}>
+                      {participant}
+                    </option>
+                  ))}
+                </S.Select>
+              </S.Field>
+            </S.Form>
             <div>
               <Credits />
             </div>
