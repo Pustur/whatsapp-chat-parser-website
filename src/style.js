@@ -5,6 +5,24 @@ import { whatsappThemeColor } from './utils/colors';
 import { zIndex } from './utils/z-index';
 
 const buttonSize = '44px';
+const selectArrowWidth = '10px';
+const selectArrowHeight = '5px';
+const selectPadding = '0.3rem';
+const inputStyles = css`
+  ${normalizeInput}
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  width: 100%;
+  height: 1.8rem;
+  padding: 0 0.3rem;
+  background-color: #fafafa;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #222;
+  }
+`;
 
 const GlobalStyles = createGlobalStyle`
   *,
@@ -189,6 +207,12 @@ const SidebarContainer = styled.div`
   }
 `;
 
+const Form = styled.form`
+  > * + * {
+    margin-top: 1rem;
+  }
+`;
+
 const Field = styled.div`
   * + * {
     margin-top: 0.375rem;
@@ -214,18 +238,24 @@ const Fieldset = styled.fieldset`
 `;
 
 const Input = styled.input`
-  ${normalizeInput}
+  ${inputStyles}
+`;
 
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  width: 100%;
-  height: 1.8rem;
-  padding: 0 0.3rem;
-  background-color: #fafafa;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+const Select = styled.select`
+  ${inputStyles}
 
-  @media (prefers-color-scheme: dark) {
-    background-color: #222;
+  padding: 0 calc(${selectPadding} * 2 + ${selectArrowWidth}) 0
+    ${selectPadding};
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - ${selectPadding} - ${selectArrowWidth} / 2)
+      60%,
+    calc(100% - ${selectPadding}) 60%;
+  background-size: calc(${selectArrowWidth} / 2) ${selectArrowHeight};
+  background-repeat: no-repeat;
+
+  &:disabled {
+    opacity: 0.5;
   }
 `;
 
@@ -278,10 +308,12 @@ export {
   Overlay,
   Sidebar,
   SidebarContainer,
+  Form,
   Field,
   Label,
   Fieldset,
   Input,
+  Select,
   Submit,
   InputDescription,
   Header,

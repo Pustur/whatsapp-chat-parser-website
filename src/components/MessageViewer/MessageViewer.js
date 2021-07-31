@@ -6,11 +6,14 @@ import * as S from './style';
 
 import { authorColors } from '../../utils/colors';
 
-const MessageViewer = ({ messages, lowerLimit, upperLimit, zipFile }) => {
-  const participants = Array.from(
-    new Set(messages.map(({ author }) => author)),
-  ).filter(author => author !== 'System');
-  const activeUser = participants[1];
+const MessageViewer = ({
+  messages,
+  activeUser,
+  participants,
+  lowerLimit,
+  upperLimit,
+  zipFile,
+}) => {
   const colorMap = participants.reduce(
     (obj, participant, i) => ({
       ...obj,
@@ -69,6 +72,8 @@ MessageViewer.propTypes = {
       message: PropTypes.string,
     }),
   ).isRequired,
+  participants: PropTypes.arrayOf(PropTypes.string).isRequired,
+  activeUser: PropTypes.string.isRequired,
   lowerLimit: PropTypes.number,
   upperLimit: PropTypes.number,
   zipFile: PropTypes.instanceOf(Promise),
