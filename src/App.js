@@ -186,7 +186,7 @@ const App = () => {
             Close menu
           </S.MenuCloseButton>
           <S.SidebarContainer>
-            <form onSubmit={setMessageLimits}>
+            <S.Form onSubmit={setMessageLimits}>
               <S.Fieldset>
                 <legend>Messages limit</legend>
                 <S.Field>
@@ -219,7 +219,7 @@ const App = () => {
               </S.Fieldset>
               <S.Field>
                 <S.Label htmlFor="active-user">Active User</S.Label>
-                <select
+                <S.Select
                   id="active-user"
                   disabled={!participants.length}
                   value={activeUser}
@@ -232,9 +232,9 @@ const App = () => {
                       {participant}
                     </option>
                   ))}
-                </select>
+                </S.Select>
               </S.Field>
-            </form>
+            </S.Form>
             <div>
               <Credits />
             </div>
