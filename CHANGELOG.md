@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0] - 2021-07-31
+
+### Added
+
+- Ability to change the current active user (whose messages are highlighted) from the sidebar [#7](https://github.com/Pustur/whatsapp-chat-parser-website/issues/7)
+
+### Changed
+
+- Updated parser and dependencies
+- Improved changelog with more links to issues
+
 ## [1.6.2] - 2021-06-01
 
 ### Changed
@@ -18,12 +29,12 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Option to render a range of messages
+- Option to render a range of messages [#2](https://github.com/Pustur/whatsapp-chat-parser-website/issues/2)
 
 ### Fixed
 
-- Some emoji rendering
-- Encryption message not being treated as a system message
+- Some emoji rendering [#4](https://github.com/Pustur/whatsapp-chat-parser-website/issues/4)
+- Encryption message not being treated as a system message [#3](https://github.com/Pustur/whatsapp-chat-parser-website/issues/3)
 
 ## [1.5.1] - 2021-01-29
 
@@ -139,6 +150,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 
+[1.7.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.6.2...1.7.0
 [1.6.2]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.6.1...1.6.2
 [1.6.1]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.6.0...1.6.1
 [1.6.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.5.1...1.6.0
