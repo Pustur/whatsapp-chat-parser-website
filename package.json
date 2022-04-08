@@ -1,6 +1,6 @@
 {
   "name": "whatsapp-chat-parser-website",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "private": true,
   "files": [
     "build/"
