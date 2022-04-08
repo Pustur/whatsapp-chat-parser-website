@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.1] - 2022-04-08
+
+### Changed
+
+- Updated dependencies
+
 ## [1.7.0] - 2021-07-31
 
 ### Added
@@ -150,6 +156,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 
+[1.7.1]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.6.2...1.7.0
 [1.6.2]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.6.1...1.6.2
 [1.6.1]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.6.0...1.6.1
