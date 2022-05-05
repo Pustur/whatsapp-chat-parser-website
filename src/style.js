@@ -298,6 +298,12 @@ const GlobalStyles = createGlobalStyle`
       color: #ccc;
     }
   }
+
+  @media print {
+    video, audio, ${Header}, ${MenuOpenButton} {
+      display: none !important;
+    }
+  }
 `;
 
 export {
