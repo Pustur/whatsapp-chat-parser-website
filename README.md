@@ -18,12 +18,13 @@ The website is available at [whatsapp-chat-parser.netlify.app](https://whatsapp-
 ## Technologies used
 
 - Libraries:
-  - [React](https://reactjs.org/) (with [Create React App](https://github.com/facebook/create-react-app))
+  - [React](https://reactjs.org/)
   - [JSZip](https://stuk.github.io/jszip/)
   - [whatsapp-chat-parser](https://github.com/Pustur/whatsapp-chat-parser)
 - CSS: [Styled Components](https://www.styled-components.com/)
 - Code formatting: [Prettier](https://prettier.io/)
 - Linting: [ESLint](https://eslint.org/) (with [Airbnb rules](https://www.npmjs.com/package/eslint-config-airbnb))
+- Bundler: [Vite](https://vitejs.dev/)
 
 ## Changelog
 
