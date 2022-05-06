@@ -8,7 +8,7 @@ const preventDefaults = e => {
   e.stopPropagation();
 };
 
-const Dropzone = ({ id, onFileUpload }) => {
+function Dropzone({ id, onFileUpload }) {
   const [isHighlighted, setIsHighlighted] = useState(false);
 
   const onDragEnterOverHandler = e => {
@@ -51,7 +51,7 @@ const Dropzone = ({ id, onFileUpload }) => {
       </S.Label>
     </form>
   );
-};
+}
 
 Dropzone.propTypes = {
   id: PropTypes.string.isRequired,

@@ -43,7 +43,7 @@ const replaceEncryptionMessageAuthor = messages =>
     return message;
   });
 
-const App = () => {
+function App() {
   const [messages, setMessages] = useState([]);
   const [activeUser, setActiveUser] = useState('');
   const [lowerLimit, setLowerLimit] = useState(DEFAULT_LOWER_LIMIT);
@@ -243,6 +243,6 @@ const App = () => {
       </S.Container>
     </>
   );
-};
+}
 
 export default App;

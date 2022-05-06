@@ -13,13 +13,21 @@ const intlOptions = {
   minute: 'numeric',
 };
 
-const Message = ({
+function Link(decoratedHref, decoratedText, key) {
+  return (
+    <a key={key} target="_blank" rel="noopener noreferrer" href={decoratedHref}>
+      {decoratedText}
+    </a>
+  );
+}
+
+function Message({
   message,
   color,
   isActiveUser,
   sameAuthorAsPrevious,
   zipFile,
-}) => {
+}) {
   const isSystem = message.author === 'System';
   const dateTime = message.date.toISOString().slice(0, 19).replace('T', ' ');
 
@@ -40,18 +48,7 @@ const Message = ({
               zipFile={zipFile}
             />
           ) : (
-            <Linkify
-              componentDecorator={(decoratedHref, decoratedText, key) => (
-                <a
-                  key={key}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={decoratedHref}
-                >
-                  {decoratedText}
-                </a>
-              )}
-            >
+            <Linkify componentDecorator={Link}>
               <S.Message>{message.message}</S.Message>
             </Linkify>
           )}
@@ -66,7 +63,7 @@ const Message = ({
       </S.Bubble>
     </S.Item>
   );
-};
+}
 
 Message.propTypes = {
   message: PropTypes.shape({

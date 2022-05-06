@@ -6,14 +6,14 @@ import * as S from './style';
 
 import { authorColors } from '../../utils/colors';
 
-const MessageViewer = ({
+function MessageViewer({
   messages,
   activeUser,
   participants,
   lowerLimit,
   upperLimit,
   zipFile,
-}) => {
+}) {
   const colorMap = participants.reduce(
     (obj, participant, i) => ({
       ...obj,
@@ -62,7 +62,7 @@ const MessageViewer = ({
       </S.List>
     </S.Container>
   );
-};
+}
 
 MessageViewer.propTypes = {
   messages: PropTypes.arrayOf(
