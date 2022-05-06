@@ -19,7 +19,7 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "lint": "eslint \"src/**/*.js\"",
+    "lint": "eslint \"src/**/*.{js,jsx}\"",
     "format": "prettier --write ."
   },
   "browserslist": {
