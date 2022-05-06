@@ -16,12 +16,10 @@
     "whatsapp-chat-parser": "3.2.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "vite",
+    "build": "vite build",
     "lint": "eslint \"src/**/*.js\"",
-    "format": "prettier --write .",
-    "eject": "react-scripts eject"
+    "format": "prettier --write ."
   },
   "browserslist": {
     "production": [
