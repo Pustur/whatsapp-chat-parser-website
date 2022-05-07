@@ -54,9 +54,7 @@ function Sidebar({ children }) {
         </S.MenuCloseButton>
         <S.SidebarContainer>
           {children}
-          <div>
-            <Credits />
-          </div>
+          <Credits />
         </S.SidebarContainer>
       </S.Sidebar>
     </>
