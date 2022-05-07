@@ -57,7 +57,7 @@ const Attachment = ({ fileName, zipFile }) => {
     return () => {
       isStillMounted = false;
     };
-  }, [fileName]);
+  }, [zipFile, fileName]);
 
   if (error) return error.toString();
   if (attachment) return renderAttachment(fileName, attachment);

@@ -113,7 +113,7 @@ function App() {
 
   useEffect(() => {
     setActiveUser(participants[0] || '');
-  }, [messages]);
+  }, [participants]);
 
   return (
     <>
