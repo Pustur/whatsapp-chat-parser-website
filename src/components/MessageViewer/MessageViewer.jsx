@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import Message from '../Message/Message';
 import * as S from './style';
@@ -13,12 +13,16 @@ function MessageViewer({
   upperLimit,
   zipFile,
 }) {
-  const colorMap = participants.reduce(
-    (obj, participant, i) => ({
-      ...obj,
-      [participant]: authorColors[i % authorColors.length],
-    }),
-    {},
+  const colorMap = useMemo(
+    () =>
+      participants.reduce(
+        (obj, participant, i) => ({
+          ...obj,
+          [participant]: authorColors[i % authorColors.length],
+        }),
+        {},
+      ),
+    [participants],
   );
   const renderedMessages = messages.slice(lowerLimit - 1, upperLimit);
   const isLimited = renderedMessages.length !== messages.length;
