@@ -28,13 +28,15 @@ function App() {
   const closeButtonRef = useRef(null);
   const openButtonRef = useRef(null);
 
-  const participants = useMemo(
-    () =>
-      Array.from(new Set(messages.map(({ author }) => author))).filter(
-        author => author !== 'System',
-      ),
-    [messages],
-  );
+  const participants = useMemo(() => {
+    const set = new Set();
+
+    messages.forEach(m => {
+      if (m.author !== 'System') set.add(m.author);
+    });
+
+    return Array.from(set);
+  }, [messages]);
 
   const closeMenu = () => {
     setIsMenuOpen(false);
