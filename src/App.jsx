@@ -2,6 +2,11 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import JSZip from 'jszip';
 import { parseString } from 'whatsapp-chat-parser';
 
+import {
+  showError,
+  readChatFile,
+  replaceEncryptionMessageAuthor,
+} from './utils/utils';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
 import Credits from './components/Credits/Credits';
@@ -11,37 +16,6 @@ import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
 const DEFAULT_LOWER_LIMIT = 1;
 const DEFAULT_UPPER_LIMIT = 100;
-
-const showError = (message, err) => {
-  console.error(err || message); // eslint-disable-line no-console
-  alert(message); // eslint-disable-line no-alert
-};
-
-const readChatFile = zipData => {
-  const chatFile = zipData.file('_chat.txt');
-
-  if (chatFile) return chatFile.async('string');
-
-  const chatFiles = zipData.file(/.*(?:chat|whatsapp).*\.txt$/i);
-
-  if (!chatFiles.length) {
-    throw new Error('No txt files found in archive');
-  }
-
-  const chatFilesSorted = chatFiles.sort(
-    (a, b) => a.name.length - b.name.length,
-  );
-
-  return chatFilesSorted[0].async('string');
-};
-
-const replaceEncryptionMessageAuthor = messages =>
-  messages.map((message, i) => {
-    if (i < 10 && message.message.includes('end-to-end')) {
-      return { ...message, author: 'System' };
-    }
-    return message;
-  });
 
 function App() {
   const [messages, setMessages] = useState([]);

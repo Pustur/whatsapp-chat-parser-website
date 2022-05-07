@@ -16,4 +16,35 @@ const getMimeType = fileName => {
   return null;
 };
 
-export { getMimeType };
+const showError = (message, err) => {
+  console.error(err || message); // eslint-disable-line no-console
+  alert(message); // eslint-disable-line no-alert
+};
+
+const readChatFile = zipData => {
+  const chatFile = zipData.file('_chat.txt');
+
+  if (chatFile) return chatFile.async('string');
+
+  const chatFiles = zipData.file(/.*(?:chat|whatsapp).*\.txt$/i);
+
+  if (!chatFiles.length) {
+    throw new Error('No txt files found in archive');
+  }
+
+  const chatFilesSorted = chatFiles.sort(
+    (a, b) => a.name.length - b.name.length,
+  );
+
+  return chatFilesSorted[0].async('string');
+};
+
+const replaceEncryptionMessageAuthor = messages =>
+  messages.map((message, i) => {
+    if (i < 10 && message.message.includes('end-to-end')) {
+      return { ...message, author: 'System' };
+    }
+    return message;
+  });
+
+export { getMimeType, showError, readChatFile, replaceEncryptionMessageAuthor };
