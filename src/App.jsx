@@ -104,7 +104,7 @@ function App() {
 
   useEffect(() => {
     const keyDownHandler = e => {
-      if (e.keyCode === 27) closeMenu();
+      if (e.key === 'Escape') closeMenu();
     };
 
     document.addEventListener('keydown', keyDownHandler);
