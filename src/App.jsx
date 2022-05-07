@@ -53,7 +53,6 @@ function App() {
 
   const closeButtonRef = useRef(null);
   const openButtonRef = useRef(null);
-  const isFirstRender = useRef(true);
 
   const participants = useMemo(
     () =>
@@ -65,10 +64,12 @@ function App() {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+    openButtonRef.current.focus();
   };
 
   const openMenu = () => {
     setIsMenuOpen(true);
+    closeButtonRef.current.focus();
   };
 
   const zipLoadEndHandler = e => {
@@ -124,17 +125,6 @@ function App() {
     setLowerLimit(Math.min(lower, upper));
     setUpperLimit(Math.max(lower, upper));
   };
-
-  useEffect(() => {
-    if (isFirstRender.current) return;
-
-    if (isMenuOpen) closeButtonRef.current.focus();
-    else openButtonRef.current.focus();
-  }, [isMenuOpen]);
-
-  useEffect(() => {
-    isFirstRender.current = false;
-  }, []);
 
   useEffect(() => {
     const keyDownHandler = e => {
