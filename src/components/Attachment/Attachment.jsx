@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { getMimeType } from '../../utils/utils';
+import { useIsMounted } from '../../hooks/useIsMounted';
 
 const renderAttachment = (fileName, attachment) => {
   const mimeType = getMimeType(fileName) || '';
@@ -29,35 +30,30 @@ const renderAttachment = (fileName, attachment) => {
 const Attachment = ({ fileName, zipFile }) => {
   const [attachment, setAttachment] = useState(null);
   const [error, setError] = useState(null);
+  const isMounted = useIsMounted();
 
   useEffect(() => {
-    let isStillMounted = true;
-
     zipFile.then(zipData => {
       const file = zipData.files[fileName];
 
       if (!file) {
-        if (isStillMounted) {
+        if (isMounted()) {
           setError(new Error(`Can't find "${fileName}" in archive`));
         }
         return;
       }
       if (getMimeType(fileName)) {
         file.async('base64').then(data => {
-          if (isStillMounted) setAttachment(data);
+          if (isMounted()) setAttachment(data);
         });
         return;
       }
 
       file.async('blob').then(blob => {
-        if (isStillMounted) setAttachment(URL.createObjectURL(blob));
+        if (isMounted()) setAttachment(URL.createObjectURL(blob));
       });
     });
-
-    return () => {
-      isStillMounted = false;
-    };
-  }, [zipFile, fileName]);
+  }, [zipFile, fileName, isMounted]);
 
   if (error) return error.toString();
   if (attachment) return renderAttachment(fileName, attachment);
