@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { getMimeType } from '../../utils/utils';
 
@@ -63,15 +62,6 @@ const Attachment = ({ fileName, zipFile }) => {
   if (error) return error.toString();
   if (attachment) return renderAttachment(fileName, attachment);
   return `Loading ${fileName}...`;
-};
-
-Attachment.propTypes = {
-  fileName: PropTypes.string.isRequired,
-  zipFile: PropTypes.instanceOf(Promise),
-};
-
-Attachment.defaultProps = {
-  zipFile: null,
 };
 
 export default Attachment;

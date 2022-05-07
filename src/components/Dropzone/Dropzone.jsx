@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import * as S from './style';
 
@@ -52,10 +51,5 @@ function Dropzone({ id, onFileUpload }) {
     </form>
   );
 }
-
-Dropzone.propTypes = {
-  id: PropTypes.string.isRequired,
-  onFileUpload: PropTypes.func.isRequired,
-};
 
 export default Dropzone;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Message from '../Message/Message';
 import * as S from './style';
@@ -63,26 +62,5 @@ function MessageViewer({
     </S.Container>
   );
 }
-
-MessageViewer.propTypes = {
-  messages: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.instanceOf(Date),
-      author: PropTypes.string,
-      message: PropTypes.string,
-    }),
-  ).isRequired,
-  participants: PropTypes.arrayOf(PropTypes.string).isRequired,
-  activeUser: PropTypes.string.isRequired,
-  lowerLimit: PropTypes.number,
-  upperLimit: PropTypes.number,
-  zipFile: PropTypes.instanceOf(Promise),
-};
-
-MessageViewer.defaultProps = {
-  lowerLimit: 1,
-  upperLimit: Infinity,
-  zipFile: null,
-};
 
 export default React.memo(MessageViewer);
