@@ -3,33 +3,33 @@ import PropTypes from 'prop-types';
 
 import { getMimeType } from '../../utils/utils';
 
+const renderAttachment = (fileName, attachment) => {
+  const mimeType = getMimeType(fileName) || '';
+  const src = `data:${mimeType};base64,${attachment}`;
+
+  if (mimeType.startsWith('image/')) {
+    return <img src={src} title={fileName} alt="" />;
+  }
+  if (mimeType.startsWith('video/')) {
+    return (
+      <video controls title={fileName}>
+        <source src={src} type={mimeType} />
+      </video>
+    );
+  }
+  if (mimeType.startsWith('audio/')) {
+    return <audio controls src={src} title={fileName} />;
+  }
+  return (
+    <a href={attachment} download={fileName}>
+      {fileName}
+    </a>
+  );
+};
+
 const Attachment = ({ fileName, zipFile }) => {
   const [attachment, setAttachment] = useState(null);
   const [error, setError] = useState(null);
-
-  const renderAttachment = () => {
-    const mimeType = getMimeType(fileName) || '';
-    const src = `data:${mimeType};base64,${attachment}`;
-
-    if (mimeType.startsWith('image/')) {
-      return <img src={src} title={fileName} alt="" />;
-    }
-    if (mimeType.startsWith('video/')) {
-      return (
-        <video controls title={fileName}>
-          <source src={src} type={mimeType} />
-        </video>
-      );
-    }
-    if (mimeType.startsWith('audio/')) {
-      return <audio controls src={src} title={fileName} />;
-    }
-    return (
-      <a href={attachment} download={fileName}>
-        {fileName}
-      </a>
-    );
-  };
 
   useEffect(() => {
     let isStillMounted = true;
@@ -61,7 +61,7 @@ const Attachment = ({ fileName, zipFile }) => {
   }, [fileName]);
 
   if (error) return error.toString();
-  if (attachment) return renderAttachment();
+  if (attachment) return renderAttachment(fileName, attachment);
   return `Loading ${fileName}...`;
 };
 
