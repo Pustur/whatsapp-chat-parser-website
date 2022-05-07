@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import JSZip from 'jszip';
 import { parseStringSync } from 'whatsapp-chat-parser';
 
@@ -9,7 +9,7 @@ import {
 } from './utils/utils';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
-import Credits from './components/Credits/Credits';
+import Sidebar from './components/Sidebar/Sidebar';
 import * as S from './style';
 
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
@@ -21,12 +21,8 @@ function App() {
   const [activeUser, setActiveUser] = useState('');
   const [lowerLimit, setLowerLimit] = useState(DEFAULT_LOWER_LIMIT);
   const [upperLimit, setUpperLimit] = useState(DEFAULT_UPPER_LIMIT);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [rawFileText, setRawFileText] = useState('');
   const [zipFile, setZipFile] = useState(null);
-
-  const closeButtonRef = useRef(null);
-  const openButtonRef = useRef(null);
 
   const messages = useMemo(() => {
     if (!rawFileText) return [];
@@ -46,16 +42,6 @@ function App() {
 
     return Array.from(set);
   }, [messages]);
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-    openButtonRef.current.focus();
-  };
-
-  const openMenu = () => {
-    setIsMenuOpen(true);
-    closeButtonRef.current.focus();
-  };
 
   const processFile = file => {
     if (!file) return;
@@ -100,15 +86,6 @@ function App() {
   };
 
   useEffect(() => {
-    const keyDownHandler = e => {
-      if (e.key === 'Escape') closeMenu();
-    };
-
-    document.addEventListener('keydown', keyDownHandler);
-    return () => document.removeEventListener('keydown', keyDownHandler);
-  }, []);
-
-  useEffect(() => {
     setActiveUser(participants[0] || '');
   }, [participants]);
 
@@ -131,78 +108,57 @@ function App() {
           upperLimit={upperLimit}
           zipFile={zipFile}
         />
-        <S.MenuOpenButton type="button" onClick={openMenu} ref={openButtonRef}>
-          Open menu
-        </S.MenuOpenButton>
-        <S.Overlay
-          type="button"
-          isActive={isMenuOpen}
-          onClick={closeMenu}
-          tabIndex="-1"
-        />
-        <S.Sidebar isOpen={isMenuOpen}>
-          <S.MenuCloseButton
-            type="button"
-            onClick={closeMenu}
-            ref={closeButtonRef}
-          >
-            Close menu
-          </S.MenuCloseButton>
-          <S.SidebarContainer>
-            <S.Form onSubmit={setMessageLimits}>
-              <S.Fieldset>
-                <legend>Messages limit</legend>
-                <S.Field>
-                  <S.Label htmlFor="lower-limit">Start</S.Label>
-                  <S.Input
-                    id="lower-limit"
-                    name="lowerLimit"
-                    type="number"
-                    min="1"
-                    placeholder={lowerLimit}
-                  />
-                </S.Field>
-                <S.Field>
-                  <S.Label htmlFor="upper-limit">End</S.Label>
-                  <S.Input
-                    id="upper-limit"
-                    name="upperLimit"
-                    type="number"
-                    min="1"
-                    placeholder={upperLimit}
-                  />
-                </S.Field>
-                <S.Field>
-                  <S.Submit type="submit" value="Apply" />
-                  <S.InputDescription>
-                    A high delta may freeze the page for a while, change this
-                    with caution
-                  </S.InputDescription>
-                </S.Field>
-              </S.Fieldset>
+        <Sidebar>
+          <S.Form onSubmit={setMessageLimits}>
+            <S.Fieldset>
+              <legend>Messages limit</legend>
               <S.Field>
-                <S.Label htmlFor="active-user">Active User</S.Label>
-                <S.Select
-                  id="active-user"
-                  disabled={!participants.length}
-                  value={activeUser}
-                  onChange={e => {
-                    setActiveUser(e.target.value);
-                  }}
-                >
-                  {participants.map(participant => (
-                    <option key={participant} value={participant}>
-                      {participant}
-                    </option>
-                  ))}
-                </S.Select>
+                <S.Label htmlFor="lower-limit">Start</S.Label>
+                <S.Input
+                  id="lower-limit"
+                  name="lowerLimit"
+                  type="number"
+                  min="1"
+                  placeholder={lowerLimit}
+                />
               </S.Field>
-            </S.Form>
-            <div>
-              <Credits />
-            </div>
-          </S.SidebarContainer>
-        </S.Sidebar>
+              <S.Field>
+                <S.Label htmlFor="upper-limit">End</S.Label>
+                <S.Input
+                  id="upper-limit"
+                  name="upperLimit"
+                  type="number"
+                  min="1"
+                  placeholder={upperLimit}
+                />
+              </S.Field>
+              <S.Field>
+                <S.Submit type="submit" value="Apply" />
+                <S.InputDescription>
+                  A high delta may freeze the page for a while, change this with
+                  caution
+                </S.InputDescription>
+              </S.Field>
+            </S.Fieldset>
+            <S.Field>
+              <S.Label htmlFor="active-user">Active User</S.Label>
+              <S.Select
+                id="active-user"
+                disabled={!participants.length}
+                value={activeUser}
+                onChange={e => {
+                  setActiveUser(e.target.value);
+                }}
+              >
+                {participants.map(participant => (
+                  <option key={participant} value={participant}>
+                    {participant}
+                  </option>
+                ))}
+              </S.Select>
+            </S.Field>
+          </S.Form>
+        </Sidebar>
       </S.Container>
     </>
   );
