@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import JSZip from 'jszip';
-import { parseString } from 'whatsapp-chat-parser';
+import { parseStringSync } from 'whatsapp-chat-parser';
 
 import {
   showError,
@@ -18,15 +18,24 @@ const DEFAULT_LOWER_LIMIT = 1;
 const DEFAULT_UPPER_LIMIT = 100;
 
 function App() {
-  const [messages, setMessages] = useState([]);
   const [activeUser, setActiveUser] = useState('');
   const [lowerLimit, setLowerLimit] = useState(DEFAULT_LOWER_LIMIT);
   const [upperLimit, setUpperLimit] = useState(DEFAULT_UPPER_LIMIT);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [rawFileText, setRawFileText] = useState('');
   const [zipFile, setZipFile] = useState(null);
 
   const closeButtonRef = useRef(null);
   const openButtonRef = useRef(null);
+
+  const messages = useMemo(() => {
+    if (!rawFileText) return [];
+    return replaceEncryptionMessageAuthor(
+      parseStringSync(rawFileText, {
+        parseAttachments: zipFile !== null,
+      }),
+    );
+  }, [rawFileText, zipFile]);
 
   const participants = useMemo(() => {
     const set = new Set();
@@ -48,40 +57,28 @@ function App() {
     closeButtonRef.current.focus();
   };
 
-  const zipLoadEndHandler = e => {
-    const arrayBuffer = e.target.result;
-    const jszip = new JSZip();
-    const zip = jszip.loadAsync(arrayBuffer);
-
-    setZipFile(zip);
-
-    zip
-      .then(readChatFile)
-      .then(text => parseString(text, { parseAttachments: true }))
-      .then(replaceEncryptionMessageAuthor)
-      .then(setMessages)
-      .catch(showError);
-  };
-
-  const txtLoadEndHandler = e => {
-    parseString(e.target.result)
-      .then(replaceEncryptionMessageAuthor)
-      .then(setMessages)
-      .catch(err =>
-        showError('An error has occurred while parsing the file', err),
-      );
-  };
-
   const processFile = file => {
     if (!file) return;
 
     const reader = new FileReader();
+    const loadEndHandler = e => {
+      if (e.target.result instanceof ArrayBuffer) {
+        const jszip = new JSZip();
+        const zip = jszip.loadAsync(e.target.result);
+
+        setZipFile(zip);
+        zip.then(readChatFile).then(setRawFileText);
+      } else {
+        setZipFile(null);
+        setRawFileText(e.target.result);
+      }
+    };
+
+    reader.addEventListener('loadend', loadEndHandler);
 
     if (/^application\/(?:x-)?zip(?:-compressed)?$/.test(file.type)) {
-      reader.addEventListener('loadend', zipLoadEndHandler);
       reader.readAsArrayBuffer(file);
     } else if (file.type === 'text/plain') {
-      reader.addEventListener('loadend', txtLoadEndHandler);
       reader.readAsText(file);
     } else {
       showError(`File type ${file.type} not supported`);
