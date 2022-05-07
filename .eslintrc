@@ -1,5 +1,9 @@
 {
-  "extends": ["airbnb", "plugin:prettier/recommended"],
+  "extends": [
+    "airbnb",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
+  ],
   "rules": {
     "import/prefer-default-export": "off",
     "react/prop-types": "off",
