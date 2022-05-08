@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useAtom } from 'jotai';
 import JSZip from 'jszip';
 import { parseStringSync } from 'whatsapp-chat-parser';
 
@@ -7,6 +8,7 @@ import {
   readChatFile,
   replaceEncryptionMessageAuthor,
 } from './utils/utils';
+import { activeUserAtom } from './store';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -18,7 +20,7 @@ const DEFAULT_LOWER_LIMIT = 1;
 const DEFAULT_UPPER_LIMIT = 100;
 
 function App() {
-  const [activeUser, setActiveUser] = useState('');
+  const [activeUser, setActiveUser] = useAtom(activeUserAtom);
   const [lowerLimit, setLowerLimit] = useState(DEFAULT_LOWER_LIMIT);
   const [upperLimit, setUpperLimit] = useState(DEFAULT_UPPER_LIMIT);
   const [rawFileText, setRawFileText] = useState('');
@@ -87,7 +89,7 @@ function App() {
 
   useEffect(() => {
     setActiveUser(participants[0] || '');
-  }, [participants]);
+  }, [setActiveUser, participants]);
 
   return (
     <>
