@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 
 import Credits from '../Credits/Credits';
 import * as S from './style';
-import { isMenuOpenAtom } from '../../store';
+import { isMenuOpenAtom } from '../../stores/global';
 
 function Sidebar({ children }) {
   const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);

@@ -8,7 +8,7 @@ import {
   readChatFile,
   replaceEncryptionMessageAuthor,
 } from './utils/utils';
-import { activeUserAtom } from './store';
+import { activeUserAtom } from './stores/global';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
 import Sidebar from './components/Sidebar/Sidebar';
