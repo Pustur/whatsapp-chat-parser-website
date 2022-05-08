@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useAtom } from 'jotai';
 
+import { extractedFileAtom } from '../../stores/global';
 import { getMimeType } from '../../utils/utils';
 import { useIsMounted } from '../../hooks/useIsMounted';
 
@@ -27,33 +29,32 @@ const renderAttachment = (fileName, attachment) => {
   );
 };
 
-const Attachment = ({ fileName, zipFile }) => {
+const Attachment = ({ fileName }) => {
+  const [extractedFile] = useAtom(extractedFileAtom);
   const [attachment, setAttachment] = useState(null);
   const [error, setError] = useState(null);
   const isMounted = useIsMounted();
 
   useEffect(() => {
-    zipFile.then(zipData => {
-      const file = zipData.files[fileName];
+    const file = extractedFile.files[fileName];
 
-      if (!file) {
-        if (isMounted()) {
-          setError(new Error(`Can't find "${fileName}" in archive`));
-        }
-        return;
+    if (!file) {
+      if (isMounted()) {
+        setError(new Error(`Can't find "${fileName}" in archive`));
       }
-      if (getMimeType(fileName)) {
-        file.async('base64').then(data => {
-          if (isMounted()) setAttachment(data);
-        });
-        return;
-      }
-
-      file.async('blob').then(blob => {
-        if (isMounted()) setAttachment(URL.createObjectURL(blob));
+      return;
+    }
+    if (getMimeType(fileName)) {
+      file.async('base64').then(data => {
+        if (isMounted()) setAttachment(data);
       });
+      return;
+    }
+
+    file.async('blob').then(blob => {
+      if (isMounted()) setAttachment(URL.createObjectURL(blob));
     });
-  }, [zipFile, fileName, isMounted]);
+  }, [extractedFile, fileName, isMounted]);
 
   if (error) return error.toString();
   if (attachment) return renderAttachment(fileName, attachment);

@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { useAtom } from 'jotai';
 
 import Credits from '../Credits/Credits';
 import * as S from './style';
+import { isMenuOpenAtom } from '../../stores/global';
 
 function Sidebar({ children }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
 
   const closeButtonRef = useRef(null);
   const openButtonRef = useRef(null);
@@ -16,7 +18,7 @@ function Sidebar({ children }) {
 
     document.addEventListener('keydown', keyDownHandler);
     return () => document.removeEventListener('keydown', keyDownHandler);
-  }, []);
+  }, [setIsMenuOpen]);
 
   useEffect(() => {
     if (isMenuOpen) closeButtonRef.current.focus();

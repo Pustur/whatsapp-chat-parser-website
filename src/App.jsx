@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import JSZip from 'jszip';
-import { parseStringSync } from 'whatsapp-chat-parser';
+import React, { useEffect } from 'react';
+import { useAtom } from 'jotai';
 
+import { showError } from './utils/utils';
 import {
-  showError,
-  readChatFile,
-  replaceEncryptionMessageAuthor,
-} from './utils/utils';
+  activeUserAtom,
+  rawFileAtom,
+  messagesAtom,
+  participantsAtom,
+} from './stores/global';
+import { limitsAtom } from './stores/filters';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -14,53 +16,19 @@ import * as S from './style';
 
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
-const DEFAULT_LOWER_LIMIT = 1;
-const DEFAULT_UPPER_LIMIT = 100;
-
 function App() {
-  const [activeUser, setActiveUser] = useState('');
-  const [lowerLimit, setLowerLimit] = useState(DEFAULT_LOWER_LIMIT);
-  const [upperLimit, setUpperLimit] = useState(DEFAULT_UPPER_LIMIT);
-  const [rawFileText, setRawFileText] = useState('');
-  const [zipFile, setZipFile] = useState(null);
-
-  const messages = useMemo(() => {
-    if (!rawFileText) return [];
-    return replaceEncryptionMessageAuthor(
-      parseStringSync(rawFileText, {
-        parseAttachments: zipFile !== null,
-      }),
-    );
-  }, [rawFileText, zipFile]);
-
-  const participants = useMemo(() => {
-    const set = new Set();
-
-    messages.forEach(m => {
-      if (m.author !== 'System') set.add(m.author);
-    });
-
-    return Array.from(set);
-  }, [messages]);
+  const [activeUser, setActiveUser] = useAtom(activeUserAtom);
+  const [limits, setLimits] = useAtom(limitsAtom);
+  const [messages] = useAtom(messagesAtom);
+  const [, setRawFile] = useAtom(rawFileAtom);
+  const [participants] = useAtom(participantsAtom);
 
   const processFile = file => {
     if (!file) return;
 
     const reader = new FileReader();
-    const loadEndHandler = e => {
-      if (e.target.result instanceof ArrayBuffer) {
-        const jszip = new JSZip();
-        const zip = jszip.loadAsync(e.target.result);
 
-        setZipFile(zip);
-        zip.then(readChatFile).then(setRawFileText);
-      } else {
-        setZipFile(null);
-        setRawFileText(e.target.result);
-      }
-    };
-
-    reader.addEventListener('loadend', loadEndHandler);
+    reader.addEventListener('loadend', e => setRawFile(e.target.result));
 
     if (/^application\/(?:x-)?zip(?:-compressed)?$/.test(file.type)) {
       reader.readAsArrayBuffer(file);
@@ -72,22 +40,15 @@ function App() {
   };
 
   const setMessageLimits = e => {
-    const { lowerLimit: ll, upperLimit: ul } = Object.fromEntries(
-      new FormData(e.currentTarget),
-    );
-    const lower =
-      ll === '' ? DEFAULT_LOWER_LIMIT : parseInt(ll, 10) || DEFAULT_LOWER_LIMIT;
-    const upper =
-      ul === '' ? DEFAULT_UPPER_LIMIT : parseInt(ul, 10) || DEFAULT_UPPER_LIMIT;
+    const entries = Object.fromEntries(new FormData(e.currentTarget));
 
     e.preventDefault();
-    setLowerLimit(Math.min(lower, upper));
-    setUpperLimit(Math.max(lower, upper));
+    setLimits({ low: entries.lowerLimit, high: entries.upperLimit });
   };
 
   useEffect(() => {
     setActiveUser(participants[0] || '');
-  }, [participants]);
+  }, [setActiveUser, participants]);
 
   return (
     <>
@@ -104,9 +65,8 @@ function App() {
           messages={messages}
           participants={participants}
           activeUser={activeUser}
-          lowerLimit={lowerLimit}
-          upperLimit={upperLimit}
-          zipFile={zipFile}
+          lowerLimit={limits.low}
+          upperLimit={limits.high}
         />
         <Sidebar>
           <S.Form onSubmit={setMessageLimits}>
@@ -119,7 +79,7 @@ function App() {
                   name="lowerLimit"
                   type="number"
                   min="1"
-                  placeholder={lowerLimit}
+                  placeholder={limits.low}
                 />
               </S.Field>
               <S.Field>
@@ -129,7 +89,7 @@ function App() {
                   name="upperLimit"
                   type="number"
                   min="1"
-                  placeholder={upperLimit}
+                  placeholder={limits.high}
                 />
               </S.Field>
               <S.Field>
