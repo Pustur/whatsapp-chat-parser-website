@@ -1,4 +1,5 @@
 import JSZip from 'jszip';
+import { parseStringSync } from 'whatsapp-chat-parser';
 
 const getMimeType = fileName => {
   if (/\.jpe?g$/.test(fileName)) return 'image/jpeg';
@@ -65,6 +66,24 @@ const fileToText = file => {
   return readChatFile(file);
 };
 
+function messagesFromFile(file) {
+  return fileToText(file).then(text =>
+    replaceEncryptionMessageAuthor(
+      parseStringSync(text, { parseAttachments: file instanceof JSZip }),
+    ),
+  );
+}
+
+function participantsFromMessages(messages) {
+  const set = new Set();
+
+  messages.forEach(m => {
+    if (m.author !== 'System') set.add(m.author);
+  });
+
+  return Array.from(set);
+}
+
 export {
   getMimeType,
   showError,
@@ -72,4 +91,6 @@ export {
   replaceEncryptionMessageAuthor,
   extractFile,
   fileToText,
+  messagesFromFile,
+  participantsFromMessages,
 };
