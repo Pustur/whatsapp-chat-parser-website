@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useAtom } from 'jotai';
 
+import { zipFileAtom } from '../../stores/global';
 import { getMimeType } from '../../utils/utils';
 import { useIsMounted } from '../../hooks/useIsMounted';
 
@@ -27,7 +29,8 @@ const renderAttachment = (fileName, attachment) => {
   );
 };
 
-const Attachment = ({ fileName, zipFile }) => {
+const Attachment = ({ fileName }) => {
+  const [zipFile] = useAtom(zipFileAtom);
   const [attachment, setAttachment] = useState(null);
   const [error, setError] = useState(null);
   const isMounted = useIsMounted();

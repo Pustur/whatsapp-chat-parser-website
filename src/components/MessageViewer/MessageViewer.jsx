@@ -11,7 +11,6 @@ function MessageViewer({
   participants,
   lowerLimit,
   upperLimit,
-  zipFile,
 }) {
   const colorMap = useMemo(
     () =>
@@ -58,7 +57,6 @@ function MessageViewer({
               sameAuthorAsPrevious={
                 prevMessage && prevMessage.author === message.author
               }
-              zipFile={zipFile}
             />
           );
         })}

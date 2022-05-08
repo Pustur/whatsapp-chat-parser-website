@@ -1,7 +1,30 @@
 import { atom } from 'jotai';
+import { parseStringSync } from 'whatsapp-chat-parser';
+
+import {
+  replaceEncryptionMessageAuthor,
+  extractFile,
+  fileToText,
+} from '../utils/utils';
 
 const isMenuOpenAtom = atom(false);
 const activeUserAtom = atom('');
-const zipFileAtom = atom(null);
+const uploadedFileAtom = atom(null);
+const zipFileAtom = atom(get => extractFile(get(uploadedFileAtom)));
+const messagesAtom = atom(get => {
+  const file = get(uploadedFileAtom);
 
-export { isMenuOpenAtom, activeUserAtom, zipFileAtom };
+  return fileToText(extractFile(file)).then(text =>
+    replaceEncryptionMessageAuthor(
+      parseStringSync(text, { parseAttachments: file instanceof ArrayBuffer }),
+    ),
+  );
+});
+
+export {
+  isMenuOpenAtom,
+  activeUserAtom,
+  uploadedFileAtom,
+  messagesAtom,
+  zipFileAtom,
+};

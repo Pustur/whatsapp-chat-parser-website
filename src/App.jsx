@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useAtom } from 'jotai';
-import JSZip from 'jszip';
-import { parseStringSync } from 'whatsapp-chat-parser';
 
+import { showError } from './utils/utils';
 import {
-  showError,
-  readChatFile,
-  replaceEncryptionMessageAuthor,
-} from './utils/utils';
-import { activeUserAtom, zipFileAtom } from './stores/global';
+  activeUserAtom,
+  uploadedFileAtom,
+  messagesAtom,
+} from './stores/global';
 import { limitsAtom } from './stores/filters';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
@@ -20,17 +18,8 @@ import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 function App() {
   const [activeUser, setActiveUser] = useAtom(activeUserAtom);
   const [limits, setLimits] = useAtom(limitsAtom);
-  const [rawFileText, setRawFileText] = useState('');
-  const [zipFile, setZipFile] = useAtom(zipFileAtom);
-
-  const messages = useMemo(() => {
-    if (!rawFileText) return [];
-    return replaceEncryptionMessageAuthor(
-      parseStringSync(rawFileText, {
-        parseAttachments: zipFile !== null,
-      }),
-    );
-  }, [rawFileText, zipFile]);
+  const [messages] = useAtom(messagesAtom);
+  const [, setUploadedFile] = useAtom(uploadedFileAtom);
 
   const participants = useMemo(() => {
     const set = new Set();
@@ -46,20 +35,8 @@ function App() {
     if (!file) return;
 
     const reader = new FileReader();
-    const loadEndHandler = e => {
-      if (e.target.result instanceof ArrayBuffer) {
-        const jszip = new JSZip();
-        const zip = jszip.loadAsync(e.target.result);
 
-        setZipFile(zip);
-        zip.then(readChatFile).then(setRawFileText);
-      } else {
-        setZipFile(null);
-        setRawFileText(e.target.result);
-      }
-    };
-
-    reader.addEventListener('loadend', loadEndHandler);
+    reader.addEventListener('loadend', e => setUploadedFile(e.target.result));
 
     if (/^application\/(?:x-)?zip(?:-compressed)?$/.test(file.type)) {
       reader.readAsArrayBuffer(file);
@@ -98,7 +75,6 @@ function App() {
           activeUser={activeUser}
           lowerLimit={limits.low}
           upperLimit={limits.high}
-          zipFile={zipFile}
         />
         <Sidebar>
           <S.Form onSubmit={setMessageLimits}>

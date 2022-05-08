@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Linkify from 'react-linkify';
 
 import Attachment from '../Attachment/Attachment';
@@ -20,13 +20,7 @@ function Link(decoratedHref, decoratedText, key) {
   );
 }
 
-function Message({
-  message,
-  color,
-  isActiveUser,
-  sameAuthorAsPrevious,
-  zipFile,
-}) {
+function Message({ message, color, isActiveUser, sameAuthorAsPrevious }) {
   const isSystem = message.author === 'System';
   const dateTime = message.date.toISOString().slice(0, 19).replace('T', ' ');
 
@@ -42,10 +36,9 @@ function Message({
             <S.Author color={color}>{message.author}</S.Author>
           )}
           {message.attachment ? (
-            <Attachment
-              fileName={message.attachment.fileName}
-              zipFile={zipFile}
-            />
+            <Suspense fallback={`Loading ${message.attachment.fileName}...`}>
+              <Attachment fileName={message.attachment.fileName} />
+            </Suspense>
           ) : (
             <Linkify componentDecorator={Link}>
               <S.Message>{message.message}</S.Message>

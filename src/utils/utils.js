@@ -1,3 +1,5 @@
+import JSZip from 'jszip';
+
 const getMimeType = fileName => {
   if (/\.jpe?g$/.test(fileName)) return 'image/jpeg';
   if (fileName.endsWith('.png')) return 'image/png';
@@ -47,4 +49,27 @@ const replaceEncryptionMessageAuthor = messages =>
     return message;
   });
 
-export { getMimeType, showError, readChatFile, replaceEncryptionMessageAuthor };
+const extractFile = file => {
+  if (!file) return null;
+  if (typeof file === 'string') return file;
+
+  const jszip = new JSZip();
+
+  return jszip.loadAsync(file);
+};
+
+const fileToText = file => {
+  if (!file) return Promise.resolve('');
+  if (typeof file === 'string') return Promise.resolve(file);
+
+  return file.then(readChatFile);
+};
+
+export {
+  getMimeType,
+  showError,
+  readChatFile,
+  replaceEncryptionMessageAuthor,
+  extractFile,
+  fileToText,
+};
