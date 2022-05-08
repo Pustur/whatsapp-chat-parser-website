@@ -18,7 +18,7 @@ The website is available at [whatsapp-chat-parser.netlify.app](https://whatsapp-
 ## Technologies used
 
 - Libraries:
-  - [React](https://reactjs.org/)
+  - [React](https://reactjs.org/) (with [Jotai](https://jotai.org/))
   - [JSZip](https://stuk.github.io/jszip/)
   - [whatsapp-chat-parser](https://github.com/Pustur/whatsapp-chat-parser)
 - CSS: [Styled Components](https://www.styled-components.com/)
