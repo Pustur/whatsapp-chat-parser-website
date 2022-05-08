@@ -8,7 +8,7 @@ import {
   readChatFile,
   replaceEncryptionMessageAuthor,
 } from './utils/utils';
-import { activeUserAtom } from './stores/global';
+import { activeUserAtom, zipFileAtom } from './stores/global';
 import { limitsAtom } from './stores/filters';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
@@ -21,7 +21,7 @@ function App() {
   const [activeUser, setActiveUser] = useAtom(activeUserAtom);
   const [limits, setLimits] = useAtom(limitsAtom);
   const [rawFileText, setRawFileText] = useState('');
-  const [zipFile, setZipFile] = useState(null);
+  const [zipFile, setZipFile] = useAtom(zipFileAtom);
 
   const messages = useMemo(() => {
     if (!rawFileText) return [];
