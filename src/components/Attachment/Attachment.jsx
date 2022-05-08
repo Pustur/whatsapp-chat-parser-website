@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 
-import { zipFileAtom } from '../../stores/global';
+import { extractedFileAtom } from '../../stores/global';
 import { getMimeType } from '../../utils/utils';
 import { useIsMounted } from '../../hooks/useIsMounted';
 
@@ -30,13 +30,13 @@ const renderAttachment = (fileName, attachment) => {
 };
 
 const Attachment = ({ fileName }) => {
-  const [zipFile] = useAtom(zipFileAtom);
+  const [extractedFile] = useAtom(extractedFileAtom);
   const [attachment, setAttachment] = useState(null);
   const [error, setError] = useState(null);
   const isMounted = useIsMounted();
 
   useEffect(() => {
-    const file = zipFile.files[fileName];
+    const file = extractedFile.files[fileName];
 
     if (!file) {
       if (isMounted()) {
@@ -54,7 +54,7 @@ const Attachment = ({ fileName }) => {
     file.async('blob').then(blob => {
       if (isMounted()) setAttachment(URL.createObjectURL(blob));
     });
-  }, [zipFile, fileName, isMounted]);
+  }, [extractedFile, fileName, isMounted]);
 
   if (error) return error.toString();
   if (attachment) return renderAttachment(fileName, attachment);

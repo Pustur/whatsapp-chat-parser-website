@@ -4,7 +4,7 @@ import { useAtom } from 'jotai';
 import { showError } from './utils/utils';
 import {
   activeUserAtom,
-  uploadedFileAtom,
+  rawFileAtom,
   messagesAtom,
   participantsAtom,
 } from './stores/global';
@@ -20,7 +20,7 @@ function App() {
   const [activeUser, setActiveUser] = useAtom(activeUserAtom);
   const [limits, setLimits] = useAtom(limitsAtom);
   const [messages] = useAtom(messagesAtom);
-  const [, setUploadedFile] = useAtom(uploadedFileAtom);
+  const [, setRawFile] = useAtom(rawFileAtom);
   const [participants] = useAtom(participantsAtom);
 
   const processFile = file => {
@@ -28,7 +28,7 @@ function App() {
 
     const reader = new FileReader();
 
-    reader.addEventListener('loadend', e => setUploadedFile(e.target.result));
+    reader.addEventListener('loadend', e => setRawFile(e.target.result));
 
     if (/^application\/(?:x-)?zip(?:-compressed)?$/.test(file.type)) {
       reader.readAsArrayBuffer(file);

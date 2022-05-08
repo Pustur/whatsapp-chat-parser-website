@@ -10,10 +10,10 @@ import {
 
 const isMenuOpenAtom = atom(false);
 const activeUserAtom = atom('');
-const uploadedFileAtom = atom(null);
-const zipFileAtom = atom(get => extractFile(get(uploadedFileAtom)));
+const rawFileAtom = atom(null);
+const extractedFileAtom = atom(get => extractFile(get(rawFileAtom)));
 const messagesAtom = atom(get => {
-  const file = get(zipFileAtom);
+  const file = get(extractedFileAtom);
 
   return fileToText(file).then(text =>
     replaceEncryptionMessageAuthor(
@@ -35,8 +35,8 @@ const participantsAtom = atom(get => {
 export {
   isMenuOpenAtom,
   activeUserAtom,
-  uploadedFileAtom,
+  rawFileAtom,
   messagesAtom,
   participantsAtom,
-  zipFileAtom,
+  extractedFileAtom,
 };
