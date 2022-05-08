@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import * as S from './style';
 
@@ -9,6 +9,7 @@ const preventDefaults = e => {
 
 function Dropzone({ id, onFileUpload }) {
   const [isHighlighted, setIsHighlighted] = useState(false);
+  const inputRef = useRef(null);
 
   const onDragEnterOverHandler = e => {
     preventDefaults(e);
@@ -28,6 +29,11 @@ function Dropzone({ id, onFileUpload }) {
 
   const onChangeHandler = e => onFileUpload(e.target.files[0]);
 
+  useEffect(() => {
+    // setTimeout to steal the focus from MenuOpenButton (only on first render)
+    setTimeout(() => inputRef.current.focus(), 0);
+  }, []);
+
   return (
     <form
       onDragEnter={onDragEnterOverHandler}
@@ -39,6 +45,7 @@ function Dropzone({ id, onFileUpload }) {
         id={id}
         type="file"
         accept="text/plain, application/zip"
+        ref={inputRef}
         onChange={onChangeHandler}
       />
       <S.Label htmlFor={id} isHighlighted={isHighlighted}>

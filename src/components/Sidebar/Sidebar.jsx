@@ -9,31 +9,26 @@ function Sidebar({ children }) {
   const closeButtonRef = useRef(null);
   const openButtonRef = useRef(null);
 
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-    openButtonRef.current.focus();
-  };
-
-  const openMenu = () => {
-    setIsMenuOpen(true);
-    closeButtonRef.current.focus();
-  };
-
   useEffect(() => {
     const keyDownHandler = e => {
-      if (e.key === 'Escape') closeMenu();
+      if (e.key === 'Escape') setIsMenuOpen(false);
     };
 
     document.addEventListener('keydown', keyDownHandler);
     return () => document.removeEventListener('keydown', keyDownHandler);
   }, []);
 
+  useEffect(() => {
+    if (isMenuOpen) closeButtonRef.current.focus();
+    else openButtonRef.current.focus();
+  }, [isMenuOpen]);
+
   return (
     <>
       <S.MenuOpenButton
         className="menu-open-button"
         type="button"
-        onClick={openMenu}
+        onClick={() => setIsMenuOpen(true)}
         ref={openButtonRef}
       >
         Open menu
@@ -41,13 +36,13 @@ function Sidebar({ children }) {
       <S.Overlay
         type="button"
         isActive={isMenuOpen}
-        onClick={closeMenu}
+        onClick={() => setIsMenuOpen(false)}
         tabIndex="-1"
       />
       <S.Sidebar isOpen={isMenuOpen}>
         <S.MenuCloseButton
           type="button"
-          onClick={closeMenu}
+          onClick={() => setIsMenuOpen(false)}
           ref={closeButtonRef}
         >
           Close menu
