@@ -1,4 +1,5 @@
 import { atom } from 'jotai';
+import JSZip from 'jszip';
 import { parseStringSync } from 'whatsapp-chat-parser';
 
 import {
@@ -12,11 +13,11 @@ const activeUserAtom = atom('');
 const uploadedFileAtom = atom(null);
 const zipFileAtom = atom(get => extractFile(get(uploadedFileAtom)));
 const messagesAtom = atom(get => {
-  const file = get(uploadedFileAtom);
+  const file = get(zipFileAtom);
 
-  return fileToText(extractFile(file)).then(text =>
+  return fileToText(file).then(text =>
     replaceEncryptionMessageAuthor(
-      parseStringSync(text, { parseAttachments: file instanceof ArrayBuffer }),
+      parseStringSync(text, { parseAttachments: file instanceof JSZip }),
     ),
   );
 });

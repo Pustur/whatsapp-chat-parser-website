@@ -62,7 +62,7 @@ const fileToText = file => {
   if (!file) return Promise.resolve('');
   if (typeof file === 'string') return Promise.resolve(file);
 
-  return file.then(readChatFile);
+  return readChatFile(file);
 };
 
 export {
