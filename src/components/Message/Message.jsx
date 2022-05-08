@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Linkify from 'react-linkify';
 
 import Attachment from '../Attachment/Attachment';
@@ -64,27 +63,5 @@ function Message({
     </S.Item>
   );
 }
-
-Message.propTypes = {
-  message: PropTypes.shape({
-    date: PropTypes.instanceOf(Date).isRequired,
-    author: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired,
-    attachment: PropTypes.shape({
-      fileName: PropTypes.string.isRequired,
-    }),
-  }).isRequired,
-  color: PropTypes.string,
-  isActiveUser: PropTypes.bool,
-  sameAuthorAsPrevious: PropTypes.bool,
-  zipFile: PropTypes.instanceOf(Promise),
-};
-
-Message.defaultProps = {
-  color: 'black',
-  isActiveUser: false,
-  sameAuthorAsPrevious: false,
-  zipFile: null,
-};
 
 export default Message;
