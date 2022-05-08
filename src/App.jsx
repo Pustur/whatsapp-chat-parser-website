@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useAtom } from 'jotai';
 
 import { showError } from './utils/utils';
@@ -6,6 +6,7 @@ import {
   activeUserAtom,
   uploadedFileAtom,
   messagesAtom,
+  participantsAtom,
 } from './stores/global';
 import { limitsAtom } from './stores/filters';
 import Dropzone from './components/Dropzone/Dropzone';
@@ -20,16 +21,7 @@ function App() {
   const [limits, setLimits] = useAtom(limitsAtom);
   const [messages] = useAtom(messagesAtom);
   const [, setUploadedFile] = useAtom(uploadedFileAtom);
-
-  const participants = useMemo(() => {
-    const set = new Set();
-
-    messages.forEach(m => {
-      if (m.author !== 'System') set.add(m.author);
-    });
-
-    return Array.from(set);
-  }, [messages]);
+  const [participants] = useAtom(participantsAtom);
 
   const processFile = file => {
     if (!file) return;

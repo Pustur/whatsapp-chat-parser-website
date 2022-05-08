@@ -20,11 +20,22 @@ const messagesAtom = atom(get => {
     ),
   );
 });
+const participantsAtom = atom(get => {
+  const messages = get(messagesAtom);
+  const set = new Set();
+
+  messages.forEach(m => {
+    if (m.author !== 'System') set.add(m.author);
+  });
+
+  return Array.from(set);
+});
 
 export {
   isMenuOpenAtom,
   activeUserAtom,
   uploadedFileAtom,
   messagesAtom,
+  participantsAtom,
   zipFileAtom,
 };
