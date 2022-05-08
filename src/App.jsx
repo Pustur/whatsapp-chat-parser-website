@@ -9,6 +9,7 @@ import {
   replaceEncryptionMessageAuthor,
 } from './utils/utils';
 import { activeUserAtom } from './stores/global';
+import { limitsAtom } from './stores/filters';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -16,13 +17,9 @@ import * as S from './style';
 
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
-const DEFAULT_LOWER_LIMIT = 1;
-const DEFAULT_UPPER_LIMIT = 100;
-
 function App() {
   const [activeUser, setActiveUser] = useAtom(activeUserAtom);
-  const [lowerLimit, setLowerLimit] = useState(DEFAULT_LOWER_LIMIT);
-  const [upperLimit, setUpperLimit] = useState(DEFAULT_UPPER_LIMIT);
+  const [limits, setLimits] = useAtom(limitsAtom);
   const [rawFileText, setRawFileText] = useState('');
   const [zipFile, setZipFile] = useState(null);
 
@@ -74,17 +71,10 @@ function App() {
   };
 
   const setMessageLimits = e => {
-    const { lowerLimit: ll, upperLimit: ul } = Object.fromEntries(
-      new FormData(e.currentTarget),
-    );
-    const lower =
-      ll === '' ? DEFAULT_LOWER_LIMIT : parseInt(ll, 10) || DEFAULT_LOWER_LIMIT;
-    const upper =
-      ul === '' ? DEFAULT_UPPER_LIMIT : parseInt(ul, 10) || DEFAULT_UPPER_LIMIT;
+    const entries = Object.fromEntries(new FormData(e.currentTarget));
 
     e.preventDefault();
-    setLowerLimit(Math.min(lower, upper));
-    setUpperLimit(Math.max(lower, upper));
+    setLimits({ low: entries.lowerLimit, high: entries.upperLimit });
   };
 
   useEffect(() => {
@@ -106,8 +96,8 @@ function App() {
           messages={messages}
           participants={participants}
           activeUser={activeUser}
-          lowerLimit={lowerLimit}
-          upperLimit={upperLimit}
+          lowerLimit={limits.low}
+          upperLimit={limits.high}
           zipFile={zipFile}
         />
         <Sidebar>
@@ -121,7 +111,7 @@ function App() {
                   name="lowerLimit"
                   type="number"
                   min="1"
-                  placeholder={lowerLimit}
+                  placeholder={limits.low}
                 />
               </S.Field>
               <S.Field>
@@ -131,7 +121,7 @@ function App() {
                   name="upperLimit"
                   type="number"
                   min="1"
-                  placeholder={upperLimit}
+                  placeholder={limits.high}
                 />
               </S.Field>
               <S.Field>
