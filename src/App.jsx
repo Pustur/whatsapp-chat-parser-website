@@ -2,12 +2,7 @@ import React, { useEffect } from 'react';
 import { useAtom } from 'jotai';
 
 import { showError } from './utils/utils';
-import {
-  activeUserAtom,
-  rawFileAtom,
-  messagesAtom,
-  participantsAtom,
-} from './stores/global';
+import { activeUserAtom, rawFileAtom, participantsAtom } from './stores/global';
 import { limitsAtom } from './stores/filters';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
@@ -19,7 +14,6 @@ import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 function App() {
   const [activeUser, setActiveUser] = useAtom(activeUserAtom);
   const [limits, setLimits] = useAtom(limitsAtom);
-  const [messages] = useAtom(messagesAtom);
   const [, setRawFile] = useAtom(rawFileAtom);
   const [participants] = useAtom(participantsAtom);
 
@@ -62,7 +56,6 @@ function App() {
           </a>
         </S.Header>
         <MessageViewer
-          messages={messages}
           participants={participants}
           activeUser={activeUser}
           lowerLimit={limits.low}
