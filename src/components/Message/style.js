@@ -43,6 +43,8 @@ const Index = styled.div`
   top: -0.5em;
   right: -0.5em;
   background-color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
   ${props =>
     props.isSystem &&
     css`
@@ -110,6 +112,12 @@ const Bubble = styled.div`
       css`
         background-color: ${activeUserDarkBackgroundColor};
       `}
+  }
+
+  &:hover {
+    ${Index} {
+      opacity: 1;
+    }
   }
 `;
 
