@@ -32,7 +32,7 @@ const readChatFile = zipData => {
   const chatFiles = zipData.file(/.*(?:chat|whatsapp).*\.txt$/i);
 
   if (!chatFiles.length) {
-    throw new Error('No txt files found in archive');
+    return Promise.reject(new Error('No txt files found in archive'));
   }
 
   const chatFilesSorted = chatFiles.sort(
@@ -63,7 +63,11 @@ const fileToText = file => {
   if (!file) return Promise.resolve('');
   if (typeof file === 'string') return Promise.resolve(file);
 
-  return readChatFile(file);
+  return readChatFile(file).catch(err => {
+    // eslint-disable-next-line no-alert
+    alert(err);
+    return Promise.resolve('');
+  });
 };
 
 function messagesFromFile(file) {
