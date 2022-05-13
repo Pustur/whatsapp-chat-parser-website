@@ -44,6 +44,19 @@ function App() {
     setActiveUser(participants[0] || '');
   }, [setActiveUser, participants]);
 
+  useEffect(() => {
+    const keyHandler = e =>
+      document.documentElement.classList.toggle('ctrl-down', e.ctrlKey);
+
+    document.addEventListener('keydown', keyHandler);
+    document.addEventListener('keyup', keyHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyHandler);
+      document.removeEventListener('keyup', keyHandler);
+    };
+  }, []);
+
   return (
     <>
       <S.GlobalStyles />

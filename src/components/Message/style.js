@@ -56,6 +56,10 @@ const Index = styled.div`
       background-color: ${activeUserBackgroundColor};
     `}
 
+  .ctrl-down & {
+    opacity: 1;
+  }
+
   @media (prefers-color-scheme: dark) {
     background-color: #262d31;
     border-color: rgba(255, 255, 255, 0.1);
