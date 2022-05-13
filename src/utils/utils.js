@@ -73,7 +73,9 @@ const fileToText = file => {
 function messagesFromFile(file) {
   return fileToText(file).then(text =>
     replaceEncryptionMessageAuthor(
-      parseStringSync(text, { parseAttachments: file instanceof JSZip }),
+      parseStringSync(text, { parseAttachments: file instanceof JSZip }).map(
+        (msg, index) => ({ ...msg, index }),
+      ),
     ),
   );
 }

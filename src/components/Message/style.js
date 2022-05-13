@@ -34,9 +34,47 @@ const Item = styled.li`
   }
 `;
 
+const Index = styled.div`
+  position: absolute;
+  font-size: 10px;
+  padding-inline: 7px;
+  border-radius: 99px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  top: -0.5em;
+  right: -0.5em;
+  background-color: white;
+  ${props =>
+    props.isSystem &&
+    css`
+      background-color: ${systemBackgroundColor};
+    `}
+  ${props =>
+    props.isActiveUser &&
+    css`
+      background-color: ${activeUserBackgroundColor};
+    `}
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #262d31;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f1f1f2;
+    ${props =>
+      props.isSystem &&
+      css`
+        background-color: ${systemDarkBackgroundColor};
+      `}
+    ${props =>
+      props.isActiveUser &&
+      css`
+        background-color: ${activeUserDarkBackgroundColor};
+      `}
+  }
+`;
+
 const Bubble = styled.div`
   ${messageBaseStyle}
 
+  position: relative;
   background-color: white;
   ${props =>
     props.isSystem &&
@@ -105,4 +143,4 @@ const Date = styled.time`
   }
 `;
 
-export { Item, Bubble, Wrapper, Author, Message, Date };
+export { Item, Bubble, Index, Wrapper, Author, Message, Date };
