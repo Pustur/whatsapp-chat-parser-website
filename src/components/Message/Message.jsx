@@ -31,6 +31,9 @@ function Message({ message, color, isActiveUser, sameAuthorAsPrevious }) {
       sameAuthorAsPrevious={sameAuthorAsPrevious}
     >
       <S.Bubble isSystem={isSystem} isActiveUser={isActiveUser}>
+        <S.Index isSystem={isSystem} isActiveUser={isActiveUser}>
+          {(message.index + 1).toLocaleString('de-CH')}
+        </S.Index>
         <S.Wrapper>
           {!isSystem && !sameAuthorAsPrevious && (
             <S.Author color={color}>{message.author}</S.Author>

@@ -47,7 +47,7 @@ function MessageViewer({ activeUser, participants, lowerLimit, upperLimit }) {
 
           return (
             <Message
-              key={i} // eslint-disable-line react/no-array-index-key
+              key={message.index}
               message={message}
               color={colorMap[message.author]}
               isActiveUser={activeUser === message.author}
