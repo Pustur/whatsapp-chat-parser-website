@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] - 2023-02-18
+
+### Added
+
+- Message's index number when hovering over a message or when holding the ctrl key
+- Upload input focused state on page load
+- Section in readme about how to run the project locally
+- Jotai as the state management library
+
+### Changed
+
+- Improved print styles
+- Updated parser and dependencies
+- Replaced create-react-app with vite
+- Lots of code cleanup and refactors
+
 ## [1.7.1] - 2022-04-08
 
 ### Changed
@@ -156,6 +172,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 
+[1.8.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.7.1...1.8.0
 [1.7.1]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.6.2...1.7.0
 [1.6.2]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.6.1...1.6.2

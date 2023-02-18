@@ -1,25 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useMemo } from 'react';
+import { useAtom } from 'jotai';
 
 import Message from '../Message/Message';
 import * as S from './style';
+import { messagesAtom } from '../../stores/global';
 
 import { authorColors } from '../../utils/colors';
 
-const MessageViewer = ({
-  messages,
-  activeUser,
-  participants,
-  lowerLimit,
-  upperLimit,
-  zipFile,
-}) => {
-  const colorMap = participants.reduce(
-    (obj, participant, i) => ({
-      ...obj,
-      [participant]: authorColors[i % authorColors.length],
-    }),
-    {},
+function MessageViewer({ activeUser, participants, lowerLimit, upperLimit }) {
+  const [messages] = useAtom(messagesAtom);
+  const colorMap = useMemo(
+    () =>
+      participants.reduce(
+        (obj, participant, i) => ({
+          ...obj,
+          [participant]: authorColors[i % authorColors.length],
+        }),
+        {},
+      ),
+    [participants],
   );
   const renderedMessages = messages.slice(lowerLimit - 1, upperLimit);
   const isLimited = renderedMessages.length !== messages.length;
@@ -48,41 +47,19 @@ const MessageViewer = ({
 
           return (
             <Message
-              key={i} // eslint-disable-line react/no-array-index-key
+              key={message.index}
               message={message}
               color={colorMap[message.author]}
               isActiveUser={activeUser === message.author}
               sameAuthorAsPrevious={
                 prevMessage && prevMessage.author === message.author
               }
-              zipFile={zipFile}
             />
           );
         })}
       </S.List>
     </S.Container>
   );
-};
-
-MessageViewer.propTypes = {
-  messages: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.instanceOf(Date),
-      author: PropTypes.string,
-      message: PropTypes.string,
-    }),
-  ).isRequired,
-  participants: PropTypes.arrayOf(PropTypes.string).isRequired,
-  activeUser: PropTypes.string.isRequired,
-  lowerLimit: PropTypes.number,
-  upperLimit: PropTypes.number,
-  zipFile: PropTypes.instanceOf(Promise),
-};
-
-MessageViewer.defaultProps = {
-  lowerLimit: 1,
-  upperLimit: Infinity,
-  zipFile: null,
-};
+}
 
 export default React.memo(MessageViewer);

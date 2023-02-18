@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef, useEffect } from 'react';
 
 import * as S from './style';
 
@@ -8,8 +7,9 @@ const preventDefaults = e => {
   e.stopPropagation();
 };
 
-const Dropzone = ({ id, onFileUpload }) => {
+function Dropzone({ id, onFileUpload }) {
   const [isHighlighted, setIsHighlighted] = useState(false);
+  const inputRef = useRef(null);
 
   const onDragEnterOverHandler = e => {
     preventDefaults(e);
@@ -29,6 +29,11 @@ const Dropzone = ({ id, onFileUpload }) => {
 
   const onChangeHandler = e => onFileUpload(e.target.files[0]);
 
+  useEffect(() => {
+    // setTimeout to steal the focus from MenuOpenButton (only on first render)
+    setTimeout(() => inputRef.current.focus(), 0);
+  }, []);
+
   return (
     <form
       onDragEnter={onDragEnterOverHandler}
@@ -40,6 +45,7 @@ const Dropzone = ({ id, onFileUpload }) => {
         id={id}
         type="file"
         accept="text/plain, application/zip"
+        ref={inputRef}
         onChange={onChangeHandler}
       />
       <S.Label htmlFor={id} isHighlighted={isHighlighted}>
@@ -51,11 +57,6 @@ const Dropzone = ({ id, onFileUpload }) => {
       </S.Label>
     </form>
   );
-};
-
-Dropzone.propTypes = {
-  id: PropTypes.string.isRequired,
-  onFileUpload: PropTypes.func.isRequired,
-};
+}
 
 export default Dropzone;
