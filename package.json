@@ -14,7 +14,7 @@
     "react-linkify": "1.0.0-alpha",
     "styled-components": "5.3.6",
     "vite": "4.1.2",
-    "whatsapp-chat-parser": "3.2.1"
+    "whatsapp-chat-parser": "4.0.0"
   },
   "scripts": {
     "start": "vite",

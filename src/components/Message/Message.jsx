@@ -21,7 +21,7 @@ function Link(decoratedHref, decoratedText, key) {
 }
 
 function Message({ message, color, isActiveUser, sameAuthorAsPrevious }) {
-  const isSystem = message.author === 'System';
+  const isSystem = !message.author;
   const dateTime = message.date.toISOString().slice(0, 19).replace('T', ' ');
 
   return (
