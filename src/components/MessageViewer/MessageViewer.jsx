@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 
 import Message from '../Message/Message';
 import * as S from './style';
@@ -8,7 +8,7 @@ import { messagesAtom } from '../../stores/global';
 import { authorColors } from '../../utils/colors';
 
 function MessageViewer({ activeUser, participants, lowerLimit, upperLimit }) {
-  const [messages] = useAtom(messagesAtom);
+  const messages = useAtomValue(messagesAtom);
   const colorMap = useMemo(
     () =>
       participants.reduce(

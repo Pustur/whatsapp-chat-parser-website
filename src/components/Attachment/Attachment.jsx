@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 
 import { extractedFileAtom } from '../../stores/global';
 import { getMimeType } from '../../utils/utils';
@@ -30,7 +30,7 @@ const renderAttachment = (fileName, attachment) => {
 };
 
 const Attachment = ({ fileName }) => {
-  const [extractedFile] = useAtom(extractedFileAtom);
+  const extractedFile = useAtomValue(extractedFileAtom);
   const [attachment, setAttachment] = useState(null);
   const [error, setError] = useState(null);
   const isMounted = useIsMounted();

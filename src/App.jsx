@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import { showError } from './utils/utils';
 import { activeUserAtom, rawFileAtom, participantsAtom } from './stores/global';
@@ -14,8 +14,8 @@ import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 function App() {
   const [activeUser, setActiveUser] = useAtom(activeUserAtom);
   const [limits, setLimits] = useAtom(limitsAtom);
-  const [, setRawFile] = useAtom(rawFileAtom);
-  const [participants] = useAtom(participantsAtom);
+  const setRawFile = useSetAtom(rawFileAtom);
+  const participants = useAtomValue(participantsAtom);
 
   const processFile = file => {
     if (!file) return;
