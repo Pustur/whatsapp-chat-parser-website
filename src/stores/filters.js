@@ -1,4 +1,6 @@
 import { atom } from 'jotai';
+import { createValidDateInputString } from '../utils/utils';
+import { messagesAtom } from './global';
 
 const DEFAULT_LOWER_LIMIT = 1;
 const DEFAULT_UPPER_LIMIT = 100;
@@ -27,4 +29,25 @@ const limitsAtom = atom(
   },
 );
 
-export { limitsAtom };
+const datesAtom = atom(get => {
+  const messages = get(messagesAtom);
+
+  if (messages.length === 0) {
+    return {
+      start: 'yyyy-mm-dd',
+      end: 'yyyy-mm-dd',
+    };
+  }
+
+  const start = createValidDateInputString(new Date(messages[0].date));
+  const end = createValidDateInputString(new Date(messages.at(-1).date));
+
+  console.log({ start, end });
+
+  return {
+    start,
+    end,
+  };
+});
+
+export { limitsAtom, datesAtom };

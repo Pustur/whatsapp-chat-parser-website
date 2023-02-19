@@ -44,9 +44,28 @@ const Field = styled.div`
   }
 `;
 
+const RadioField = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  & + & {
+    margin-top: 0.5rem;
+  }
+`;
+
 const Label = styled.label`
   display: block;
   opacity: 0.8;
+  width: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Fieldset = styled.fieldset`
@@ -60,6 +79,12 @@ const Fieldset = styled.fieldset`
 
 const Input = styled.input`
   ${inputStyles}
+`;
+
+const RadioInput = styled.input`
+  ${normalizeInput};
+
+  appearance: auto;
 `;
 
 const Select = styled.select`
@@ -183,9 +208,11 @@ export {
   Container,
   Form,
   Field,
+  RadioField,
   Label,
   Fieldset,
   Input,
+  RadioInput,
   Select,
   Submit,
   InputDescription,

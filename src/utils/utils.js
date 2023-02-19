@@ -90,6 +90,19 @@ function participantsFromMessages(messages) {
   return Array.from(set);
 }
 
+function createValidDateInputString(date) {
+  const year = date.getFullYear();
+  const month = date
+    .getMonth()
+    .toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
+  const day = (date.getDay() + 1).toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  });
+
+  return `${year}-${month}-${day}`;
+}
+
 export {
   getMimeType,
   showError,
@@ -99,4 +112,5 @@ export {
   fileToText,
   messagesFromFile,
   participantsFromMessages,
+  createValidDateInputString,
 };
