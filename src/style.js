@@ -90,6 +90,10 @@ const Submit = styled.input`
   padding: 0 0.3rem;
   background-color: ${whatsappThemeColor};
   color: white;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const InputDescription = styled.div`
