@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import { showError } from './utils/utils';
 import { activeUserAtom, rawFileAtom, participantsAtom } from './stores/global';
-import { datesAtom, limitsAtom } from './stores/filters';
+import { datesAtom, filterModeAtom, limitsAtom } from './stores/filters';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -12,7 +12,7 @@ import * as S from './style';
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
 function App() {
-  const [filterMode, setFilterMode] = useState('index');
+  const [filterMode, setFilterMode] = useAtom(filterModeAtom);
   const [activeUser, setActiveUser] = useAtom(activeUserAtom);
   const [limits, setLimits] = useAtom(limitsAtom);
   const [dates, setDates] = useAtom(datesAtom);

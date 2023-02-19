@@ -5,6 +5,8 @@ import { messagesAtom } from './global';
 const DEFAULT_LOWER_LIMIT = 1;
 const DEFAULT_UPPER_LIMIT = 100;
 
+const filterModeAtom = atom('index');
+
 const setLimits = (limits, { low, high }) => {
   return {
     ...limits,
@@ -50,4 +52,4 @@ const datesAtom = atom(get => {
   };
 });
 
-export { limitsAtom, datesAtom };
+export { filterModeAtom, limitsAtom, datesAtom };
