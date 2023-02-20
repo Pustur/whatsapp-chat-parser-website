@@ -33,10 +33,7 @@ function MessageViewer({ activeUser, participants, lowerLimit, upperLimit }) {
       ? messages.slice(lowerLimit - 1, upperLimit)
       : filterMessagesByDate(messages, startDate, endDatePlusOne);
 
-  const isLimited =
-    renderedMessages.length !== messages.length ||
-    messagesDateBounds.start < startDate ||
-    messagesDateBounds.end > endDatePlusOne;
+  const isLimited = renderedMessages.length !== messages.length;
 
   return (
     <S.Container>
