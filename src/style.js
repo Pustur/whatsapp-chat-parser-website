@@ -151,6 +151,10 @@ const GlobalStyles = createGlobalStyle`
     font-family: sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 
       'Segoe UI Symbol', 'Noto Color Emoji';
     box-sizing: border-box;
+    
+    @media (prefers-color-scheme: dark) {
+      color-scheme: dark;
+    }
   }
 
   body {
