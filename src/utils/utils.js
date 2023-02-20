@@ -90,18 +90,8 @@ function participantsFromMessages(messages) {
   return Array.from(set);
 }
 
-function createValidDateInputString(date) {
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toLocaleString('en-US', {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  });
-  const day = date.getDate().toLocaleString('en-US', {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  });
-
-  return `${year}-${month}-${day}`;
+function getISODateString(date) {
+  return date.toISOString().slice(0, 10);
 }
 
 function extractStartEndDatesFromMessages(messages) {
@@ -112,8 +102,8 @@ function extractStartEndDatesFromMessages(messages) {
     };
   }
 
-  const start = createValidDateInputString(new Date(messages[0].date));
-  const end = createValidDateInputString(new Date(messages.at(-1).date));
+  const start = getISODateString(new Date(messages[0].date));
+  const end = getISODateString(new Date(messages.at(-1).date));
 
   return {
     start,
@@ -152,7 +142,7 @@ export {
   fileToText,
   messagesFromFile,
   participantsFromMessages,
-  createValidDateInputString,
+  getISODateString,
   extractStartEndDatesFromMessages,
   convertDateInputStringIntoDate,
   filterMessagesByDate,
