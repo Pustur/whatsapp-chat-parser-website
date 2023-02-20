@@ -102,13 +102,9 @@ function extractStartEndDatesFromMessages(messages) {
 }
 
 function filterMessagesByDate(messages, startDate, endDate) {
-  return messages.filter(message => {
-    const date = new Date(message.date);
-    return (
-      date.valueOf() >= startDate.valueOf() &&
-      date.valueOf() <= endDate.valueOf()
-    );
-  });
+  return messages.filter(
+    message => message.date >= startDate && message.date <= endDate,
+  );
 }
 
 export {
