@@ -14,6 +14,8 @@ function MessageViewer({ activeUser, participants, lowerLimit, upperLimit }) {
   const messagesDateBounds = useAtomValue(messagesDateBoundsAtom);
   const filterMode = useAtomValue(globalFilterModeAtom);
   const { start: startDate, end: endDate } = useAtomValue(datesAtom);
+  const endDatePlusOne = new Date(endDate);
+  endDatePlusOne.setDate(endDatePlusOne.getDate() + 1);
   const colorMap = useMemo(
     () =>
       participants.reduce(
@@ -29,12 +31,12 @@ function MessageViewer({ activeUser, participants, lowerLimit, upperLimit }) {
   const renderedMessages =
     filterMode === 'index'
       ? messages.slice(lowerLimit - 1, upperLimit)
-      : filterMessagesByDate(messages, startDate, endDate);
+      : filterMessagesByDate(messages, startDate, endDatePlusOne);
 
   const isLimited =
     renderedMessages.length !== messages.length ||
-    messagesDateBounds.start.valueOf() < startDate.valueOf() ||
-    messagesDateBounds.end.valueOf() > endDate.valueOf();
+    messagesDateBounds.start < startDate ||
+    messagesDateBounds.end > endDatePlusOne;
 
   return (
     <S.Container>
