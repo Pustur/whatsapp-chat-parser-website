@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
-import { getISODateString, showError } from './utils/utils';
+import { capitalize, getISODateString, showError } from './utils/utils';
 import {
   activeUserAtom,
   rawFileAtom,
@@ -103,15 +103,12 @@ function App() {
                 <S.RadioField key={name}>
                   <S.RadioInput
                     id={name}
-                    name={name}
                     type="radio"
                     value={name}
                     checked={filterMode === name}
                     onChange={e => setFilterMode(e.target.value)}
                   />
-                  <S.Label htmlFor={name}>
-                    {name.charAt(0).toUpperCase() + name.slice(1)}
-                  </S.Label>
+                  <S.Label htmlFor={name}>{capitalize(name)}</S.Label>
                 </S.RadioField>
               ))}
             </S.Fieldset>

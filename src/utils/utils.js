@@ -107,6 +107,10 @@ function filterMessagesByDate(messages, startDate, endDate) {
   );
 }
 
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export {
   getMimeType,
   showError,
@@ -119,4 +123,5 @@ export {
   getISODateString,
   extractStartEndDatesFromMessages,
   filterMessagesByDate,
+  capitalize,
 };
