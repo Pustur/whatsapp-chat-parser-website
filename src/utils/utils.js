@@ -95,20 +95,10 @@ function getISODateString(date) {
 }
 
 function extractStartEndDatesFromMessages(messages) {
-  if (messages.length === 0) {
-    return {
-      start: 'yyyy-mm-dd',
-      end: 'yyyy-mm-dd',
-    };
-  }
+  const start = messages[0]?.date ?? new Date();
+  const end = messages.at(-1)?.date ?? new Date();
 
-  const start = getISODateString(new Date(messages[0].date));
-  const end = getISODateString(new Date(messages.at(-1).date));
-
-  return {
-    start,
-    end,
-  };
+  return { start, end };
 }
 
 function convertDateInputStringIntoDate(startOrEnd, dateInputString) {

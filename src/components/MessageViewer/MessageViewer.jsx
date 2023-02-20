@@ -35,8 +35,6 @@ function MessageViewer({
     [participants],
   );
 
-  const ogStartDate = new Date(messagesDateBounds.start);
-  const ogEndDate = new Date(messagesDateBounds.end);
   const startDate = convertDateInputStringIntoDate(
     'start',
     startDateInputString,
@@ -50,8 +48,8 @@ function MessageViewer({
 
   const isLimited =
     renderedMessages.length !== messages.length ||
-    ogStartDate.valueOf() < startDate.valueOf() ||
-    ogEndDate.valueOf() > endDate.valueOf();
+    messagesDateBounds.start.valueOf() < startDate.valueOf() ||
+    messagesDateBounds.end.valueOf() > endDate.valueOf();
 
   return (
     <S.Container>

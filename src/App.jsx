@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
-import { showError } from './utils/utils';
+import { getISODateString, showError } from './utils/utils';
 import {
   activeUserAtom,
   rawFileAtom,
@@ -160,9 +160,9 @@ function App() {
                       id="start-date"
                       name="startDate"
                       type="date"
-                      min={messagesDateBounds.start}
-                      max={messagesDateBounds.end}
-                      defaultValue={messagesDateBounds.start}
+                      min={getISODateString(messagesDateBounds.start)}
+                      max={getISODateString(messagesDateBounds.end)}
+                      defaultValue={getISODateString(messagesDateBounds.start)}
                     />
                   </S.Field>
                   <S.Field>
@@ -171,9 +171,9 @@ function App() {
                       id="end-date"
                       name="endDate"
                       type="date"
-                      min={messagesDateBounds.start}
-                      max={messagesDateBounds.end}
-                      defaultValue={messagesDateBounds.end}
+                      min={getISODateString(messagesDateBounds.start)}
+                      max={getISODateString(messagesDateBounds.end)}
+                      defaultValue={getISODateString(messagesDateBounds.end)}
                     />
                   </S.Field>
                   <S.Field>
