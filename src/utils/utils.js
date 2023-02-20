@@ -92,15 +92,55 @@ function participantsFromMessages(messages) {
 
 function createValidDateInputString(date) {
   const year = date.getFullYear();
-  const month = date
-    .getMonth()
-    .toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
-  const day = (date.getDay() + 1).toLocaleString('en-US', {
+  const month = (date.getMonth() + 1).toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  });
+  const day = date.getDate().toLocaleString('en-US', {
     minimumIntegerDigits: 2,
     useGrouping: false,
   });
 
   return `${year}-${month}-${day}`;
+}
+
+function extractStartEndDatesFromMessages(messages) {
+  if (messages.length === 0) {
+    return {
+      start: 'yyyy-mm-dd',
+      end: 'yyyy-mm-dd',
+    };
+  }
+
+  const start = createValidDateInputString(new Date(messages[0].date));
+  const end = createValidDateInputString(new Date(messages.at(-1).date));
+
+  return {
+    start,
+    end,
+  };
+}
+
+function convertDateInputStringIntoDate(startOrEnd, dateInputString) {
+  const [year, month, day] = dateInputString.split('-').map(i => +i);
+
+  if (startOrEnd === 'start') {
+    const tmp = new Date(year, month - 1, day - 1);
+    return new Date(tmp.valueOf() + 1);
+  }
+
+  const tmp = new Date(year, month - 1, day + 1);
+  return new Date(tmp.valueOf() - 1);
+}
+
+function filterMessagesByDate(messages, startDate, endDate) {
+  return messages.filter(message => {
+    const date = new Date(message.date);
+    return (
+      date.valueOf() >= startDate.valueOf() &&
+      date.valueOf() <= endDate.valueOf()
+    );
+  });
 }
 
 export {
@@ -113,4 +153,7 @@ export {
   messagesFromFile,
   participantsFromMessages,
   createValidDateInputString,
+  extractStartEndDatesFromMessages,
+  convertDateInputStringIntoDate,
+  filterMessagesByDate,
 };

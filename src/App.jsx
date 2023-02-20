@@ -1,9 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import { showError } from './utils/utils';
-import { activeUserAtom, rawFileAtom, participantsAtom } from './stores/global';
-import { datesAtom, filterModeAtom, limitsAtom } from './stores/filters';
+import {
+  activeUserAtom,
+  rawFileAtom,
+  participantsAtom,
+  messagesDateBoundsAtom,
+} from './stores/global';
+import { datesAtom, globalFilterModeAtom, limitsAtom } from './stores/filters';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -12,10 +17,12 @@ import * as S from './style';
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
 function App() {
-  const [filterMode, setFilterMode] = useAtom(filterModeAtom);
+  const [filterMode, setFilterMode] = useState('index');
+  const setGlobalFilterMode = useSetAtom(globalFilterModeAtom);
   const [activeUser, setActiveUser] = useAtom(activeUserAtom);
   const [limits, setLimits] = useAtom(limitsAtom);
   const [dates, setDates] = useAtom(datesAtom);
+  const messagesDateBounds = useAtomValue(messagesDateBoundsAtom);
   const setRawFile = useSetAtom(rawFileAtom);
   const participants = useAtomValue(participantsAtom);
 
@@ -40,10 +47,15 @@ function App() {
 
     e.preventDefault();
     setLimits({ low: entries.lowerLimit, high: entries.upperLimit });
+    setGlobalFilterMode('index');
   };
 
   const setMessagesByDate = e => {
+    const entries = Object.fromEntries(new FormData(e.currentTarget));
+
     e.preventDefault();
+    setDates({ start: entries.startDate, end: entries.endDate });
+    setGlobalFilterMode('date');
   };
 
   useEffect(() => {
@@ -79,32 +91,27 @@ function App() {
           activeUser={activeUser}
           lowerLimit={limits.low}
           upperLimit={limits.high}
+          startDateInputString={dates.start}
+          endDateInputString={dates.end}
         />
         <Sidebar>
           <S.Fieldset>
             <legend>Filter by</legend>
-            <S.RadioField>
-              <S.RadioInput
-                id="index"
-                name="index"
-                type="radio"
-                value="index"
-                checked={filterMode === 'index'}
-                onChange={e => setFilterMode(e.target.value)}
-              />
-              <S.Label htmlFor="index">Index</S.Label>
-            </S.RadioField>
-            <S.RadioField>
-              <S.RadioInput
-                id="date"
-                name="date"
-                type="radio"
-                value="date"
-                checked={filterMode === 'date'}
-                onChange={e => setFilterMode(e.target.value)}
-              />
-              <S.Label htmlFor="date">Date</S.Label>
-            </S.RadioField>
+            {['index', 'date'].map(name => (
+              <S.RadioField key={name}>
+                <S.RadioInput
+                  id={name}
+                  name={name}
+                  type="radio"
+                  value={name}
+                  checked={filterMode === name}
+                  onChange={e => setFilterMode(e.target.value)}
+                />
+                <S.Label htmlFor={name}>
+                  {name.charAt(0).toUpperCase() + name.slice(1)}
+                </S.Label>
+              </S.RadioField>
+            ))}
           </S.Fieldset>
           {filterMode === 'index' && (
             <S.Form onSubmit={setMessageLimits}>
@@ -150,15 +157,9 @@ function App() {
                     id="start-date"
                     name="startDate"
                     type="date"
-                    min={dates.start}
-                    max={dates.end}
-                    value={dates.start}
-                    onChange={e =>
-                      setDates(prev => ({
-                        ...prev,
-                        start: new Date(e.target.value),
-                      }))
-                    }
+                    min={messagesDateBounds.start}
+                    max={messagesDateBounds.end}
+                    defaultValue={messagesDateBounds.start}
                   />
                 </S.Field>
                 <S.Field>
@@ -167,15 +168,9 @@ function App() {
                     id="end-date"
                     name="endDate"
                     type="date"
-                    min={dates.start}
-                    max={dates.end}
-                    value={dates.end}
-                    onChange={e =>
-                      setDates(prev => ({
-                        ...prev,
-                        end: new Date(e.target.value),
-                      }))
-                    }
+                    min={messagesDateBounds.start}
+                    max={messagesDateBounds.end}
+                    defaultValue={messagesDateBounds.end}
                   />
                 </S.Field>
                 <S.Field>
