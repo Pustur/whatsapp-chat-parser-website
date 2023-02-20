@@ -101,7 +101,7 @@ function App() {
               <legend>Filter by</legend>
               {['index', 'date'].map(name => (
                 <S.RadioField key={name}>
-                  <S.RadioInput
+                  <input
                     id={name}
                     type="radio"
                     value={name}

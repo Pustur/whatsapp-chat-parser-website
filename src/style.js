@@ -49,10 +49,6 @@ const RadioField = styled.div`
   align-items: flex-start;
   gap: 0.25rem;
 
-  &:hover {
-    cursor: pointer;
-  }
-
   & + & {
     margin-top: 0.5rem;
   }
@@ -79,12 +75,6 @@ const Fieldset = styled.fieldset`
 
 const Input = styled.input`
   ${inputStyles}
-`;
-
-const RadioInput = styled.input`
-  ${normalizeInput};
-
-  appearance: auto;
 `;
 
 const Select = styled.select`
@@ -212,7 +202,6 @@ export {
   Label,
   Fieldset,
   Input,
-  RadioInput,
   Select,
   Submit,
   InputDescription,
