@@ -101,18 +101,6 @@ function extractStartEndDatesFromMessages(messages) {
   return { start, end };
 }
 
-function convertDateInputStringIntoDate(startOrEnd, dateInputString) {
-  const [year, month, day] = dateInputString.split('-').map(i => +i);
-
-  if (startOrEnd === 'start') {
-    const tmp = new Date(year, month - 1, day - 1);
-    return new Date(tmp.valueOf() + 1);
-  }
-
-  const tmp = new Date(year, month - 1, day + 1);
-  return new Date(tmp.valueOf() - 1);
-}
-
 function filterMessagesByDate(messages, startDate, endDate) {
   return messages.filter(message => {
     const date = new Date(message.date);
@@ -134,6 +122,5 @@ export {
   participantsFromMessages,
   getISODateString,
   extractStartEndDatesFromMessages,
-  convertDateInputStringIntoDate,
   filterMessagesByDate,
 };

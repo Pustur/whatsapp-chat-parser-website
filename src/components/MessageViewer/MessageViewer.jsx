@@ -6,23 +6,14 @@ import * as S from './style';
 import { messagesAtom, messagesDateBoundsAtom } from '../../stores/global';
 
 import { authorColors } from '../../utils/colors';
-import { globalFilterModeAtom } from '../../stores/filters';
-import {
-  convertDateInputStringIntoDate,
-  filterMessagesByDate,
-} from '../../utils/utils';
+import { datesAtom, globalFilterModeAtom } from '../../stores/filters';
+import { filterMessagesByDate, getISODateString } from '../../utils/utils';
 
-function MessageViewer({
-  activeUser,
-  participants,
-  lowerLimit,
-  upperLimit,
-  startDateInputString,
-  endDateInputString,
-}) {
+function MessageViewer({ activeUser, participants, lowerLimit, upperLimit }) {
   const messages = useAtomValue(messagesAtom);
   const messagesDateBounds = useAtomValue(messagesDateBoundsAtom);
   const filterMode = useAtomValue(globalFilterModeAtom);
+  const { start: startDate, end: endDate } = useAtomValue(datesAtom);
   const colorMap = useMemo(
     () =>
       participants.reduce(
@@ -34,12 +25,6 @@ function MessageViewer({
       ),
     [participants],
   );
-
-  const startDate = convertDateInputStringIntoDate(
-    'start',
-    startDateInputString,
-  );
-  const endDate = convertDateInputStringIntoDate('end', endDateInputString);
 
   const renderedMessages =
     filterMode === 'index'
@@ -65,8 +50,8 @@ function MessageViewer({
             )}
             {isLimited && filterMode === 'date' && (
               <span>
-                Showing messages from {startDateInputString} to{' '}
-                {endDateInputString}
+                Showing messages from {getISODateString(startDate)} to{' '}
+                {getISODateString(endDate)}
               </span>
             )}
             {!isLimited && <span>Showing all {messages.length} messages</span>}

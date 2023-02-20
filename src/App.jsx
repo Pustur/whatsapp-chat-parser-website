@@ -22,7 +22,7 @@ function App() {
   const setGlobalFilterMode = useSetAtom(globalFilterModeAtom);
   const [activeUser, setActiveUser] = useAtom(activeUserAtom);
   const [limits, setLimits] = useAtom(limitsAtom);
-  const [dates, setDates] = useAtom(datesAtom);
+  const setDates = useSetAtom(datesAtom);
   const messages = useAtomValue(messagesAtom);
   const messagesDateBounds = useAtomValue(messagesDateBoundsAtom);
   const setRawFile = useSetAtom(rawFileAtom);
@@ -53,10 +53,11 @@ function App() {
   };
 
   const setMessagesByDate = e => {
-    const entries = Object.fromEntries(new FormData(e.currentTarget));
-
     e.preventDefault();
-    setDates({ start: entries.startDate, end: entries.endDate });
+    setDates({
+      start: e.currentTarget.startDate.valueAsDate,
+      end: e.currentTarget.endDate.valueAsDate,
+    });
     setGlobalFilterMode('date');
   };
 
@@ -93,8 +94,6 @@ function App() {
           activeUser={activeUser}
           lowerLimit={limits.low}
           upperLimit={limits.high}
-          startDateInputString={dates.start}
-          endDateInputString={dates.end}
         />
         {messages.length > 0 && (
           <Sidebar>

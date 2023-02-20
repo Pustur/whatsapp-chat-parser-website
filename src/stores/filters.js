@@ -30,8 +30,8 @@ const limitsAtom = atom(
 );
 
 const datesAtom = atom({
-  start: 'yyyy-mm-dd',
-  end: 'yyyy-mm-dd',
+  start: new Date(),
+  end: new Date(),
 });
 
 export { globalFilterModeAtom, limitsAtom, datesAtom };
