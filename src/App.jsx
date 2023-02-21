@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
-import { capitalize, getISODateString, showError } from './utils/utils';
+import { showError } from './utils/utils';
 import {
   activeUserAtom,
   rawFileAtom,
   participantsAtom,
-  messagesDateBoundsAtom,
   messagesAtom,
 } from './stores/global';
-import { datesAtom, globalFilterModeAtom, limitsAtom } from './stores/filters';
+import { limitsAtom } from './stores/filters';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -18,13 +17,9 @@ import * as S from './style';
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
 function App() {
-  const [filterMode, setFilterMode] = useState('index');
-  const setGlobalFilterMode = useSetAtom(globalFilterModeAtom);
   const [activeUser, setActiveUser] = useAtom(activeUserAtom);
-  const [limits, setLimits] = useAtom(limitsAtom);
-  const setDates = useSetAtom(datesAtom);
+  const limits = useAtomValue(limitsAtom);
   const messages = useAtomValue(messagesAtom);
-  const messagesDateBounds = useAtomValue(messagesDateBoundsAtom);
   const setRawFile = useSetAtom(rawFileAtom);
   const participants = useAtomValue(participantsAtom);
 
@@ -42,23 +37,6 @@ function App() {
     } else {
       showError(`File type ${file.type} not supported`);
     }
-  };
-
-  const setMessageLimits = e => {
-    const entries = Object.fromEntries(new FormData(e.currentTarget));
-
-    e.preventDefault();
-    setLimits({ low: entries.lowerLimit, high: entries.upperLimit });
-    setGlobalFilterMode('index');
-  };
-
-  const setMessagesByDate = e => {
-    e.preventDefault();
-    setDates({
-      start: e.currentTarget.startDate.valueAsDate,
-      end: e.currentTarget.endDate.valueAsDate,
-    });
-    setGlobalFilterMode('date');
   };
 
   useEffect(() => {
@@ -95,112 +73,7 @@ function App() {
           lowerLimit={limits.low}
           upperLimit={limits.high}
         />
-        {messages.length > 0 && (
-          <Sidebar>
-            <S.Fieldset>
-              <legend>Filter by</legend>
-              {['index', 'date'].map(name => (
-                <S.RadioField key={name}>
-                  <input
-                    id={name}
-                    type="radio"
-                    value={name}
-                    checked={filterMode === name}
-                    onChange={e => setFilterMode(e.target.value)}
-                  />
-                  <S.Label htmlFor={name}>{capitalize(name)}</S.Label>
-                </S.RadioField>
-              ))}
-            </S.Fieldset>
-            {filterMode === 'index' && (
-              <S.Form onSubmit={setMessageLimits}>
-                <S.Fieldset>
-                  <legend>Messages limit</legend>
-                  <S.Field>
-                    <S.Label htmlFor="lower-limit">Start</S.Label>
-                    <S.Input
-                      id="lower-limit"
-                      name="lowerLimit"
-                      type="number"
-                      min="1"
-                      placeholder={limits.low}
-                    />
-                  </S.Field>
-                  <S.Field>
-                    <S.Label htmlFor="upper-limit">End</S.Label>
-                    <S.Input
-                      id="upper-limit"
-                      name="upperLimit"
-                      type="number"
-                      min="1"
-                      placeholder={limits.high}
-                    />
-                  </S.Field>
-                  <S.Field>
-                    <S.Submit type="submit" value="Apply" />
-                    <S.InputDescription>
-                      A high delta may freeze the page for a while, change this
-                      with caution
-                    </S.InputDescription>
-                  </S.Field>
-                </S.Fieldset>
-              </S.Form>
-            )}
-            {filterMode === 'date' && (
-              <S.Form onSubmit={setMessagesByDate}>
-                <S.Fieldset>
-                  <legend>Messages date window</legend>
-                  <S.Field>
-                    <S.Label htmlFor="start-date">Start</S.Label>
-                    <S.Input
-                      id="start-date"
-                      name="startDate"
-                      type="date"
-                      min={getISODateString(messagesDateBounds.start)}
-                      max={getISODateString(messagesDateBounds.end)}
-                      defaultValue={getISODateString(messagesDateBounds.start)}
-                    />
-                  </S.Field>
-                  <S.Field>
-                    <S.Label htmlFor="end-date">End</S.Label>
-                    <S.Input
-                      id="end-date"
-                      name="endDate"
-                      type="date"
-                      min={getISODateString(messagesDateBounds.start)}
-                      max={getISODateString(messagesDateBounds.end)}
-                      defaultValue={getISODateString(messagesDateBounds.end)}
-                    />
-                  </S.Field>
-                  <S.Field>
-                    <S.Submit type="submit" value="Apply" />
-                    <S.InputDescription>
-                      A high delta may freeze the page for a while, change this
-                      with caution
-                    </S.InputDescription>
-                  </S.Field>
-                </S.Fieldset>
-              </S.Form>
-            )}
-            <S.Field>
-              <S.Label htmlFor="active-user">Active User</S.Label>
-              <S.Select
-                id="active-user"
-                disabled={!participants.length}
-                value={activeUser}
-                onChange={e => {
-                  setActiveUser(e.target.value);
-                }}
-              >
-                {participants.map(participant => (
-                  <option key={participant} value={participant}>
-                    {participant}
-                  </option>
-                ))}
-              </S.Select>
-            </S.Field>
-          </Sidebar>
-        )}
+        {messages.length > 0 && <Sidebar />}
       </S.Container>
     </>
   );

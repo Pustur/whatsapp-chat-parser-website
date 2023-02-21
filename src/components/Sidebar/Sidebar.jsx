@@ -1,15 +1,54 @@
-import React, { useRef, useEffect } from 'react';
-import { useAtom } from 'jotai';
+import React, { useRef, useEffect, useState } from 'react';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import Credits from '../Credits/Credits';
-import * as S from './style';
-import { isMenuOpenAtom } from '../../stores/global';
+import FilterModeSelector from '../FilterModeSelector/FilterModeSelector';
+import FilterMessageLimitsForm from '../FilterMessageLimitsForm/FilterMessageLimitsForm';
+import FilterMessageDatesForm from '../FilterMessageDatesForm/FilterMessageDatesForm';
 
-function Sidebar({ children }) {
+import * as S from './style';
+import {
+  activeUserAtom,
+  isMenuOpenAtom,
+  messagesDateBoundsAtom,
+  participantsAtom,
+} from '../../stores/global';
+import {
+  datesAtom,
+  globalFilterModeAtom,
+  limitsAtom,
+} from '../../stores/filters';
+import ActiveUserSelector from '../ActiveUserSelector/ActiveUserSelector';
+
+function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
+  const [filterMode, setFilterMode] = useState('index');
+  const setGlobalFilterMode = useSetAtom(globalFilterModeAtom);
+  const [limits, setLimits] = useAtom(limitsAtom);
+  const setDates = useSetAtom(datesAtom);
+  const messagesDateBounds = useAtomValue(messagesDateBoundsAtom);
+  const participants = useAtomValue(participantsAtom);
+  const [activeUser, setActiveUser] = useAtom(activeUserAtom);
 
   const closeButtonRef = useRef(null);
   const openButtonRef = useRef(null);
+
+  const setMessageLimits = e => {
+    const entries = Object.fromEntries(new FormData(e.currentTarget));
+
+    e.preventDefault();
+    setLimits({ low: entries.lowerLimit, high: entries.upperLimit });
+    setGlobalFilterMode('index');
+  };
+
+  const setMessagesByDate = e => {
+    e.preventDefault();
+    setDates({
+      start: e.currentTarget.startDate.valueAsDate,
+      end: e.currentTarget.endDate.valueAsDate,
+    });
+    setGlobalFilterMode('date');
+  };
 
   useEffect(() => {
     const keyDownHandler = e => {
@@ -50,7 +89,29 @@ function Sidebar({ children }) {
           Close menu
         </S.MenuCloseButton>
         <S.SidebarContainer>
-          <S.SidebarChildren>{children}</S.SidebarChildren>
+          <S.SidebarChildren>
+            <FilterModeSelector
+              filterMode={filterMode}
+              setFilterMode={setFilterMode}
+            />
+            {filterMode === 'index' && (
+              <FilterMessageLimitsForm
+                limits={limits}
+                setMessageLimits={setMessageLimits}
+              />
+            )}
+            {filterMode === 'date' && (
+              <FilterMessageDatesForm
+                messagesDateBounds={messagesDateBounds}
+                setMessagesByDate={setMessagesByDate}
+              />
+            )}
+            <ActiveUserSelector
+              participants={participants}
+              activeUser={activeUser}
+              setActiveUser={setActiveUser}
+            />
+          </S.SidebarChildren>
           <Credits />
         </S.SidebarContainer>
       </S.Sidebar>
