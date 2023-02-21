@@ -9,12 +9,13 @@ import {
   messagesDateBoundsAtom,
   participantsAtom,
 } from '../../stores/global';
-import { capitalize, getISODateString } from '../../utils/utils';
+import { getISODateString } from '../../utils/utils';
 import {
   datesAtom,
   globalFilterModeAtom,
   limitsAtom,
 } from '../../stores/filters';
+import FilterModeSelector from './FilterModeSelector';
 
 function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
@@ -86,21 +87,10 @@ function Sidebar() {
         </S.MenuCloseButton>
         <S.SidebarContainer>
           <S.SidebarChildren>
-            <S.Fieldset>
-              <legend>Filter by</legend>
-              {['index', 'date'].map(name => (
-                <S.RadioField key={name}>
-                  <input
-                    id={name}
-                    type="radio"
-                    value={name}
-                    checked={filterMode === name}
-                    onChange={e => setFilterMode(e.target.value)}
-                  />
-                  <S.Label htmlFor={name}>{capitalize(name)}</S.Label>
-                </S.RadioField>
-              ))}
-            </S.Fieldset>
+            <FilterModeSelector
+              filterMode={filterMode}
+              setFilterMode={setFilterMode}
+            />
             {filterMode === 'index' && (
               <S.Form onSubmit={setMessageLimits}>
                 <S.Fieldset>
