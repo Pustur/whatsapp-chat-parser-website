@@ -1,4 +1,4 @@
-import { atom, WritableAtom } from 'jotai';
+import { atom } from 'jotai';
 
 const DEFAULT_LOWER_LIMIT = 1;
 const DEFAULT_UPPER_LIMIT = 100;
