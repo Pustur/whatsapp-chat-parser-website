@@ -7,6 +7,7 @@
     "build/"
   ],
   "dependencies": {
+    "@vitejs/plugin-react": "^3.1.0",
     "jotai": "1.13.1",
     "jszip": "3.10.1",
     "react": "18.2.0",
@@ -19,7 +20,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint \"src/**/*.{js,jsx}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write ."
   },
   "devDependencies": {
@@ -27,10 +28,12 @@
     "@types/react-dom": "^18.0.11",
     "@types/react-linkify": "^1.0.1",
     "@types/styled-components": "^5.1.26",
-    "@vitejs/plugin-react": "^3.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
     "eslint": "8.34.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "8.6.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-jsx-a11y": "6.7.1",
     "eslint-plugin-prettier": "4.2.1",
