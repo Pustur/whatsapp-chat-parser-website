@@ -2,6 +2,9 @@ import ReactDOM from 'react-dom/client';
 
 import App from './App';
 
-const root = ReactDOM.createRoot(document.getElementById('root')!);
+const rootDOM = document.getElementById('root');
 
-root.render(<App />);
+if (rootDOM !== null) {
+  const root = ReactDOM.createRoot(rootDOM);
+  root.render(<App />);
+}
