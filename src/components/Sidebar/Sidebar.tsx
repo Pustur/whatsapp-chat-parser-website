@@ -22,7 +22,7 @@ import ActiveUserSelector from '../ActiveUserSelector/ActiveUserSelector';
 
 function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
-  const [filterMode, setFilterMode] = useState('index');
+  const [filterMode, setFilterMode] = useState<'index' | 'date'>('index');
   const setGlobalFilterMode = useSetAtom(globalFilterModeAtom);
   const [limits, setLimits] = useAtom(limitsAtom);
   const setDates = useSetAtom(datesAtom);
@@ -30,10 +30,10 @@ function Sidebar() {
   const participants = useAtomValue(participantsAtom);
   const [activeUser, setActiveUser] = useAtom(activeUserAtom);
 
-  const closeButtonRef = useRef(null);
-  const openButtonRef = useRef(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const openButtonRef = useRef<HTMLButtonElement>(null);
 
-  const setMessageLimits = e => {
+  const setMessageLimits = (e: React.FormEvent<HTMLFormElement>) => {
     const entries = Object.fromEntries(new FormData(e.currentTarget));
 
     e.preventDefault();
@@ -41,7 +41,7 @@ function Sidebar() {
     setGlobalFilterMode('index');
   };
 
-  const setMessagesByDate = e => {
+  const setMessagesByDate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setDates({
       start: e.currentTarget.startDate.valueAsDate,
@@ -51,7 +51,7 @@ function Sidebar() {
   };
 
   useEffect(() => {
-    const keyDownHandler = e => {
+    const keyDownHandler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setIsMenuOpen(false);
     };
 
@@ -60,8 +60,11 @@ function Sidebar() {
   }, [setIsMenuOpen]);
 
   useEffect(() => {
-    if (isMenuOpen) closeButtonRef.current.focus();
-    else openButtonRef.current.focus();
+    if (isMenuOpen && closeButtonRef.current) {
+      closeButtonRef.current.focus();
+    } else if (openButtonRef.current) {
+      openButtonRef.current.focus();
+    }
   }, [isMenuOpen]);
 
   return (
@@ -78,7 +81,7 @@ function Sidebar() {
         type="button"
         isActive={isMenuOpen}
         onClick={() => setIsMenuOpen(false)}
-        tabIndex="-1"
+        tabIndex={-1}
       />
       <S.Sidebar isOpen={isMenuOpen}>
         <S.MenuCloseButton

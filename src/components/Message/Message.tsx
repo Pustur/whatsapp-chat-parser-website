@@ -1,5 +1,6 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import Linkify from 'react-linkify';
+import type { Message as WhatsappCharParserMessage } from 'whatsapp-chat-parser/dist/index';
 
 import Attachment from '../Attachment/Attachment';
 import * as S from './style';
@@ -10,9 +11,9 @@ const intlOptions = {
   day: 'numeric',
   hour: 'numeric',
   minute: 'numeric',
-};
+} as const;
 
-function Link(decoratedHref, decoratedText, key) {
+function Link(decoratedHref: string, decoratedText: string, key: number) {
   return (
     <a key={key} target="_blank" rel="noopener noreferrer" href={decoratedHref}>
       {decoratedText}
@@ -20,7 +21,23 @@ function Link(decoratedHref, decoratedText, key) {
   );
 }
 
-function Message({ message, color, isActiveUser, sameAuthorAsPrevious }) {
+export interface ChatMessage extends WhatsappCharParserMessage {
+  index: number;
+}
+
+interface IMessage {
+  message: ChatMessage;
+  color: string;
+  isActiveUser: boolean;
+  sameAuthorAsPrevious: boolean;
+}
+
+function Message({
+  message,
+  color,
+  isActiveUser,
+  sameAuthorAsPrevious,
+}: IMessage) {
   const isSystem = !message.author;
   const dateTime = message.date.toISOString().slice(0, 19).replace('T', ' ');
 

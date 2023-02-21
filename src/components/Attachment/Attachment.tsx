@@ -5,7 +5,7 @@ import { extractedFileAtom } from '../../stores/global';
 import { getMimeType } from '../../utils/utils';
 import { useIsMounted } from '../../hooks/useIsMounted';
 
-const renderAttachment = (fileName, attachment) => {
+const renderAttachment = (fileName: string, attachment: string) => {
   const mimeType = getMimeType(fileName) || '';
   const src = `data:${mimeType};base64,${attachment}`;
 
@@ -29,13 +29,19 @@ const renderAttachment = (fileName, attachment) => {
   );
 };
 
-const Attachment = ({ fileName }) => {
+interface IAttachment {
+  fileName: string;
+}
+
+const Attachment = ({ fileName }: IAttachment) => {
   const extractedFile = useAtomValue(extractedFileAtom);
-  const [attachment, setAttachment] = useState(null);
-  const [error, setError] = useState(null);
+  const [attachment, setAttachment] = useState<null | string>(null);
+  const [error, setError] = useState<null | Error>(null);
   const isMounted = useIsMounted();
 
   useEffect(() => {
+    if (!extractedFile || typeof extractedFile === 'string') return;
+
     const file = extractedFile.files[fileName];
 
     if (!file) {
@@ -56,9 +62,9 @@ const Attachment = ({ fileName }) => {
     });
   }, [extractedFile, fileName, isMounted]);
 
-  if (error) return error.toString();
+  if (error) return <p>error.toString()</p>;
   if (attachment) return renderAttachment(fileName, attachment);
-  return `Loading ${fileName}...`;
+  return <p>Loading {fileName}...</p>;
 };
 
 export default Attachment;

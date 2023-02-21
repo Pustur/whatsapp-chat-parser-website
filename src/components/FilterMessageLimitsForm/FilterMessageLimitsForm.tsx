@@ -1,8 +1,17 @@
-import React from 'react';
-
 import * as S from '../Sidebar/style';
 
-function FilterMessageLimitsForm({ limits, setMessageLimits }) {
+interface IFilterMessageLimitsForm {
+  limits: {
+    low: number;
+    high: number;
+  };
+  setMessageLimits: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+function FilterMessageLimitsForm({
+  limits,
+  setMessageLimits,
+}: IFilterMessageLimitsForm) {
   return (
     <S.Form onSubmit={setMessageLimits}>
       <S.Fieldset>
@@ -14,7 +23,7 @@ function FilterMessageLimitsForm({ limits, setMessageLimits }) {
             name="lowerLimit"
             type="number"
             min="1"
-            placeholder={limits.low}
+            placeholder={limits.low.toString()}
           />
         </S.Field>
         <S.Field>
@@ -24,7 +33,7 @@ function FilterMessageLimitsForm({ limits, setMessageLimits }) {
             name="upperLimit"
             type="number"
             min="1"
-            placeholder={limits.high}
+            placeholder={limits.high.toString()}
           />
         </S.Field>
         <S.Field>

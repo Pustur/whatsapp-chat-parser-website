@@ -1,9 +1,15 @@
-import React from 'react';
-
 import { capitalize } from '../../utils/utils';
 import * as S from '../Sidebar/style';
 
-function FilterModeSelector({ filterMode, setFilterMode }) {
+interface IFilterModeSelector {
+  filterMode: 'index' | 'date';
+  setFilterMode: (filterMode: 'index' | 'date') => void;
+}
+
+function FilterModeSelector({
+  filterMode,
+  setFilterMode,
+}: IFilterModeSelector) {
   return (
     <S.Fieldset>
       <legend>Filter by</legend>
@@ -14,7 +20,7 @@ function FilterModeSelector({ filterMode, setFilterMode }) {
             type="radio"
             value={name}
             checked={filterMode === name}
-            onChange={e => setFilterMode(e.target.value)}
+            onChange={e => setFilterMode(e.target.value as 'index' | 'date')}
           />
           <S.Label htmlFor={name}>{capitalize(name)}</S.Label>
         </S.RadioField>

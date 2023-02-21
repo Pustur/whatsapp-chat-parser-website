@@ -1,8 +1,16 @@
-import React from 'react';
-
 import * as S from '../Sidebar/style';
 
-function ActiveUserSelector({ participants, activeUser, setActiveUser }) {
+interface IActiveUserSelector {
+  participants: string[];
+  activeUser: string;
+  setActiveUser: (activeUser: string) => void;
+}
+
+function ActiveUserSelector({
+  participants,
+  activeUser,
+  setActiveUser,
+}: IActiveUserSelector) {
   return (
     <S.Field>
       <S.Label htmlFor="active-user">Active User</S.Label>

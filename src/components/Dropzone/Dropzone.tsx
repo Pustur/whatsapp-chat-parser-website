@@ -1,37 +1,48 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import * as S from './style';
 
-const preventDefaults = e => {
+const preventDefaults = (e: React.DragEvent<HTMLFormElement>) => {
   e.preventDefault();
   e.stopPropagation();
 };
 
-function Dropzone({ id, onFileUpload }) {
-  const [isHighlighted, setIsHighlighted] = useState(false);
-  const inputRef = useRef(null);
+interface IDropzone {
+  id: string;
+  onFileUpload: (e: File) => void;
+}
 
-  const onDragEnterOverHandler = e => {
+function Dropzone({ id, onFileUpload }: IDropzone) {
+  const [isHighlighted, setIsHighlighted] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const onDragEnterOverHandler = (e: React.DragEvent<HTMLFormElement>) => {
     preventDefaults(e);
     setIsHighlighted(true);
   };
 
-  const onDragLeaveHandler = e => {
+  const onDragLeaveHandler = (e: React.DragEvent<HTMLFormElement>) => {
     preventDefaults(e);
     setIsHighlighted(false);
   };
 
-  const onDropHandler = e => {
+  const onDropHandler = (e: React.DragEvent<HTMLFormElement>) => {
     preventDefaults(e);
     setIsHighlighted(false);
     onFileUpload(e.dataTransfer.files[0]);
   };
 
-  const onChangeHandler = e => onFileUpload(e.target.files[0]);
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      onFileUpload(e.target.files[0]);
+    }
+  };
 
   useEffect(() => {
     // setTimeout to steal the focus from MenuOpenButton (only on first render)
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => {
+      if (inputRef.current) inputRef.current.focus();
+    }, 0);
   }, []);
 
   return (

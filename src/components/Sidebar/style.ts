@@ -103,7 +103,7 @@ const MenuCloseButton = styled.button`
   }
 `;
 
-const Overlay = styled.button`
+const Overlay = styled.button<{ isActive: boolean }>`
   ${normalizeButton}
 
   display: block;
@@ -122,7 +122,7 @@ const Overlay = styled.button`
     `}
 `;
 
-const Sidebar = styled.aside`
+const Sidebar = styled.aside<{ isOpen: boolean }>`
   position: fixed;
   width: 280px;
   top: 0;

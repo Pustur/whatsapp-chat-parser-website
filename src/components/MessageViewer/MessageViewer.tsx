@@ -3,20 +3,35 @@ import { useAtomValue } from 'jotai';
 
 import Message from '../Message/Message';
 import * as S from './style';
-import { messagesAtom, messagesDateBoundsAtom } from '../../stores/global';
+import { messagesAtom } from '../../stores/global';
 
 import { authorColors } from '../../utils/colors';
 import { datesAtom, globalFilterModeAtom } from '../../stores/filters';
 import { filterMessagesByDate, getISODateString } from '../../utils/utils';
 
-function MessageViewer({ activeUser, participants, lowerLimit, upperLimit }) {
+interface IMessageViewer {
+  activeUser: string;
+  participants: string[];
+  lowerLimit: number;
+  upperLimit: number;
+}
+
+type ColorMap = {
+  [participant: string]: string;
+};
+
+function MessageViewer({
+  activeUser,
+  participants,
+  lowerLimit,
+  upperLimit,
+}: IMessageViewer) {
   const messages = useAtomValue(messagesAtom);
-  const messagesDateBounds = useAtomValue(messagesDateBoundsAtom);
   const filterMode = useAtomValue(globalFilterModeAtom);
   const { start: startDate, end: endDate } = useAtomValue(datesAtom);
   const endDatePlusOne = new Date(endDate);
   endDatePlusOne.setDate(endDatePlusOne.getDate() + 1);
-  const colorMap = useMemo(
+  const colorMap: ColorMap = useMemo(
     () =>
       participants.reduce(
         (obj, participant, i) => ({
@@ -66,7 +81,7 @@ function MessageViewer({ activeUser, participants, lowerLimit, upperLimit }) {
             <Message
               key={message.index}
               message={message}
-              color={colorMap[message.author]}
+              color={colorMap[message.author || '']}
               isActiveUser={activeUser === message.author}
               sameAuthorAsPrevious={
                 prevMessage && prevMessage.author === message.author

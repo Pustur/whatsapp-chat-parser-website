@@ -1,7 +1,8 @@
 import JSZip from 'jszip';
 import { parseString } from 'whatsapp-chat-parser';
+import { ChatMessage } from '../components/Message/Message';
 
-const getMimeType = fileName => {
+const getMimeType = (fileName: string) => {
   if (/\.jpe?g$/.test(fileName)) return 'image/jpeg';
   if (fileName.endsWith('.png')) return 'image/png';
   if (fileName.endsWith('.gif')) return 'image/gif';
@@ -19,12 +20,12 @@ const getMimeType = fileName => {
   return null;
 };
 
-const showError = (message, err) => {
+const showError = (message: string, err?: Error) => {
   console.error(err || message); // eslint-disable-line no-console
   alert(message); // eslint-disable-line no-alert
 };
 
-const readChatFile = zipData => {
+const readChatFile = (zipData: JSZip) => {
   const chatFile = zipData.file('_chat.txt');
 
   if (chatFile) return chatFile.async('string');
@@ -42,7 +43,7 @@ const readChatFile = zipData => {
   return chatFilesSorted[0].async('string');
 };
 
-const replaceEncryptionMessageAuthor = messages =>
+const replaceEncryptionMessageAuthor = (messages: ChatMessage[]) =>
   messages.map((message, i) => {
     if (i < 10 && message.message.includes('end-to-end')) {
       return { ...message, author: null };
@@ -50,7 +51,7 @@ const replaceEncryptionMessageAuthor = messages =>
     return message;
   });
 
-const extractFile = file => {
+const extractFile = (file: string | ArrayBuffer | null) => {
   if (!file) return null;
   if (typeof file === 'string') return file;
 
@@ -59,19 +60,19 @@ const extractFile = file => {
   return jszip.loadAsync(file);
 };
 
-const fileToText = file => {
+const fileToText = (file: string | JSZip | null) => {
   if (!file) return Promise.resolve('');
   if (typeof file === 'string') return Promise.resolve(file);
 
-  return readChatFile(file).catch(err => {
+  return readChatFile(file).catch((err: Error) => {
     // eslint-disable-next-line no-alert
     alert(err);
     return Promise.resolve('');
   });
 };
 
-function messagesFromFile(file) {
-  return fileToText(file).then(text =>
+function messagesFromFile(file: string | JSZip | null) {
+  return fileToText(file).then((text: string) =>
     replaceEncryptionMessageAuthor(
       parseString(text, { parseAttachments: file instanceof JSZip }).map(
         (msg, index) => ({ ...msg, index }),
@@ -80,8 +81,8 @@ function messagesFromFile(file) {
   );
 }
 
-function participantsFromMessages(messages) {
-  const set = new Set();
+function participantsFromMessages(messages: ChatMessage[]) {
+  const set = new Set<string>();
 
   messages.forEach(m => {
     if (m.author) set.add(m.author);
@@ -90,25 +91,29 @@ function participantsFromMessages(messages) {
   return Array.from(set);
 }
 
-function getISODateString(date) {
+function getISODateString(date: Date) {
   return date.toISOString().slice(0, 10);
 }
 
-function extractStartEndDatesFromMessages(messages) {
+function extractStartEndDatesFromMessages(messages: ChatMessage[]) {
   const start = messages[0]?.date ?? new Date();
   const end = messages.at(-1)?.date ?? new Date();
 
   return { start, end };
 }
 
-function filterMessagesByDate(messages, startDate, endDate) {
+function filterMessagesByDate(
+  messages: ChatMessage[],
+  startDate: Date,
+  endDate: Date,
+) {
   return messages.filter(
     message => message.date >= startDate && message.date <= endDate,
   );
 }
 
-function capitalize(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 export {

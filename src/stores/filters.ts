@@ -1,11 +1,19 @@
-import { atom } from 'jotai';
+import { atom, WritableAtom } from 'jotai';
 
 const DEFAULT_LOWER_LIMIT = 1;
 const DEFAULT_UPPER_LIMIT = 100;
 
 const globalFilterModeAtom = atom('index');
 
-const setLimits = (limits, { low, high }) => {
+interface ILimits {
+  low: number;
+  high: number;
+}
+
+const setLimits = (
+  limits: ILimits,
+  { low, high }: { low: string; high: string },
+) => {
   return {
     ...limits,
     low:
@@ -19,14 +27,12 @@ const setLimits = (limits, { low, high }) => {
   };
 };
 
-const limitsAtom = atom(
+const limitsAtom = atom<{ low: number; high: number }>(
   {
     low: DEFAULT_LOWER_LIMIT,
     high: DEFAULT_UPPER_LIMIT,
   },
-  (get, set, limits) => {
-    set(limitsAtom, setLimits(get(limitsAtom), limits));
-  },
+  (get, set, limits) => set(limitsAtom, setLimits(get(limitsAtom), limits)),
 );
 
 const datesAtom = atom({
