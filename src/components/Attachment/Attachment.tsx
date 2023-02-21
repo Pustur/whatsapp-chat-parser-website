@@ -33,7 +33,7 @@ interface IAttachment {
   fileName: string;
 }
 
-const Attachment = ({ fileName }: IAttachment) => {
+function Attachment({ fileName }: IAttachment) {
   const extractedFile = useAtomValue(extractedFileAtom);
   const [attachment, setAttachment] = useState<null | string>(null);
   const [error, setError] = useState<null | Error>(null);
@@ -65,6 +65,6 @@ const Attachment = ({ fileName }: IAttachment) => {
   if (error) return <p>error.toString()</p>;
   if (attachment) return renderAttachment(fileName, attachment);
   return <p>Loading {fileName}...</p>;
-};
+}
 
 export default Attachment;
