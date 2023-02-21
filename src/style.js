@@ -44,9 +44,24 @@ const Field = styled.div`
   }
 `;
 
+const RadioField = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+
+  & + & {
+    margin-top: 0.5rem;
+  }
+`;
+
 const Label = styled.label`
   display: block;
   opacity: 0.8;
+  width: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Fieldset = styled.fieldset`
@@ -90,6 +105,10 @@ const Submit = styled.input`
   padding: 0 0.3rem;
   background-color: ${whatsappThemeColor};
   color: white;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const InputDescription = styled.div`
@@ -132,6 +151,10 @@ const GlobalStyles = createGlobalStyle`
     font-family: sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 
       'Segoe UI Symbol', 'Noto Color Emoji';
     box-sizing: border-box;
+    
+    @media (prefers-color-scheme: dark) {
+      color-scheme: dark;
+    }
   }
 
   body {
@@ -179,6 +202,7 @@ export {
   Container,
   Form,
   Field,
+  RadioField,
   Label,
   Fieldset,
   Input,

@@ -50,7 +50,7 @@ function Sidebar({ children }) {
           Close menu
         </S.MenuCloseButton>
         <S.SidebarContainer>
-          {children}
+          <S.SidebarChildren>{children}</S.SidebarChildren>
           <Credits />
         </S.SidebarContainer>
       </S.Sidebar>

@@ -4,6 +4,9 @@
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended"
   ],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
   "rules": {
     "import/prefer-default-export": "off",
     "react/prop-types": "off",

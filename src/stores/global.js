@@ -2,6 +2,7 @@ import { atom } from 'jotai';
 
 import {
   extractFile,
+  extractStartEndDatesFromMessages,
   messagesFromFile,
   participantsFromMessages,
 } from '../utils/utils';
@@ -15,6 +16,10 @@ const participantsAtom = atom(get =>
   participantsFromMessages(get(messagesAtom)),
 );
 
+const messagesDateBoundsAtom = atom(get =>
+  extractStartEndDatesFromMessages(get(messagesAtom)),
+);
+
 export {
   isMenuOpenAtom,
   activeUserAtom,
@@ -22,4 +27,5 @@ export {
   messagesAtom,
   participantsAtom,
   extractedFileAtom,
+  messagesDateBoundsAtom,
 };

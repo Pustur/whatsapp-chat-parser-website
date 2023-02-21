@@ -90,6 +90,27 @@ function participantsFromMessages(messages) {
   return Array.from(set);
 }
 
+function getISODateString(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function extractStartEndDatesFromMessages(messages) {
+  const start = messages[0]?.date ?? new Date();
+  const end = messages.at(-1)?.date ?? new Date();
+
+  return { start, end };
+}
+
+function filterMessagesByDate(messages, startDate, endDate) {
+  return messages.filter(
+    message => message.date >= startDate && message.date <= endDate,
+  );
+}
+
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export {
   getMimeType,
   showError,
@@ -99,4 +120,8 @@ export {
   fileToText,
   messagesFromFile,
   participantsFromMessages,
+  getISODateString,
+  extractStartEndDatesFromMessages,
+  filterMessagesByDate,
+  capitalize,
 };

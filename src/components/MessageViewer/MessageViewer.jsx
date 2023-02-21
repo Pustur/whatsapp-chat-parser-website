@@ -1,14 +1,21 @@
 import React, { useMemo } from 'react';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 
 import Message from '../Message/Message';
 import * as S from './style';
-import { messagesAtom } from '../../stores/global';
+import { messagesAtom, messagesDateBoundsAtom } from '../../stores/global';
 
 import { authorColors } from '../../utils/colors';
+import { datesAtom, globalFilterModeAtom } from '../../stores/filters';
+import { filterMessagesByDate, getISODateString } from '../../utils/utils';
 
 function MessageViewer({ activeUser, participants, lowerLimit, upperLimit }) {
-  const [messages] = useAtom(messagesAtom);
+  const messages = useAtomValue(messagesAtom);
+  const messagesDateBounds = useAtomValue(messagesDateBoundsAtom);
+  const filterMode = useAtomValue(globalFilterModeAtom);
+  const { start: startDate, end: endDate } = useAtomValue(datesAtom);
+  const endDatePlusOne = new Date(endDate);
+  endDatePlusOne.setDate(endDatePlusOne.getDate() + 1);
   const colorMap = useMemo(
     () =>
       participants.reduce(
@@ -20,7 +27,12 @@ function MessageViewer({ activeUser, participants, lowerLimit, upperLimit }) {
       ),
     [participants],
   );
-  const renderedMessages = messages.slice(lowerLimit - 1, upperLimit);
+
+  const renderedMessages =
+    filterMode === 'index'
+      ? messages.slice(lowerLimit - 1, upperLimit)
+      : filterMessagesByDate(messages, startDate, endDatePlusOne);
+
   const isLimited = renderedMessages.length !== messages.length;
 
   return (
@@ -28,15 +40,20 @@ function MessageViewer({ activeUser, participants, lowerLimit, upperLimit }) {
       {messages.length > 0 && (
         <S.P>
           <S.Info>
-            {isLimited ? (
+            {isLimited && filterMode === 'index' && (
               <span>
                 Showing messages {lowerLimit} to{' '}
                 {Math.min(upperLimit, messages.length)} (
                 {renderedMessages.length} out of {messages.length})
               </span>
-            ) : (
-              <span>Showing all {messages.length} messages</span>
             )}
+            {isLimited && filterMode === 'date' && (
+              <span>
+                Showing messages from {getISODateString(startDate)} to{' '}
+                {getISODateString(endDate)}
+              </span>
+            )}
+            {!isLimited && <span>Showing all {messages.length} messages</span>}
           </S.Info>
         </S.P>
       )}

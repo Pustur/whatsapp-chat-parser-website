@@ -3,6 +3,8 @@ import { atom } from 'jotai';
 const DEFAULT_LOWER_LIMIT = 1;
 const DEFAULT_UPPER_LIMIT = 100;
 
+const globalFilterModeAtom = atom('index');
+
 const setLimits = (limits, { low, high }) => {
   return {
     ...limits,
@@ -27,4 +29,9 @@ const limitsAtom = atom(
   },
 );
 
-export { limitsAtom };
+const datesAtom = atom({
+  start: new Date(),
+  end: new Date(),
+});
+
+export { globalFilterModeAtom, limitsAtom, datesAtom };

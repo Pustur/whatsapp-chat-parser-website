@@ -136,4 +136,17 @@ const SidebarContainer = styled.div`
   }
 `;
 
-export { MenuOpenButton, MenuCloseButton, Overlay, Sidebar, SidebarContainer };
+const SidebarChildren = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
+
+export {
+  MenuOpenButton,
+  MenuCloseButton,
+  Overlay,
+  Sidebar,
+  SidebarContainer,
+  SidebarChildren,
+};
