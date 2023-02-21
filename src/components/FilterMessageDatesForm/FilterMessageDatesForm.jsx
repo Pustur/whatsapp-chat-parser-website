@@ -2,7 +2,7 @@ import React from 'react';
 
 import { getISODateString } from '../../utils/utils';
 
-import * as S from './style';
+import * as S from '../Sidebar/style';
 
 function FilterMessageDatesForm({ messagesDateBounds, setMessagesByDate }) {
   return (

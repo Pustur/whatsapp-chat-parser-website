@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { capitalize } from '../../utils/utils';
-import * as S from './style';
+import * as S from '../Sidebar/style';
 
 function FilterModeSelector({ filterMode, setFilterMode }) {
   return (

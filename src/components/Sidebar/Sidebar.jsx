@@ -2,9 +2,9 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import Credits from '../Credits/Credits';
-import FilterModeSelector from './FilterModeSelector';
-import FilterMessageLimitsForm from './FilterMessageLimitsForm';
-import FilterMessageDatesForm from './FilterMessageDatesForm';
+import FilterModeSelector from '../FilterModeSelector/FilterModeSelector';
+import FilterMessageLimitsForm from '../FilterMessageLimitsForm/FilterMessageLimitsForm';
+import FilterMessageDatesForm from '../FilterMessageDatesForm/FilterMessageDatesForm';
 
 import * as S from './style';
 import {
@@ -18,7 +18,7 @@ import {
   globalFilterModeAtom,
   limitsAtom,
 } from '../../stores/filters';
-import ActiveUserSelector from './ActiveUserSelector';
+import ActiveUserSelector from '../ActiveUserSelector/ActiveUserSelector';
 
 function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);

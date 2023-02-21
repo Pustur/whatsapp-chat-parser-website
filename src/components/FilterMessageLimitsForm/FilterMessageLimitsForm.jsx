@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as S from './style';
+import * as S from '../Sidebar/style';
 
 function FilterMessageLimitsForm({ limits, setMessageLimits }) {
   return (
