@@ -16,6 +16,7 @@ import {
 import {
   datesAtom,
   globalFilterModeAtom,
+  ILimitsString,
   limitsAtom,
 } from '../../stores/filters';
 import ActiveUserSelector from '../ActiveUserSelector/ActiveUserSelector';
@@ -37,7 +38,10 @@ function Sidebar() {
     const entries = Object.fromEntries(new FormData(e.currentTarget));
 
     e.preventDefault();
-    setLimits({ low: entries.lowerLimit, high: entries.upperLimit });
+    setLimits({
+      low: entries.lowerLimit,
+      high: entries.upperLimit,
+    } as ILimitsString);
     setGlobalFilterMode('index');
   };
 

@@ -10,10 +10,12 @@ interface ILimits {
   high: number;
 }
 
-const setLimits = (
-  limits: ILimits,
-  { low, high }: { low: string; high: string },
-) => {
+export interface ILimitsString {
+  low: string;
+  high: string;
+}
+
+const setLimits = (limits: ILimits, { low, high }: ILimitsString) => {
   return {
     ...limits,
     low:
@@ -27,12 +29,15 @@ const setLimits = (
   };
 };
 
-const limitsAtom = atom<{ low: number; high: number }>(
-  {
-    low: DEFAULT_LOWER_LIMIT,
-    high: DEFAULT_UPPER_LIMIT,
-  },
-  (get, set, limits) => set(limitsAtom, setLimits(get(limitsAtom), limits)),
+const tempLimitsAtom = atom<ILimits>({
+  low: DEFAULT_LOWER_LIMIT,
+  high: DEFAULT_UPPER_LIMIT,
+});
+
+const limitsAtom = atom<ILimits, ILimitsString>(
+  get => get(tempLimitsAtom),
+  (get, set, limits) =>
+    set(tempLimitsAtom, setLimits(get(tempLimitsAtom), limits)),
 );
 
 const datesAtom = atom({
