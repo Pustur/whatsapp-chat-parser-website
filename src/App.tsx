@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import { showError } from './utils/utils';
