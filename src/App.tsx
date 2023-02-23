@@ -1,14 +1,8 @@
 import { useEffect } from 'react';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 
 import { showError } from './utils/utils';
-import {
-  activeUserAtom,
-  rawFileAtom,
-  participantsAtom,
-  messagesAtom,
-} from './stores/global';
-import { limitsAtom } from './stores/filters';
+import { rawFileAtom, messagesAtom } from './stores/global';
 import Dropzone from './components/Dropzone/Dropzone';
 import MessageViewer from './components/MessageViewer/MessageViewer';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -17,11 +11,8 @@ import * as S from './style';
 import exampleChat from './assets/whatsapp-chat-parser-example.zip';
 
 function App() {
-  const [activeUser, setActiveUser] = useAtom(activeUserAtom);
-  const limits = useAtomValue(limitsAtom);
   const messages = useAtomValue(messagesAtom);
   const setRawFile = useSetAtom(rawFileAtom);
-  const participants = useAtomValue(participantsAtom);
 
   const processFile = (file: File) => {
     if (!file) return;
@@ -42,10 +33,6 @@ function App() {
       showError(`File type ${file.type} not supported`);
     }
   };
-
-  useEffect(() => {
-    setActiveUser(participants[0] || '');
-  }, [setActiveUser, participants]);
 
   useEffect(() => {
     const keyHandler = (e: KeyboardEvent) =>
@@ -71,12 +58,7 @@ function App() {
             Download example chat
           </a>
         </S.Header>
-        <MessageViewer
-          participants={participants}
-          activeUser={activeUser}
-          lowerLimit={limits.low}
-          upperLimit={limits.high}
-        />
+        <MessageViewer />
         {messages.length > 0 && <Sidebar />}
       </S.Container>
     </>

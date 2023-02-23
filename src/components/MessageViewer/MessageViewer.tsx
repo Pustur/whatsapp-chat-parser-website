@@ -1,27 +1,26 @@
-import React, { useMemo } from 'react';
-import { useAtomValue } from 'jotai';
+import React, { useMemo, useEffect } from 'react';
+import { useAtom, useAtomValue } from 'jotai';
 
 import Message from '../Message/Message';
 import * as S from './style';
-import { messagesAtom } from '../../stores/global';
+import {
+  activeUserAtom,
+  messagesAtom,
+  participantsAtom,
+} from '../../stores/global';
 
 import { authorColors } from '../../utils/colors';
-import { datesAtom, globalFilterModeAtom } from '../../stores/filters';
+import {
+  datesAtom,
+  globalFilterModeAtom,
+  limitsAtom,
+} from '../../stores/filters';
 import { filterMessagesByDate, getISODateString } from '../../utils/utils';
 
-interface IMessageViewer {
-  activeUser: string;
-  participants: string[];
-  lowerLimit: number;
-  upperLimit: number;
-}
-
-function MessageViewer({
-  activeUser,
-  participants,
-  lowerLimit,
-  upperLimit,
-}: IMessageViewer) {
+function MessageViewer() {
+  const limits = useAtomValue(limitsAtom);
+  const [activeUser, setActiveUser] = useAtom(activeUserAtom);
+  const participants = useAtomValue(participantsAtom);
   const messages = useAtomValue(messagesAtom);
   const filterMode = useAtomValue(globalFilterModeAtom);
   const { start: startDate, end: endDate } = useAtomValue(datesAtom);
@@ -41,10 +40,14 @@ function MessageViewer({
 
   const renderedMessages =
     filterMode === 'index'
-      ? messages.slice(lowerLimit - 1, upperLimit)
+      ? messages.slice(limits.low - 1, limits.high)
       : filterMessagesByDate(messages, startDate, endDatePlusOne);
 
   const isLimited = renderedMessages.length !== messages.length;
+
+  useEffect(() => {
+    setActiveUser(participants[0] || '');
+  }, [setActiveUser, participants]);
 
   return (
     <S.Container>
@@ -53,8 +56,8 @@ function MessageViewer({
           <S.Info>
             {isLimited && filterMode === 'index' && (
               <span>
-                Showing messages {lowerLimit} to{' '}
-                {Math.min(upperLimit, messages.length)} (
+                Showing messages {limits.low} to{' '}
+                {Math.min(limits.high, messages.length)} (
                 {renderedMessages.length} out of {messages.length})
               </span>
             )}
