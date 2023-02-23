@@ -62,9 +62,9 @@ function Attachment({ fileName }: IAttachment) {
     });
   }, [extractedFile, fileName, isMounted]);
 
-  if (error) return <p>error.toString()</p>;
+  if (error) return <div>{error.toString()}</div>;
   if (attachment) return renderAttachment(fileName, attachment);
-  return <p>Loading {fileName}...</p>;
+  return <div>Loading {fileName}...</div>;
 }
 
 export default Attachment;

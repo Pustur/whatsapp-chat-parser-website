@@ -1,9 +1,10 @@
+import { FilterMode } from '../../types';
 import { capitalize } from '../../utils/utils';
 import * as S from '../Sidebar/style';
 
 interface IFilterModeSelector {
-  filterMode: 'index' | 'date';
-  setFilterMode: (filterMode: 'index' | 'date') => void;
+  filterMode: FilterMode;
+  setFilterMode: React.Dispatch<React.SetStateAction<FilterMode>>;
 }
 
 function FilterModeSelector({
@@ -20,7 +21,7 @@ function FilterModeSelector({
             type="radio"
             value={name}
             checked={filterMode === name}
-            onChange={e => setFilterMode(e.target.value as 'index' | 'date')}
+            onChange={e => setFilterMode(e.target.value as FilterMode)}
           />
           <S.Label htmlFor={name}>{capitalize(name)}</S.Label>
         </S.RadioField>

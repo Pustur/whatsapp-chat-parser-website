@@ -1,11 +1,10 @@
 import * as S from '../Sidebar/style';
 
+import { ILimits } from '../../types';
+
 interface IFilterMessageLimitsForm {
-  limits: {
-    low: number;
-    high: number;
-  };
-  setMessageLimits: (e: React.FormEvent<HTMLFormElement>) => void;
+  limits: ILimits;
+  setMessageLimits: React.FormEventHandler<HTMLFormElement>;
 }
 
 function FilterMessageLimitsForm({

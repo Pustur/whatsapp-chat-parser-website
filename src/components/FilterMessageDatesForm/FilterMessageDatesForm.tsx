@@ -1,13 +1,11 @@
+import { DateBounds } from '../../types';
 import { getISODateString } from '../../utils/utils';
 
 import * as S from '../Sidebar/style';
 
 interface IFilterMessageDatesForm {
-  messagesDateBounds: {
-    start: Date;
-    end: Date;
-  };
-  setMessagesByDate: (e: React.FormEvent<HTMLFormElement>) => void;
+  messagesDateBounds: DateBounds;
+  setMessagesByDate: React.FormEventHandler<HTMLFormElement>;
 }
 
 function FilterMessageDatesForm({

@@ -1,19 +1,15 @@
 import { Suspense } from 'react';
 import Linkify from 'react-linkify';
-import type { Message as WhatsappCharParserMessage } from 'whatsapp-chat-parser/dist/index';
 
 import Attachment from '../Attachment/Attachment';
 import * as S from './style';
+import { IndexedMessage } from '../../types';
 
-const intlOptions = {
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-} as const;
-
-function Link(decoratedHref: string, decoratedText: string, key: number) {
+function Link(
+  decoratedHref: string,
+  decoratedText: string,
+  key: number,
+): React.ReactNode | undefined {
   return (
     <a key={key} target="_blank" rel="noopener noreferrer" href={decoratedHref}>
       {decoratedText}
@@ -21,12 +17,8 @@ function Link(decoratedHref: string, decoratedText: string, key: number) {
   );
 }
 
-export interface ChatMessage extends WhatsappCharParserMessage {
-  index: number;
-}
-
 interface IMessage {
-  message: ChatMessage;
+  message: IndexedMessage;
   color: string;
   isActiveUser: boolean;
   sameAuthorAsPrevious: boolean;
@@ -67,9 +59,13 @@ function Message({
         </S.Wrapper>
         {!isSystem && (
           <S.Date dateTime={dateTime}>
-            {new Intl.DateTimeFormat('default', intlOptions).format(
-              message.date,
-            )}
+            {new Intl.DateTimeFormat('default', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric',
+            }).format(message.date)}
           </S.Date>
         )}
       </S.Bubble>

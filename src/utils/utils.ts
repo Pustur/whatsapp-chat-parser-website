@@ -1,6 +1,6 @@
 import JSZip from 'jszip';
 import { parseString } from 'whatsapp-chat-parser';
-import { ChatMessage } from '../components/Message/Message';
+import { DateBounds, ExtractedFile, IndexedMessage } from '../types';
 
 const getMimeType = (fileName: string) => {
   if (/\.jpe?g$/.test(fileName)) return 'image/jpeg';
@@ -43,7 +43,7 @@ const readChatFile = (zipData: JSZip) => {
   return chatFilesSorted[0].async('string');
 };
 
-const replaceEncryptionMessageAuthor = (messages: ChatMessage[]) =>
+const replaceEncryptionMessageAuthor = (messages: IndexedMessage[]) =>
   messages.map((message, i) => {
     if (i < 10 && message.message.includes('end-to-end')) {
       return { ...message, author: null };
@@ -51,7 +51,7 @@ const replaceEncryptionMessageAuthor = (messages: ChatMessage[]) =>
     return message;
   });
 
-const extractFile = (file: string | ArrayBuffer | null) => {
+const extractFile = (file: FileReader['result']) => {
   if (!file) return null;
   if (typeof file === 'string') return file;
 
@@ -60,7 +60,7 @@ const extractFile = (file: string | ArrayBuffer | null) => {
   return jszip.loadAsync(file);
 };
 
-const fileToText = (file: string | JSZip | null) => {
+const fileToText = (file: ExtractedFile) => {
   if (!file) return Promise.resolve('');
   if (typeof file === 'string') return Promise.resolve(file);
 
@@ -71,8 +71,8 @@ const fileToText = (file: string | JSZip | null) => {
   });
 };
 
-function messagesFromFile(file: string | JSZip | null) {
-  return fileToText(file).then((text: string) =>
+function messagesFromFile(file: ExtractedFile) {
+  return fileToText(file).then(text =>
     replaceEncryptionMessageAuthor(
       parseString(text, { parseAttachments: file instanceof JSZip }).map(
         (msg, index) => ({ ...msg, index }),
@@ -81,7 +81,7 @@ function messagesFromFile(file: string | JSZip | null) {
   );
 }
 
-function participantsFromMessages(messages: ChatMessage[]) {
+function participantsFromMessages(messages: IndexedMessage[]) {
   const set = new Set<string>();
 
   messages.forEach(m => {
@@ -95,7 +95,9 @@ function getISODateString(date: Date) {
   return date.toISOString().slice(0, 10);
 }
 
-function extractStartEndDatesFromMessages(messages: ChatMessage[]) {
+function extractStartEndDatesFromMessages(
+  messages: IndexedMessage[],
+): DateBounds {
   const start = messages[0]?.date ?? new Date();
   const end = messages.at(-1)?.date ?? new Date();
 
@@ -103,7 +105,7 @@ function extractStartEndDatesFromMessages(messages: ChatMessage[]) {
 }
 
 function filterMessagesByDate(
-  messages: ChatMessage[],
+  messages: IndexedMessage[],
   startDate: Date,
   endDate: Date,
 ) {

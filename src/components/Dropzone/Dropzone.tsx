@@ -41,7 +41,7 @@ function Dropzone({ id, onFileUpload }: IDropzone) {
   useEffect(() => {
     // setTimeout to steal the focus from MenuOpenButton (only on first render)
     setTimeout(() => {
-      if (inputRef.current) inputRef.current.focus();
+      inputRef.current?.focus();
     }, 0);
   }, []);
 

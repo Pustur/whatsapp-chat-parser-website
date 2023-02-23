@@ -16,10 +16,6 @@ interface IMessageViewer {
   upperLimit: number;
 }
 
-type ColorMap = {
-  [participant: string]: string;
-};
-
 function MessageViewer({
   activeUser,
   participants,
@@ -31,7 +27,7 @@ function MessageViewer({
   const { start: startDate, end: endDate } = useAtomValue(datesAtom);
   const endDatePlusOne = new Date(endDate);
   endDatePlusOne.setDate(endDatePlusOne.getDate() + 1);
-  const colorMap: ColorMap = useMemo(
+  const colorMap: Record<string, string> = useMemo(
     () =>
       participants.reduce(
         (obj, participant, i) => ({

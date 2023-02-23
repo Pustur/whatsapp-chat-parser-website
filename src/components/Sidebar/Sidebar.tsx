@@ -5,6 +5,7 @@ import Credits from '../Credits/Credits';
 import FilterModeSelector from '../FilterModeSelector/FilterModeSelector';
 import FilterMessageLimitsForm from '../FilterMessageLimitsForm/FilterMessageLimitsForm';
 import FilterMessageDatesForm from '../FilterMessageDatesForm/FilterMessageDatesForm';
+import ActiveUserSelector from '../ActiveUserSelector/ActiveUserSelector';
 
 import * as S from './style';
 import {
@@ -16,14 +17,13 @@ import {
 import {
   datesAtom,
   globalFilterModeAtom,
-  ILimitsString,
   limitsAtom,
 } from '../../stores/filters';
-import ActiveUserSelector from '../ActiveUserSelector/ActiveUserSelector';
+import { FilterMode, ILimitsString } from '../../types';
 
 function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
-  const [filterMode, setFilterMode] = useState<'index' | 'date'>('index');
+  const [filterMode, setFilterMode] = useState<FilterMode>('index');
   const setGlobalFilterMode = useSetAtom(globalFilterModeAtom);
   const [limits, setLimits] = useAtom(limitsAtom);
   const setDates = useSetAtom(datesAtom);
@@ -64,11 +64,8 @@ function Sidebar() {
   }, [setIsMenuOpen]);
 
   useEffect(() => {
-    if (isMenuOpen && closeButtonRef.current) {
-      closeButtonRef.current.focus();
-    } else if (openButtonRef.current) {
-      openButtonRef.current.focus();
-    }
+    if (isMenuOpen) closeButtonRef.current?.focus();
+    else openButtonRef.current?.focus();
   }, [isMenuOpen]);
 
   return (

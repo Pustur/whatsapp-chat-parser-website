@@ -1,19 +1,11 @@
 import { atom } from 'jotai';
 
+import { DateBounds, FilterMode, ILimits, ILimitsString } from '../types';
+
 const DEFAULT_LOWER_LIMIT = 1;
 const DEFAULT_UPPER_LIMIT = 100;
 
-const globalFilterModeAtom = atom('index');
-
-interface ILimits {
-  low: number;
-  high: number;
-}
-
-export interface ILimitsString {
-  low: string;
-  high: string;
-}
+const globalFilterModeAtom = atom<FilterMode>('index');
 
 const setLimits = (limits: ILimits, { low, high }: ILimitsString) => {
   return {
@@ -40,7 +32,7 @@ const limitsAtom = atom<ILimits, ILimitsString>(
     set(tempLimitsAtom, setLimits(get(tempLimitsAtom), limits)),
 );
 
-const datesAtom = atom({
+const datesAtom = atom<DateBounds>({
   start: new Date(),
   end: new Date(),
 });

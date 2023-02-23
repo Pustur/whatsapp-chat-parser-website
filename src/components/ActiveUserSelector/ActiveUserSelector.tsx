@@ -1,9 +1,11 @@
+import type { SetStateAction } from 'jotai';
+
 import * as S from '../Sidebar/style';
 
 interface IActiveUserSelector {
   participants: string[];
   activeUser: string;
-  setActiveUser: (activeUser: string) => void;
+  setActiveUser: (activeUser: SetStateAction<string>) => void;
 }
 
 function ActiveUserSelector({
