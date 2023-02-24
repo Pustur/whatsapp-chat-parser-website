@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.0] - 2023-02-24
+
+### Added
+
+- Filter by start / end date ([#15](https://github.com/Pustur/whatsapp-chat-parser-website/issues/15) Thanks [@DaveKeehl](https://github.com/DaveKeehl))
+
+### Changed
+
+- Converted project to TypeScript (Thanks [@DaveKeehl](https://github.com/DaveKeehl))
+- Some code cleanup and refactors
+
 ## [1.8.0] - 2023-02-18
 
 ### Added
@@ -172,6 +183,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 
+[1.9.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.7.1...1.8.0
 [1.7.1]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.6.2...1.7.0
