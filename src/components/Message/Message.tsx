@@ -1,18 +1,15 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import Linkify from 'react-linkify';
 
 import Attachment from '../Attachment/Attachment';
 import * as S from './style';
+import { IndexedMessage } from '../../types';
 
-const intlOptions = {
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-};
-
-function Link(decoratedHref, decoratedText, key) {
+function Link(
+  decoratedHref: string,
+  decoratedText: string,
+  key: number,
+): React.ReactNode | undefined {
   return (
     <a key={key} target="_blank" rel="noopener noreferrer" href={decoratedHref}>
       {decoratedText}
@@ -20,7 +17,19 @@ function Link(decoratedHref, decoratedText, key) {
   );
 }
 
-function Message({ message, color, isActiveUser, sameAuthorAsPrevious }) {
+interface IMessage {
+  message: IndexedMessage;
+  color: string;
+  isActiveUser: boolean;
+  sameAuthorAsPrevious: boolean;
+}
+
+function Message({
+  message,
+  color,
+  isActiveUser,
+  sameAuthorAsPrevious,
+}: IMessage) {
   const isSystem = !message.author;
   const dateTime = message.date.toISOString().slice(0, 19).replace('T', ' ');
 
@@ -50,9 +59,13 @@ function Message({ message, color, isActiveUser, sameAuthorAsPrevious }) {
         </S.Wrapper>
         {!isSystem && (
           <S.Date dateTime={dateTime}>
-            {new Intl.DateTimeFormat('default', intlOptions).format(
-              message.date,
-            )}
+            {new Intl.DateTimeFormat('default', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric',
+            }).format(message.date)}
           </S.Date>
         )}
       </S.Bubble>

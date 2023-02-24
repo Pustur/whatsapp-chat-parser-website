@@ -9,7 +9,7 @@ import {
 
 const isMenuOpenAtom = atom(false);
 const activeUserAtom = atom('');
-const rawFileAtom = atom(null);
+const rawFileAtom = atom<FileReader['result']>(null);
 const extractedFileAtom = atom(get => extractFile(get(rawFileAtom)));
 const messagesAtom = atom(get => messagesFromFile(get(extractedFileAtom)));
 const participantsAtom = atom(get =>

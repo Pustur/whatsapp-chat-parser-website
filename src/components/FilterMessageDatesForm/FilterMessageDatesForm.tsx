@@ -1,10 +1,17 @@
-import React from 'react';
-
+import { DateBounds } from '../../types';
 import { getISODateString } from '../../utils/utils';
 
 import * as S from '../Sidebar/style';
 
-function FilterMessageDatesForm({ messagesDateBounds, setMessagesByDate }) {
+interface IFilterMessageDatesForm {
+  messagesDateBounds: DateBounds;
+  setMessagesByDate: React.FormEventHandler<HTMLFormElement>;
+}
+
+function FilterMessageDatesForm({
+  messagesDateBounds,
+  setMessagesByDate,
+}: IFilterMessageDatesForm) {
   return (
     <S.Form onSubmit={setMessagesByDate}>
       <S.Fieldset>

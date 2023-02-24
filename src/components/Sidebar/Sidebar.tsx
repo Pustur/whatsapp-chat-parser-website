@@ -1,10 +1,11 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import Credits from '../Credits/Credits';
 import FilterModeSelector from '../FilterModeSelector/FilterModeSelector';
 import FilterMessageLimitsForm from '../FilterMessageLimitsForm/FilterMessageLimitsForm';
 import FilterMessageDatesForm from '../FilterMessageDatesForm/FilterMessageDatesForm';
+import ActiveUserSelector from '../ActiveUserSelector/ActiveUserSelector';
 
 import * as S from './style';
 import {
@@ -18,11 +19,11 @@ import {
   globalFilterModeAtom,
   limitsAtom,
 } from '../../stores/filters';
-import ActiveUserSelector from '../ActiveUserSelector/ActiveUserSelector';
+import { FilterMode } from '../../types';
 
 function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
-  const [filterMode, setFilterMode] = useState('index');
+  const [filterMode, setFilterMode] = useState<FilterMode>('index');
   const setGlobalFilterMode = useSetAtom(globalFilterModeAtom);
   const [limits, setLimits] = useAtom(limitsAtom);
   const setDates = useSetAtom(datesAtom);
@@ -30,18 +31,21 @@ function Sidebar() {
   const participants = useAtomValue(participantsAtom);
   const [activeUser, setActiveUser] = useAtom(activeUserAtom);
 
-  const closeButtonRef = useRef(null);
-  const openButtonRef = useRef(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const openButtonRef = useRef<HTMLButtonElement>(null);
 
-  const setMessageLimits = e => {
+  const setMessageLimits = (e: React.FormEvent<HTMLFormElement>) => {
     const entries = Object.fromEntries(new FormData(e.currentTarget));
 
     e.preventDefault();
-    setLimits({ low: entries.lowerLimit, high: entries.upperLimit });
+    setLimits({
+      low: parseInt(entries.lowerLimit as string, 10),
+      high: parseInt(entries.upperLimit as string, 10),
+    });
     setGlobalFilterMode('index');
   };
 
-  const setMessagesByDate = e => {
+  const setMessagesByDate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setDates({
       start: e.currentTarget.startDate.valueAsDate,
@@ -51,7 +55,7 @@ function Sidebar() {
   };
 
   useEffect(() => {
-    const keyDownHandler = e => {
+    const keyDownHandler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setIsMenuOpen(false);
     };
 
@@ -60,8 +64,8 @@ function Sidebar() {
   }, [setIsMenuOpen]);
 
   useEffect(() => {
-    if (isMenuOpen) closeButtonRef.current.focus();
-    else openButtonRef.current.focus();
+    if (isMenuOpen) closeButtonRef.current?.focus();
+    else openButtonRef.current?.focus();
   }, [isMenuOpen]);
 
   return (
@@ -78,7 +82,7 @@ function Sidebar() {
         type="button"
         isActive={isMenuOpen}
         onClick={() => setIsMenuOpen(false)}
-        tabIndex="-1"
+        tabIndex={-1}
       />
       <S.Sidebar isOpen={isMenuOpen}>
         <S.MenuCloseButton

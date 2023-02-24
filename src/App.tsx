@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import { showError } from './utils/utils';
@@ -23,12 +23,16 @@ function App() {
   const setRawFile = useSetAtom(rawFileAtom);
   const participants = useAtomValue(participantsAtom);
 
-  const processFile = file => {
+  const processFile = (file: File) => {
     if (!file) return;
 
     const reader = new FileReader();
 
-    reader.addEventListener('loadend', e => setRawFile(e.target.result));
+    reader.addEventListener('loadend', e => {
+      if (e.target) {
+        setRawFile(e.target.result);
+      }
+    });
 
     if (/^application\/(?:x-)?zip(?:-compressed)?$/.test(file.type)) {
       reader.readAsArrayBuffer(file);
@@ -44,7 +48,7 @@ function App() {
   }, [setActiveUser, participants]);
 
   useEffect(() => {
-    const keyHandler = e =>
+    const keyHandler = (e: KeyboardEvent) =>
       document.documentElement.classList.toggle('ctrl-down', e.ctrlKey);
 
     document.addEventListener('keydown', keyHandler);
