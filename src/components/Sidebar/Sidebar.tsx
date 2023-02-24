@@ -19,7 +19,7 @@ import {
   globalFilterModeAtom,
   limitsAtom,
 } from '../../stores/filters';
-import { FilterMode, ILimitsString } from '../../types';
+import { FilterMode } from '../../types';
 
 function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
@@ -39,9 +39,9 @@ function Sidebar() {
 
     e.preventDefault();
     setLimits({
-      low: entries.lowerLimit,
-      high: entries.upperLimit,
-    } as ILimitsString);
+      low: parseInt(entries.lowerLimit as string, 10),
+      high: parseInt(entries.upperLimit as string, 10),
+    });
     setGlobalFilterMode('index');
   };
 

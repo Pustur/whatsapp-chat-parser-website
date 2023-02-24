@@ -14,21 +14,9 @@ interface ILimits {
   high: number;
 }
 
-interface ILimitsString {
-  low: string;
-  high: string;
-}
-
 interface DateBounds {
   start: Date;
   end: Date;
 }
 
-export type {
-  FilterMode,
-  ExtractedFile,
-  IndexedMessage,
-  ILimits,
-  ILimitsString,
-  DateBounds,
-};
+export type { FilterMode, ExtractedFile, IndexedMessage, ILimits, DateBounds };

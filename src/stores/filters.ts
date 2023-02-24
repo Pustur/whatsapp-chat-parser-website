@@ -1,35 +1,27 @@
 import { atom } from 'jotai';
 
-import { DateBounds, FilterMode, ILimits, ILimitsString } from '../types';
+import { DateBounds, FilterMode, ILimits } from '../types';
 
 const DEFAULT_LOWER_LIMIT = 1;
 const DEFAULT_UPPER_LIMIT = 100;
 
 const globalFilterModeAtom = atom<FilterMode>('index');
 
-const setLimits = (limits: ILimits, { low, high }: ILimitsString) => {
-  return {
-    ...limits,
-    low:
-      low === ''
-        ? DEFAULT_LOWER_LIMIT
-        : parseInt(low, 10) || DEFAULT_LOWER_LIMIT,
-    high:
-      high === ''
-        ? DEFAULT_UPPER_LIMIT
-        : parseInt(high, 10) || DEFAULT_UPPER_LIMIT,
-  };
-};
+const mergeLimits = (oldLimits: ILimits, newLimits: ILimits): ILimits => ({
+  ...oldLimits,
+  low: Number.isNaN(newLimits.low) ? DEFAULT_LOWER_LIMIT : newLimits.low,
+  high: Number.isNaN(newLimits.high) ? DEFAULT_UPPER_LIMIT : newLimits.high,
+});
 
 const tempLimitsAtom = atom<ILimits>({
   low: DEFAULT_LOWER_LIMIT,
   high: DEFAULT_UPPER_LIMIT,
 });
 
-const limitsAtom = atom<ILimits, ILimitsString>(
+const limitsAtom = atom<ILimits, ILimits>(
   get => get(tempLimitsAtom),
   (get, set, limits) =>
-    set(tempLimitsAtom, setLimits(get(tempLimitsAtom), limits)),
+    set(tempLimitsAtom, mergeLimits(get(tempLimitsAtom), limits)),
 );
 
 const datesAtom = atom<DateBounds>({
