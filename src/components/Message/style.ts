@@ -8,7 +8,11 @@ import {
   activeUserDarkBackgroundColor,
 } from '../../utils/colors';
 
-const Item = styled.li`
+const Item = styled.li<{
+  isSystem: boolean;
+  isActiveUser: boolean;
+  sameAuthorAsPrevious: boolean;
+}>`
   margin-top: 1rem;
   margin-left: auto;
   margin-right: auto;
@@ -34,7 +38,7 @@ const Item = styled.li`
   }
 `;
 
-const Index = styled.div`
+const Index = styled.div<{ isSystem: boolean; isActiveUser: boolean }>`
   position: absolute;
   font-size: 10px;
   padding-inline: 7px;
@@ -77,7 +81,7 @@ const Index = styled.div`
   }
 `;
 
-const Bubble = styled.div`
+const Bubble = styled.div<{ isSystem: boolean; isActiveUser: boolean }>`
   ${messageBaseStyle}
 
   position: relative;

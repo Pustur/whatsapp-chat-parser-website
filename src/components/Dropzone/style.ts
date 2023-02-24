@@ -12,7 +12,7 @@ const labelHighlight = css`
   }
 `;
 
-const Label = styled.label`
+const Label = styled.label<{ isHighlighted: boolean }>`
   display: block;
   border-radius: 10px;
   padding: 20px;
