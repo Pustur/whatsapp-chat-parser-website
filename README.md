@@ -28,6 +28,7 @@ It's also possible to download them directly from the [releases page](https://gi
 
 ## Technologies used
 
+- Language: [TypeScript](https://www.typescriptlang.org/)
 - Libraries:
   - [React](https://reactjs.org/) (with [Jotai](https://jotai.org/))
   - [JSZip](https://stuk.github.io/jszip/)
