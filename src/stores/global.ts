@@ -9,9 +9,12 @@ import {
 
 const isMenuOpenAtom = atom(false);
 const activeUserAtom = atom('');
+const isAnonymousAtom = atom(false);
 const rawFileAtom = atom<FileReader['result']>(null);
 const extractedFileAtom = atom(get => extractFile(get(rawFileAtom)));
-const messagesAtom = atom(get => messagesFromFile(get(extractedFileAtom)));
+const messagesAtom = atom(get =>
+  messagesFromFile(get(extractedFileAtom), get(isAnonymousAtom)),
+);
 const participantsAtom = atom(get =>
   participantsFromMessages(get(messagesAtom)),
 );
@@ -23,6 +26,7 @@ const messagesDateBoundsAtom = atom(get =>
 export {
   isMenuOpenAtom,
   activeUserAtom,
+  isAnonymousAtom,
   rawFileAtom,
   messagesAtom,
   participantsAtom,
