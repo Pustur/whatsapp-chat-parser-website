@@ -168,12 +168,8 @@ const Form = styled.form`
 `;
 
 const Field = styled.div`
-  * + * {
+  > * + * {
     margin-top: 0.375rem;
-  }
-
-  & + & {
-    margin-top: 1rem;
   }
 `;
 
@@ -203,6 +199,10 @@ const Fieldset = styled.fieldset`
 
   @media (prefers-color-scheme: dark) {
     border-color: #444;
+  }
+
+  ${Field} + ${Field} {
+    margin-top: 1rem;
   }
 `;
 
