@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.0] - 2024-08-02
+
+### Added
+
+- Anonymous users toggle [#36](https://github.com/Pustur/whatsapp-chat-parser-website/issues/36)
+
+### Changed
+
+- Updated dependencies
+- Minor code cleanup and refactors
+
 ## [1.9.0] - 2023-02-24
 
 ### Added
@@ -183,6 +194,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 
+[1.10.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.9.0...1.10.0
 [1.9.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.7.1...1.8.0
 [1.7.1]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.7.0...1.7.1
