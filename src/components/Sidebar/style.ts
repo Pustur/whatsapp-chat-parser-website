@@ -161,6 +161,44 @@ const SidebarChildren = styled.div`
   gap: 2rem;
 `;
 
+const ToggleCheckbox = styled.input`
+  --toggle-width: 44px;
+  --toggle-height: 22px;
+  --toggle-padding: 2px;
+
+  appearance: none;
+  margin: 0;
+  display: flex;
+  padding: var(--toggle-padding);
+  height: var(--toggle-height);
+  width: var(--toggle-width);
+  background-color: #aaa;
+  border-radius: var(--toggle-height);
+  cursor: pointer;
+
+  &::before {
+    content: '';
+
+    aspect-ratio: 1;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+  }
+
+  &:checked {
+    background-color: ${whatsappThemeColor};
+
+    &::before {
+      transform: translateX(
+        calc(
+          (var(--toggle-width) - var(--toggle-padding) * 2) -
+            (var(--toggle-height) - var(--toggle-padding) * 2)
+        )
+      );
+    }
+  }
+`;
+
 const Form = styled.form`
   > * + * {
     margin-top: 1rem;
@@ -168,12 +206,8 @@ const Form = styled.form`
 `;
 
 const Field = styled.div`
-  * + * {
+  > * + * {
     margin-top: 0.375rem;
-  }
-
-  & + & {
-    margin-top: 1rem;
   }
 `;
 
@@ -203,6 +237,10 @@ const Fieldset = styled.fieldset`
 
   @media (prefers-color-scheme: dark) {
     border-color: #444;
+  }
+
+  ${Field} + ${Field} {
+    margin-top: 1rem;
   }
 `;
 
@@ -265,4 +303,5 @@ export {
   Submit,
   RadioField,
   Label,
+  ToggleCheckbox,
 };

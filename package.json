@@ -1,20 +1,20 @@
 {
   "name": "whatsapp-chat-parser-website",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "type": "module",
   "private": true,
   "files": [
     "build/"
   ],
   "dependencies": {
-    "@vitejs/plugin-react": "^3.1.0",
+    "@vitejs/plugin-react": "^4.3.1",
     "jotai": "1.13.1",
     "jszip": "3.10.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-linkify": "1.0.0-alpha",
-    "styled-components": "5.3.6",
-    "vite": "4.1.2",
+    "styled-components": "6.1.12",
+    "vite": "5.3.4",
     "whatsapp-chat-parser": "4.0.0"
   },
   "scripts": {
@@ -24,22 +24,21 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@types/react-linkify": "^1.0.1",
-    "@types/styled-components": "^5.1.26",
-    "@typescript-eslint/eslint-plugin": "^5.53.0",
-    "@typescript-eslint/parser": "^5.53.0",
-    "eslint": "8.34.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-linkify": "^1.0.4",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1",
+    "eslint": "8.57.0",
     "eslint-config-airbnb": "19.0.4",
-    "eslint-config-prettier": "8.6.0",
-    "eslint-import-resolver-typescript": "^3.5.3",
-    "eslint-plugin-import": "2.27.5",
-    "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-prettier": "4.2.1",
-    "eslint-plugin-react": "7.32.2",
-    "eslint-plugin-react-hooks": "4.6.0",
-    "prettier": "2.8.4",
-    "typescript": "^4.9.5"
+    "eslint-config-prettier": "9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-jsx-a11y": "6.9.0",
+    "eslint-plugin-prettier": "5.2.1",
+    "eslint-plugin-react": "7.34.4",
+    "eslint-plugin-react-hooks": "4.6.2",
+    "prettier": "3.3.3",
+    "typescript": "^5.5.3"
   }
 }

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, startTransition } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import Credits from '../Credits/Credits';
@@ -10,6 +10,7 @@ import ActiveUserSelector from '../ActiveUserSelector/ActiveUserSelector';
 import * as S from './style';
 import {
   activeUserAtom,
+  isAnonymousAtom,
   isMenuOpenAtom,
   messagesDateBoundsAtom,
   participantsAtom,
@@ -23,6 +24,7 @@ import { FilterMode } from '../../types';
 
 function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
+  const [isAnonymous, setIsAnonymous] = useAtom(isAnonymousAtom);
   const [filterMode, setFilterMode] = useState<FilterMode>('index');
   const setGlobalFilterMode = useSetAtom(globalFilterModeAtom);
   const [limits, setLimits] = useAtom(limitsAtom);
@@ -115,6 +117,18 @@ function Sidebar() {
               activeUser={activeUser}
               setActiveUser={setActiveUser}
             />
+
+            <S.Field>
+              <S.Label htmlFor="is-anonymous">Anonymize users</S.Label>
+              <S.ToggleCheckbox
+                id="is-anonymous"
+                type="checkbox"
+                checked={isAnonymous}
+                onChange={() =>
+                  startTransition(() => setIsAnonymous(bool => !bool))
+                }
+              />
+            </S.Field>
           </S.SidebarChildren>
           <Credits />
         </S.SidebarContainer>

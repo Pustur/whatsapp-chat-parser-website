@@ -1,6 +1,7 @@
 import JSZip from 'jszip';
 import { parseString } from 'whatsapp-chat-parser';
 import { DateBounds, ExtractedFile, IndexedMessage } from '../types';
+import { UniqueIdGenerator } from './unique-id-generator';
 
 const getMimeType = (fileName: string) => {
   if (/\.jpe?g$/.test(fileName)) return 'image/jpeg';
@@ -71,14 +72,22 @@ const fileToText = (file: ExtractedFile) => {
   });
 };
 
-function messagesFromFile(file: ExtractedFile) {
-  return fileToText(file).then(text =>
-    replaceEncryptionMessageAuthor(
-      parseString(text, { parseAttachments: file instanceof JSZip }).map(
-        (msg, index) => ({ ...msg, index }),
-      ),
-    ),
-  );
+function messagesFromFile(file: ExtractedFile, isAnonymous = false) {
+  return fileToText(file).then(text => {
+    const uniqueIdGenerator = new UniqueIdGenerator();
+    const parsed = parseString(text, {
+      parseAttachments: file instanceof JSZip,
+    }).map(({ author, ...msg }, index) => ({
+      ...msg,
+      author:
+        author && isAnonymous
+          ? `User ${uniqueIdGenerator.getId(author)}`
+          : author,
+      index,
+    }));
+
+    return replaceEncryptionMessageAuthor(parsed);
+  });
 }
 
 function participantsFromMessages(messages: IndexedMessage[]) {

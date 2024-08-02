@@ -15,7 +15,7 @@ function ActiveUserSelector({
 }: IActiveUserSelector) {
   return (
     <S.Field>
-      <S.Label htmlFor="active-user">Active User</S.Label>
+      <S.Label htmlFor="active-user">Active user</S.Label>
       <S.Select
         id="active-user"
         disabled={!participants.length}
