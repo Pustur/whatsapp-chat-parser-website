@@ -82,11 +82,11 @@ function Sidebar() {
       </S.MenuOpenButton>
       <S.Overlay
         type="button"
-        isActive={isMenuOpen}
+        $isActive={isMenuOpen}
         onClick={() => setIsMenuOpen(false)}
         tabIndex={-1}
       />
-      <S.Sidebar isOpen={isMenuOpen}>
+      <S.Sidebar $isOpen={isMenuOpen}>
         <S.MenuCloseButton
           type="button"
           onClick={() => setIsMenuOpen(false)}

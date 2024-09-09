@@ -12,13 +12,13 @@ const labelHighlight = css`
   }
 `;
 
-const Label = styled.label<{ isHighlighted: boolean }>`
+const Label = styled.label<{ $isHighlighted: boolean }>`
   display: block;
   border-radius: 10px;
   padding: 20px;
   border: 2px dashed #ccc;
   cursor: pointer;
-  ${props => props.isHighlighted && labelHighlight}
+  ${props => props.$isHighlighted && labelHighlight}
 
   @media (prefers-color-scheme: dark) {
     border-color: #666;

@@ -105,7 +105,7 @@ const MenuCloseButton = styled.button`
   }
 `;
 
-const Overlay = styled.button<{ isActive: boolean }>`
+const Overlay = styled.button<{ $isActive: boolean }>`
   ${normalizeButton}
 
   display: block;
@@ -114,24 +114,24 @@ const Overlay = styled.button<{ isActive: boolean }>`
   top: 0;
   bottom: 0;
   background-color: black;
-  opacity: ${props => (props.isActive ? 0.2 : 0)};
+  opacity: ${props => (props.$isActive ? 0.2 : 0)};
   transition: opacity 0.3s ease;
   z-index: ${zIndex.overlay};
   ${props =>
-    !props.isActive &&
+    !props.$isActive &&
     css`
       pointer-events: none;
     `}
 `;
 
-const Sidebar = styled.aside<{ isOpen: boolean }>`
+const Sidebar = styled.aside<{ $isOpen: boolean }>`
   position: fixed;
   width: 280px;
   top: 0;
   left: 0;
   bottom: 0;
   background-color: white;
-  transform: translate3d(${props => (props.isOpen ? 0 : '-100%')}, 0, 0);
+  transform: translate3d(${props => (props.$isOpen ? 0 : '-100%')}, 0, 0);
   transition: transform 0.3s ease;
   z-index: ${zIndex.sidebar};
 
