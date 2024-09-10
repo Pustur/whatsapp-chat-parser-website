@@ -19,4 +19,23 @@ interface DateBounds {
   end: Date;
 }
 
-export type { FilterMode, ExtractedFile, IndexedMessage, ILimits, DateBounds };
+interface PollOption {
+  text: string;
+  votes: number;
+}
+
+interface PollStructure {
+  title: string;
+  options: PollOption[];
+  maxVotes: number;
+}
+
+export type {
+  FilterMode,
+  ExtractedFile,
+  IndexedMessage,
+  ILimits,
+  DateBounds,
+  PollOption,
+  PollStructure,
+};

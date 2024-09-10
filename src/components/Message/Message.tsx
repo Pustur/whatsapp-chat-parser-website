@@ -2,8 +2,10 @@ import { Suspense } from 'react';
 import Linkify from 'react-linkify';
 
 import Attachment from '../Attachment/Attachment';
+import Poll from '../Poll/Poll';
 import * as S from './style';
 import { IndexedMessage } from '../../types';
+import { parsePollMessage } from '../../utils/poll-parser';
 
 function Link(
   decoratedHref: string,
@@ -32,6 +34,22 @@ function Message({
 }: IMessage) {
   const isSystem = !message.author;
   const dateTime = message.date.toISOString().slice(0, 19).replace('T', ' ');
+  const pollData = parsePollMessage(message.message);
+  let messageComponent = (
+    <Linkify componentDecorator={Link}>
+      <S.Message>{message.message}</S.Message>
+    </Linkify>
+  );
+
+  if (message.attachment) {
+    messageComponent = (
+      <Suspense fallback={`Loading ${message.attachment.fileName}...`}>
+        <Attachment fileName={message.attachment.fileName} />
+      </Suspense>
+    );
+  } else if (pollData !== null) {
+    messageComponent = <Poll pollData={pollData} />;
+  }
 
   return (
     <S.Item
@@ -47,15 +65,7 @@ function Message({
           {!isSystem && !sameAuthorAsPrevious && (
             <S.Author color={color}>{message.author}</S.Author>
           )}
-          {message.attachment ? (
-            <Suspense fallback={`Loading ${message.attachment.fileName}...`}>
-              <Attachment fileName={message.attachment.fileName} />
-            </Suspense>
-          ) : (
-            <Linkify componentDecorator={Link}>
-              <S.Message>{message.message}</S.Message>
-            </Linkify>
-          )}
+          {messageComponent}
         </S.Wrapper>
         {!isSystem && (
           <S.Date dateTime={dateTime}>
