@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useRef, useState } from 'react';
 import Linkify from 'react-linkify';
 
 import Attachment from '../Attachment/Attachment';
@@ -32,6 +32,23 @@ function Message({
 }: IMessage) {
   const isSystem = !message.author;
   const dateTime = message.date.toISOString().slice(0, 19).replace('T', ' ');
+  const [copied, setCopied] = useState(false);
+  const clipboardRef = useRef<HTMLDivElement>(null);
+
+  const handleClipboardCopy = () => {
+    setCopied(true);
+    const cbRef = clipboardRef.current;
+    if (cbRef !== null) {
+      cbRef.classList.remove('animate');
+      // eslint-disable-next-line no-void
+      void cbRef.offsetWidth;
+      cbRef.classList.add('animate');
+    }
+    navigator.clipboard.writeText(message.message);
+    setTimeout(() => {
+      setCopied(false);
+    }, 3000);
+  };
 
   return (
     <S.Item
@@ -54,6 +71,12 @@ function Message({
           ) : (
             <Linkify componentDecorator={Link}>
               <S.Message>{message.message}</S.Message>
+              <S.CopyToClipboard
+                ref={clipboardRef}
+                onClick={handleClipboardCopy}
+              >
+                {copied ? '✔️ Copied' : '📋'}
+              </S.CopyToClipboard>
             </Linkify>
           )}
         </S.Wrapper>

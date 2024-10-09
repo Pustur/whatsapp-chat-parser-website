@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import { overflowBreakWord, messageBaseStyle } from '../../utils/styles';
 import {
@@ -140,6 +140,35 @@ const Author = styled.div`
   color: ${props => props.color};
 `;
 
+const bounceIn = keyframes`
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
+const CopyToClipboard = styled.div`
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+  &.animate {
+    animation: ${bounceIn} 2s forwards;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: ${props => props.color};
+`;
+
 const Message = styled.div`
   ${overflowBreakWord}
 
@@ -159,4 +188,4 @@ const Date = styled.time`
   }
 `;
 
-export { Item, Bubble, Index, Wrapper, Author, Message, Date };
+export { Item, Bubble, Index, Wrapper, Author, Message, Date, CopyToClipboard };
