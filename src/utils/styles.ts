@@ -1,4 +1,5 @@
 import { css } from 'styled-components';
+import { whatsappThemeColor } from './colors';
 
 const screenReaderOnly = css`
   position: absolute;
@@ -46,6 +47,17 @@ const messageBaseStyle = css`
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 `;
 
+const standardButton = css`
+  border: 0;
+  border-radius: 4px;
+  width: 100%;
+  height: 1.8rem;
+  padding: 0 0.5rem;
+  background-color: ${whatsappThemeColor};
+  color: white;
+  cursor: pointer;
+`;
+
 export {
   screenReaderOnly,
   hideText,
@@ -53,4 +65,5 @@ export {
   normalizeInput,
   overflowBreakWord,
   messageBaseStyle,
+  standardButton,
 };

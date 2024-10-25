@@ -1,6 +1,11 @@
 import styled, { css } from 'styled-components';
 
-import { hideText, normalizeButton, normalizeInput } from '../../utils/styles';
+import {
+  hideText,
+  normalizeButton,
+  normalizeInput,
+  standardButton,
+} from '../../utils/styles';
 import { whatsappThemeColor } from '../../utils/colors';
 import { zIndex } from '../../utils/z-index';
 
@@ -270,18 +275,7 @@ const Select = styled.select`
 
 const Submit = styled.input`
   ${normalizeInput}
-
-  border: 0;
-  border-radius: 4px;
-  width: 100%;
-  height: 1.8rem;
-  padding: 0 0.3rem;
-  background-color: ${whatsappThemeColor};
-  color: white;
-
-  &:hover {
-    cursor: pointer;
-  }
+  ${standardButton}
 `;
 
 const InputDescription = styled.div`
