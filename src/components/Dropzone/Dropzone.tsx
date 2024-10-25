@@ -59,7 +59,7 @@ function Dropzone({ id, onFileUpload }: IDropzone) {
         ref={inputRef}
         onChange={onChangeHandler}
       />
-      <S.Label htmlFor={id} isHighlighted={isHighlighted}>
+      <S.Label htmlFor={id} $isHighlighted={isHighlighted}>
         <S.P>
           Click here to upload a file or drag and drop it onto the dashed region
           (supported formats: <S.Extension>txt</S.Extension>,{' '}

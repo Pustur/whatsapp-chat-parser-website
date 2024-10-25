@@ -1,6 +1,6 @@
 {
   "name": "whatsapp-chat-parser-website",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "type": "module",
   "private": true,
   "files": [

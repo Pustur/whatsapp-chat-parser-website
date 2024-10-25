@@ -47,7 +47,9 @@ const MenuOpenButton = styled.button`
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     background-color: white;
-    box-shadow: 0 -5px 0 white, 0 5px 0 white;
+    box-shadow:
+      0 -5px 0 white,
+      0 5px 0 white;
   }
 
   @media (min-width: 700px) {
@@ -103,7 +105,7 @@ const MenuCloseButton = styled.button`
   }
 `;
 
-const Overlay = styled.button<{ isActive: boolean }>`
+const Overlay = styled.button<{ $isActive: boolean }>`
   ${normalizeButton}
 
   display: block;
@@ -112,24 +114,24 @@ const Overlay = styled.button<{ isActive: boolean }>`
   top: 0;
   bottom: 0;
   background-color: black;
-  opacity: ${props => (props.isActive ? 0.2 : 0)};
+  opacity: ${props => (props.$isActive ? 0.2 : 0)};
   transition: opacity 0.3s ease;
   z-index: ${zIndex.overlay};
   ${props =>
-    !props.isActive &&
+    !props.$isActive &&
     css`
       pointer-events: none;
     `}
 `;
 
-const Sidebar = styled.aside<{ isOpen: boolean }>`
+const Sidebar = styled.aside<{ $isOpen: boolean }>`
   position: fixed;
   width: 280px;
   top: 0;
   left: 0;
   bottom: 0;
   background-color: white;
-  transform: translate3d(${props => (props.isOpen ? 0 : '-100%')}, 0, 0);
+  transform: translate3d(${props => (props.$isOpen ? 0 : '-100%')}, 0, 0);
   transition: transform 0.3s ease;
   z-index: ${zIndex.sidebar};
 
@@ -255,8 +257,8 @@ const Select = styled.select`
     ${selectPadding};
   background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
     linear-gradient(135deg, currentColor 50%, transparent 50%);
-  background-position: calc(100% - ${selectPadding} - ${selectArrowWidth} / 2)
-      60%,
+  background-position:
+    calc(100% - ${selectPadding} - ${selectArrowWidth} / 2) 60%,
     calc(100% - ${selectPadding}) 60%;
   background-size: calc(${selectArrowWidth} / 2) ${selectArrowHeight};
   background-repeat: no-repeat;

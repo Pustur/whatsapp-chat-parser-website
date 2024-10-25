@@ -9,25 +9,25 @@ import {
 } from '../../utils/colors';
 
 const Item = styled.li<{
-  isSystem: boolean;
-  isActiveUser: boolean;
-  sameAuthorAsPrevious: boolean;
+  $isSystem: boolean;
+  $isActiveUser: boolean;
+  $sameAuthorAsPrevious: boolean;
 }>`
   margin-top: 1rem;
   margin-left: auto;
   margin-right: auto;
   ${props =>
-    props.isSystem &&
+    props.$isSystem &&
     css`
       text-align: center;
     `}
   ${props =>
-    props.isActiveUser &&
+    props.$isActiveUser &&
     css`
       text-align: right;
     `}
   ${props =>
-    props.sameAuthorAsPrevious &&
+    props.$sameAuthorAsPrevious &&
     css`
       margin-top: 0.25rem;
     `}
@@ -38,7 +38,7 @@ const Item = styled.li<{
   }
 `;
 
-const Index = styled.div<{ isSystem: boolean; isActiveUser: boolean }>`
+const Index = styled.div<{ $isSystem: boolean; $isActiveUser: boolean }>`
   position: absolute;
   font-size: 10px;
   padding-inline: 7px;
@@ -50,12 +50,12 @@ const Index = styled.div<{ isSystem: boolean; isActiveUser: boolean }>`
   opacity: 0;
   transition: opacity 0.3s ease;
   ${props =>
-    props.isSystem &&
+    props.$isSystem &&
     css`
       background-color: ${systemBackgroundColor};
     `}
   ${props =>
-    props.isActiveUser &&
+    props.$isActiveUser &&
     css`
       background-color: ${activeUserBackgroundColor};
     `}
@@ -69,30 +69,30 @@ const Index = styled.div<{ isSystem: boolean; isActiveUser: boolean }>`
     border-color: rgba(255, 255, 255, 0.1);
     color: #f1f1f2;
     ${props =>
-      props.isSystem &&
+      props.$isSystem &&
       css`
         background-color: ${systemDarkBackgroundColor};
       `}
     ${props =>
-      props.isActiveUser &&
+      props.$isActiveUser &&
       css`
         background-color: ${activeUserDarkBackgroundColor};
       `}
   }
 `;
 
-const Bubble = styled.div<{ isSystem: boolean; isActiveUser: boolean }>`
+const Bubble = styled.div<{ $isSystem: boolean; $isActiveUser: boolean }>`
   ${messageBaseStyle}
 
   position: relative;
   background-color: white;
   ${props =>
-    props.isSystem &&
+    props.$isSystem &&
     css`
       background-color: ${systemBackgroundColor};
     `}
   ${props =>
-    props.isActiveUser &&
+    props.$isActiveUser &&
     css`
       text-align: left;
       background-color: ${activeUserBackgroundColor};
@@ -110,13 +110,13 @@ const Bubble = styled.div<{ isSystem: boolean; isActiveUser: boolean }>`
     background-color: #262d31;
     color: #f1f1f2;
     ${props =>
-      props.isSystem &&
+      props.$isSystem &&
       css`
         background-color: ${systemDarkBackgroundColor};
         color: #fad964;
       `}
     ${props =>
-      props.isActiveUser &&
+      props.$isActiveUser &&
       css`
         background-color: ${activeUserDarkBackgroundColor};
       `}
