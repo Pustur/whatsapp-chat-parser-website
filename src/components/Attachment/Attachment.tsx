@@ -3,7 +3,6 @@ import { useAtomValue } from 'jotai';
 
 import { extractedFileAtom } from '../../stores/global';
 import { getMimeType } from '../../utils/utils';
-import { useIsMounted } from '../../hooks/useIsMounted';
 
 const renderAttachment = (fileName: string, attachment: string) => {
   const mimeType = getMimeType(fileName) || '';
@@ -37,7 +36,6 @@ function Attachment({ fileName }: IAttachment) {
   const extractedFile = useAtomValue(extractedFileAtom);
   const [attachment, setAttachment] = useState<null | string>(null);
   const [error, setError] = useState<null | Error>(null);
-  const isMounted = useIsMounted();
 
   useEffect(() => {
     if (!extractedFile || typeof extractedFile === 'string') return;
@@ -45,14 +43,12 @@ function Attachment({ fileName }: IAttachment) {
     const file = extractedFile.files[fileName];
 
     if (!file) {
-      if (isMounted()) {
-        setError(new Error(`Can't find "${fileName}" in archive`));
-      }
+      setError(new Error(`Can't find "${fileName}" in archive`));
       return;
     }
     if (getMimeType(fileName)) {
       file.async('base64').then(data => {
-        if (isMounted()) setAttachment(data);
+        setAttachment(data);
       });
       return;
     }
@@ -66,13 +62,13 @@ function Attachment({ fileName }: IAttachment) {
     if (uncompressedSize > 0 && uncompressedSize < sizeLimit) {
       // TODO: Maybe we should generate this crap only on user request, otherwise it lingers in memory needlessly
       file.async('blob').then(blob => {
-        if (isMounted()) setAttachment(URL.createObjectURL(blob));
+        setAttachment(URL.createObjectURL(blob));
       });
       return;
     }
 
     setError(new Error(`Can't load "${fileName}" as it exceeds 250MB`));
-  }, [extractedFile, fileName, isMounted]);
+  }, [extractedFile, fileName]);
 
   if (error) return <div>{error.toString()}</div>;
   if (attachment) return renderAttachment(fileName, attachment);
