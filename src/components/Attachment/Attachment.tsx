@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useAtomValue } from 'jotai';
 
 import { extractedFileAtom } from '../../stores/global';
@@ -39,9 +39,10 @@ function Attachment({ fileName }: IAttachment) {
   const extractedFile = useAtomValue(extractedFileAtom);
   const [attachment, setAttachment] = useState<null | string>(null);
   const [error, setError] = useState<null | Error>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const mimeType = getMimeType(fileName) || '';
 
-  useEffect(() => {
+  const loadAttachment = useCallback(() => {
     if (!extractedFile || typeof extractedFile === 'string') return;
 
     const file = extractedFile.files[fileName];
@@ -51,8 +52,10 @@ function Attachment({ fileName }: IAttachment) {
       return;
     }
     if (mimeType) {
+      setIsLoading(true);
       file.async('base64').then(data => {
         setAttachment(data);
+        setIsLoading(false);
       });
       return;
     }
@@ -64,9 +67,10 @@ function Attachment({ fileName }: IAttachment) {
 
     // We actually need to check > 0 because big files have negative numbers (int overflow? kek)
     if (uncompressedSize > 0 && uncompressedSize < sizeLimit) {
-      // TODO: Maybe we should generate this crap only on user request, otherwise it lingers in memory needlessly
+      setIsLoading(true);
       file.async('blob').then(blob => {
         setAttachment(URL.createObjectURL(blob));
+        setIsLoading(false);
       });
       return;
     }
@@ -74,9 +78,29 @@ function Attachment({ fileName }: IAttachment) {
     setError(new Error(`Can't load "${fileName}" as it exceeds 250MB`));
   }, [extractedFile, fileName, mimeType]);
 
+  useEffect(() => {
+    if (
+      mimeType.startsWith('image/') ||
+      mimeType.startsWith('audio/') ||
+      mimeType.startsWith('video/')
+    ) {
+      loadAttachment();
+    }
+  }, [loadAttachment, mimeType]);
+
   if (error) return <div>{error.toString()}</div>;
   if (attachment) return renderAttachment(fileName, mimeType, attachment);
-  return <div>Loading {fileName}...</div>;
+  return (
+    <div>
+      {isLoading ? (
+        <div>Loading {fileName}...</div>
+      ) : (
+        <button type="button" onClick={loadAttachment}>
+          Load {fileName}
+        </button>
+      )}
+    </div>
+  );
 }
 
 export default Attachment;
