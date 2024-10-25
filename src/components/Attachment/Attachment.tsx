@@ -4,8 +4,11 @@ import { useAtomValue } from 'jotai';
 import { extractedFileAtom } from '../../stores/global';
 import { getMimeType } from '../../utils/utils';
 
-const renderAttachment = (fileName: string, attachment: string) => {
-  const mimeType = getMimeType(fileName) || '';
+const renderAttachment = (
+  fileName: string,
+  mimeType: string,
+  attachment: string,
+) => {
   const src = `data:${mimeType};base64,${attachment}`;
 
   if (mimeType.startsWith('image/')) {
@@ -36,6 +39,7 @@ function Attachment({ fileName }: IAttachment) {
   const extractedFile = useAtomValue(extractedFileAtom);
   const [attachment, setAttachment] = useState<null | string>(null);
   const [error, setError] = useState<null | Error>(null);
+  const mimeType = getMimeType(fileName) || '';
 
   useEffect(() => {
     if (!extractedFile || typeof extractedFile === 'string') return;
@@ -46,7 +50,7 @@ function Attachment({ fileName }: IAttachment) {
       setError(new Error(`Can't find "${fileName}" in archive`));
       return;
     }
-    if (getMimeType(fileName)) {
+    if (mimeType) {
       file.async('base64').then(data => {
         setAttachment(data);
       });
@@ -68,10 +72,10 @@ function Attachment({ fileName }: IAttachment) {
     }
 
     setError(new Error(`Can't load "${fileName}" as it exceeds 250MB`));
-  }, [extractedFile, fileName]);
+  }, [extractedFile, fileName, mimeType]);
 
   if (error) return <div>{error.toString()}</div>;
-  if (attachment) return renderAttachment(fileName, attachment);
+  if (attachment) return renderAttachment(fileName, mimeType, attachment);
   return <div>Loading {fileName}...</div>;
 }
 
