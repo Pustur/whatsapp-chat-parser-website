@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.0] - 2024-10-25
+
+### Added
+
+- Graphical support for polls [#43](https://github.com/Pustur/whatsapp-chat-parser-website/issues/43)
+- Button to load downloadable attachments (this should reduce unnecessary memory consumption / browser crashes [#42](https://github.com/Pustur/whatsapp-chat-parser-website/issues/42))
+
+### Changed
+
+- Updated dependencies
+- Attachments >250MB can't be loaded / downloaded [#42](https://github.com/Pustur/whatsapp-chat-parser-website/issues/42)
+- Minor code cleanup and refactors
+
 ## [1.10.0] - 2024-08-02
 
 ### Added
@@ -194,6 +207,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 
+[1.11.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.10.0...1.11.0
 [1.10.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.9.0...1.10.0
 [1.9.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.7.1...1.8.0
