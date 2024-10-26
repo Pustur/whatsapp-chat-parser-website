@@ -4,6 +4,8 @@ import { useAtomValue } from 'jotai';
 import { extractedFileAtom } from '../../stores/global';
 import { getMimeType } from '../../utils/utils';
 
+import * as S from './style';
+
 const renderAttachment = (
   fileName: string,
   mimeType: string,
@@ -95,9 +97,9 @@ function Attachment({ fileName }: IAttachment) {
       {isLoading ? (
         <div>Loading {fileName}...</div>
       ) : (
-        <button type="button" onClick={loadAttachment}>
+        <S.Button type="button" onClick={loadAttachment}>
           Load {fileName}
-        </button>
+        </S.Button>
       )}
     </div>
   );
