@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.1] - 2024-10-26
+
+### Changed
+
+- Updated dependencies
+- Updated example chat to show new features
+
+### Fixed
+
+- Styled new button to load attachments
+
 ## [1.11.0] - 2024-10-25
 
 ### Added
@@ -11,7 +22,6 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Updated dependencies
 - Attachments >250MB can't be loaded / downloaded [#42](https://github.com/Pustur/whatsapp-chat-parser-website/issues/42)
 - Minor code cleanup and refactors
 
@@ -207,6 +217,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 
+[1.11.1]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.11.0...1.11.1
 [1.11.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.10.0...1.11.0
 [1.10.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.9.0...1.10.0
 [1.9.0]: https://github.com/Pustur/whatsapp-chat-parser-website/compare/1.8.0...1.9.0
